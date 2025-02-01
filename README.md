@@ -20,6 +20,6 @@ In this window, there are five tabs, four of which are for changing color values
 
 ### To-do List
 High Priority:
-  [ ] Complete README file
-  [ ] Check License
-  [ ] Convert Code to classes and functions for easier functionality with other games and versions
+- [ ] Complete README file
+- [ ] Check License
+- [ ] Convert Code to classes and functions for easier functionality with other games and versions
