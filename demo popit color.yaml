@@ -1,0 +1,11 @@
+color-code:
+  caption: "demonstration popit color"
+  primcolor: "00D4E9"
+  primopacity: "FF"
+  seccolor: "AE009D"
+  secopacity: "FF"
+  tertcolor: "F0D600"
+  tertopacity: "FF"
+  emphcolor: "161401"
+  emphopacity: "FF"
+  save: "export\\"
