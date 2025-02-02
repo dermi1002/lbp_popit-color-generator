@@ -46,7 +46,7 @@ In this tab is a label that reads:
 
 Below is an entry that reads Code Name. As the label said, you can click on it and type anything into it as shown below:
 
-![Entering a Code Name in the Export Tab of the LittleBigPlanet Color Generator GUI](./readme_pictures/main_exportcodename.png)
+![Entering a Code Name in the Export Tab of the LittleBigPlanet Color Generator GUI](./.readme_pictures/main_exportcodename.png)
 
 Thereafter, you can click on the "Save YAML" button to store your Popit color values in a YAML "configuration" file.
 
