@@ -40,12 +40,23 @@ Once your done editing the color values, you can move onto the fifth tab, Export
 
 ![Export Tab in the LBP Popit Color Generator GUI](./.readme_pictures/main_export.png)
 
-To be continued...
+In this tab is a label that reads:
+
+*"If you are finished with your Popit color theme, give it a Code Name and export a cheat file!"*
+
+Below is an entry that reads Code Name. As the label said, you can click on it and type anything into it as shown below:
+
+![Entering a Code Name in the Export Tab of the LittleBigPlanet Color Generator GUI](./readme_pictures/main_exportcodename.png)
+
+Thereafter, you can click on the "Save YAML" button to store your Popit color values in a YAML "configuration" file.
+
+Then, you can click on the "Concert to NCL" button to convert a YAML file to a .ncl NetCheat List file, which is a set of values to manipulate in a PS3 memory editor.
+
+First, the program will prompt you to open a YAML file. Then, it will prompt you to choose a directory to save the .ncl file.
 
 ### To-do List
 High Priority:
-- [ ] Complete README file
-- [ ] Change License to prohibit commercial usage
+- [ ] Complete and polish README file
 
 Next:
 - [ ] Rework the code into classes and functions for easier functionality with other games and versions
