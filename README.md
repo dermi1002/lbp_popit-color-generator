@@ -68,13 +68,14 @@ This pointer is found via the following:
 - If done correctly, the pointer would include the Popit Color value within it.
 
 ## To-do List
-High Priority:
-- [ ] Complete and polish README file
-
-Next:
+### High Priority:
 - [ ] Rework the code into classes and functions for easier functionality with other games and versions
+
+### Next:
 - [ ] Add functionality to change colors via hex color entry
 
-Future Considerations:
+### Future Considerations:
+- [ ] ~~Complete and~~ polish README file
 - [ ] Create mock-up gameplay previews
-- More to add...
+
+More to add...
