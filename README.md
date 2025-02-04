@@ -4,5 +4,6 @@ The ultimage goal is to turn a "Color Tab" frame into a tamplate Class to be rep
 What are the consequences?
 
 ## Current Issues:
-- [ ] The class ColorTab is not callable. Perhaps it should be a function instead?
+- [ ] The class ColorTabList doesn't have the attribute tk. Maybe that also needs to be a function or moved into the main window?????
+- [x] ~~The class ColorTab is not callable. Perhaps it should be a function instead?~~
 
