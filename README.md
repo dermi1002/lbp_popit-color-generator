@@ -4,6 +4,7 @@ The ultimage goal is to turn a "Color Tab" frame into a tamplate Class to be rep
 What are the consequences?
 
 ## Current Issues:
-- [ ] The class ColorTabList doesn't have the attribute tk. Maybe that also needs to be a function or moved into the main window?????
+- [ ] I changed ColorTab into a function, colorTab, and placed it inside the ColorTabList class. The program can open, but when an instance is called, it's placed outside the class. Why is that?
+- [x] ~~The class ColorTabList doesn't have the attribute tk. Maybe that also needs to be a function or moved into the main window?????~~
 - [x] ~~The class ColorTab is not callable. Perhaps it should be a function instead?~~
 
