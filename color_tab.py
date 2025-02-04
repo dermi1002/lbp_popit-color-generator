@@ -1,10 +1,22 @@
 import customtkinter as ctk
 import pyperclip
 
+
+class ColorTabList(ctk.CTkTabview):
+    def __init__(self, master, *args, **kwargs):
+        super().__init__(master, *args, **kwargs) #super(ColorTabList, self)
+
+        self.add('Primary')
+
+        self.set('Primary')
+
+        self.grid(row=0, column=0, padx=5)
+
+
 # i want to turn an individual color tab frame into a template that could be used four times
 # this would be so i would only have to change code within a color tab once and not have to repeat it across multiple instances if that makes sense
 # is this callable yet?
-class ColorTab(ctk.CTkFrame):
+def colorTab():
     # don't mind the functions yet
     #def change_color(value):
     #    R = int(red_slider.get())
@@ -21,27 +33,16 @@ class ColorTab(ctk.CTkFrame):
     #def hex_copy():
     #    pyperclip.copy(_hexentry.get())
 
-    def __init__(self, parent, *args, **kwargs):
-        super().__init__(parent, *args, **kwargs)
-        self.grid()
+    # i make a frame for the tab
+    #colorframe = ColorTabList(WindowLBP2USNormal)
 
-        self.color_tab = ctk.CTkFrame(self).grid(row=0)
+    # and within that frame, i make two other frames
+    color_tab = ctk.CTkFrame(ColorTabList).grid(row=0)
 
-        self.color_info = ctk.CTkFrame(self).grid(row=0, column=1, padx=10)
+    color_info = ctk.CTkFrame(ColorTabList).grid(row=0, column=1, padx=10)
 
-
-class ColorTabList(ctk.CTkTabview):
-    def __init__(self, parent, *args, **kwargs):
-        super().__init__(parent, *args, **kwargs)
-
-        self.add('Primary')
-
-        self.set('Primary')
-
-        self.grid(row=0, column=0, padx=5)
-
-
-class WindowLBP2USNormal(ctk.CTk):
+    
+class WindowLBP2USNormal(ctk.CTk): # inherrits everything from main window right?
     def __init__(self):
         super().__init__()
 
@@ -53,9 +54,11 @@ class WindowLBP2USNormal(ctk.CTk):
         # program
         self.color_tablist = ColorTabList(self)
 
-        self.prim_colortab = ColorTab(self)
+        self.prim_colortab = colorTab()
         
         self.prim_colortab(self.color_tablist.tab('Primary'))
+
+        
 
         self.mainloop()
 
