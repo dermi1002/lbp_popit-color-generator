@@ -69,7 +69,7 @@ This pointer is found via the following:
 
 ## To-do List
 ### High Priority:
-- [ ] Rework the code into classes and functions for easier functionality with other games and versions
+- [ ] Rework the code into classes and functions for easier functionality with other games and versions (see the class-test branch)
 
 ### Next:
 - [ ] Add functionality to change colors via hex color entry
