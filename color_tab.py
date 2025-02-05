@@ -6,6 +6,8 @@ class ColorTabList(ctk.CTkTabview):
     def __init__(self, master, *args, **kwargs):
         super().__init__(master, *args, **kwargs) #super(ColorTabList, self)
 
+        self.place_configure(width=530, height=254)
+
         self.add('Primary')
         self.add('Export')
 
@@ -14,67 +16,56 @@ class ColorTabList(ctk.CTkTabview):
         class ColorTab(ctk.CTkFrame):
             def __init__(self, master, *args, **kwargs):
                 super().__init__(master, *args, **kwargs)
-                # don't mind the functions yet
-                #def change_color(value):
-                #    R = int(red_slider.get())
-                #    G = int(green_slider.get())
-                #    B = int(blue_slider.get())
+                
+                def change_color(value):
+                    self.R = int(self.red_slider.get())
+                    self.G = int(self.green_slider.get())
+                    self.B = int(self.blue_slider.get())
 
-                #    _hexprint = '%02X%02X%02X' % (R, G, B)
+                    _hexprint = '%02X%02X%02X' % (self.R, self.G, self.B)
 
-                #    color_preview.configure(bg_color=f'#{_hexprint}')
+                    self.color_preview.configure(bg_color=f'#{self._hexprint}')
 
-                #    _hexentry.delete(0, ctk.END)
-                #    _hexentry.insert(0, _hexprint)
+                    self._hexentry.delete(0, ctk.END)
+                    self._hexentry.insert(0, _hexprint)
 
-                #def hex_copy():
-                #    pyperclip.copy(_hexentry.get())
-
-
-                # ok so it turns out that the grid system in within a function is much different than normal
-                # everything still appears outside the tabview
-                color_square = ctk.CTkFrame(master).grid(row=0, column=0)
-
-                self.color_preview = ctk.CTkLabel(color_square, text='', bg_color='#000', width=200, height=200).grid(row=0, column=0, padx=5, pady=5)
+                def copy_hexentry():
+                    pyperclip.copy(self._hexentry.get())
 
 
-                color_info = ctk.CTkFrame(master).grid(row=3, column=1, padx=10)
+                self.color_preview = ctk.CTkLabel(master, text='', bg_color='#000', width=200, height=200).place(y=4)
 
 
-                color_sliders = ctk.CTkFrame(color_info).grid(row=3, column=1, pady=10)
+                self.letter_r = ctk.CTkLabel(master, text='R').place(x=225, y=10)
+                self.red_slider = ctk.CTkSlider(master, from_=0, to=255, width=256, command=change_color).place(x=260, y=16)
 
-                self.letter_r = ctk.CTkLabel(color_sliders, text='R').grid(row=0, column=1, padx=10, pady=10)
-                self.red_slider = ctk.CTkSlider(color_sliders, from_=0, to=255, width=256).grid(row=0, column=2, padx=5, pady=10)
+                self.letter_g = ctk.CTkLabel(master, text='G').place(x=225, y=60)
+                self.green_slider = ctk.CTkSlider(master, from_=0, to=255, width=256, command=change_color).place(x=260, y=66)
 
-                self.letter_g = ctk.CTkLabel(color_sliders, text='G').grid(row=1, column=1, padx=10, pady=10)
-                self.green_slider = ctk.CTkSlider(color_sliders, from_=0, to=255, width=256).grid(row=1, column=2, padx=5, pady=10)
-
-                self.letter_b = ctk.CTkLabel(color_sliders, text='B').grid(row=2, column=1, padx=10, pady=10)
-                self.blue_slider = ctk.CTkSlider(color_sliders, from_=0, to=255, width=256).grid(row=2, column=2, padx=5, pady=10)
+                self.letter_b = ctk.CTkLabel(master, text='B').place(x=225, y=110)
+                self.blue_slider = ctk.CTkSlider(master, from_=0, to=255, width=256, command=change_color).place(x=260, y=116)
 
 
-                color_entries = ctk.CTkFrame(color_info).grid(row=3, column=1)
+                self._hexdisplay = ctk.CTkLabel(master, text='HEX Color:').place(x=225, y=170)
+                self._hexentry = ctk.CTkEntry(master)
+                self._hexcopy = ctk.CTkButton(master, text='Copy', width=50, command=copy_hexentry).place(x=450, y=170)
 
-                self._hexdisplay = ctk.CTkLabel(color_entries, text='HEX Color: ').grid(row=3, column=0, padx=5)
-                self._hexentry = ctk.CTkEntry(color_entries)
-                self._hexcopy = ctk.CTkButton(color_entries, text='Copy', width=50).grid(row=3, column=2, padx=5)
-
-                self._hexentry.grid(row=3, column=1)
+                self._hexentry.place(x=297, y=170)
                 self._hexentry.insert(ctk.END, '000000')
 
         self.prim_colortab = ColorTab(self.tab('Primary'))
 
-        self.grid(row=0, column=0, padx=5)
+        self.place(x=5)
 
     
-class WindowLBP2USNormal(ctk.CTk): # inherrits everything from main window right?
+class WindowLBP2USNormal(ctk.CTk):
     def __init__(self):
         super().__init__()
 
         # window setup
         self.title("LBP2 Color Generator")
-        self.geometry('535x265')
-        #self.resizable(False, False)
+        self.geometry('540x260')
+        self.resizable(False, False)
 
         # program
         ColorTabList(self)
