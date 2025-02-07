@@ -5,7 +5,7 @@ import yaml
 
 class ColorTabList(ctk.CTkTabview):
     def __init__(self, master, *args, **kwargs):
-        super().__init__(master, *args, **kwargs) #super(ColorTabList, self)
+        super().__init__(master, *args, **kwargs)
 
         self.place_configure(width=530, height=254)
 
