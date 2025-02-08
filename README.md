@@ -11,9 +11,9 @@ In order to install these libraries, create a virtual environment, and install t
 ```
 pip install -r requirements.txt
 ```
-Then, you can open the GUI program:
+Then, for the time being, you can open a window of the GUI program:
 ```
-python main.py
+python window_lbp2.py
 ```
 If done correctly, you'll end up with this:
 
@@ -69,7 +69,7 @@ This pointer is found via the following:
 
 ## To-do List
 ### High Priority:
-- [ ] Rework the code into classes and functions for easier functionality with other games and versions (see the class-test branch)
+- [ ] Develop a main window for selection of several game versions
 
 ### Next:
 - [ ] Add functionality to change colors via hex color entry
@@ -79,3 +79,6 @@ This pointer is found via the following:
 - [ ] Create mock-up gameplay previews
 
 More to add...
+
+### Completed:
+- [x] ~~Rework the code into classes and functions for easier functionality with other games and versions (see the class-test branch)~~
