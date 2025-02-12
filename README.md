@@ -1,7 +1,7 @@
 # LittleBigPlanet Popit Color Generator
 A CustomTkinter GUI program that generates NetCheat List files to modify LittleBigPlanet Popit Color Themes
 
-# THIS PROGRAM IS A WORK IN PROGRESS AND ONLY WORKS ON LBP2 US LATEST VERSION! DO NOT ATTEMPT ON OTHER GAMES OR VERSIONS!
+# THIS PROGRAM IS AN UNFINISHED WORK (IN PROGRESS) AND ONLY WORKS ON LBP2 US LATEST VERSION! DO NOT ATTEMPT ON OTHER GAMES OR VERSIONS!
 ## Doing so may result to loss of progress in your levels, profile, or even the whole game!
 
 ## How To Use
