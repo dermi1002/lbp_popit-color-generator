@@ -56,7 +56,7 @@ First, the program will prompt you to open a YAML file. Then, it will prompt you
 
 As of now, keeping the default directories is essential for the programs functionality.
 
-Oncce you saved your .ncl file, you can import it to a memory editor for the PS3 and apply it in-game.
+Once you saved your .ncl file, you can import it to a memory editor for the PS3 and apply it in-game.
 
 ## How Cheat Codes Work
 
@@ -69,7 +69,8 @@ This pointer is found via the following:
 
 ## To-do List
 ### High Priority:
-- [ ] Develop a main window for selection of several game versions
+- [ ] Edit code functions, values, etc., for extra readability among project contributors
+- [ ] ~~Develop a main window for selection of several game versions~~ Plan Cancelled
 
 ### Next:
 - [ ] Add functionality to change colors via hex color entry

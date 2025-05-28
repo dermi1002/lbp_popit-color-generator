@@ -22,11 +22,11 @@ class ColorTabList(ctk.CTkTabview):
                 super().__init__(master, *args, **kwargs)
                 
                 def change_color(value):
-                    self.R = int(self.red_slider.get())
-                    self.G = int(self.green_slider.get())
-                    self.B = int(self.blue_slider.get())
+                    self.Red = int(self.red_slider.get())
+                    self.Green = int(self.green_slider.get())
+                    self.Blue = int(self.blue_slider.get())
 
-                    self._hexprint = '%02X%02X%02X' % (self.R, self.G, self.B)
+                    self._hexprint = '%02X%02X%02X' % (self.Red, self.Green, self.Blue)
 
                     self.color_preview.configure(bg_color=f'#{self._hexprint}')
 
@@ -40,7 +40,7 @@ class ColorTabList(ctk.CTkTabview):
                 self.color_preview = ctk.CTkLabel(master, text='', bg_color='#000', width=200, height=200)
                 self.color_preview.place(y=4)
 
-
+                # i'll probably make a class for this
                 self.letter_r = ctk.CTkLabel(master, text='R').place(x=225, y=10)
                 self.red_slider = ctk.CTkSlider(master, from_=0, to=255, width=256, command=change_color)
 
@@ -71,18 +71,42 @@ class ColorTabList(ctk.CTkTabview):
                 self._hexentry.place(x=297, y=170)
                 self._hexentry.insert(ctk.END, '000000')
 
-        self.pri_colortab = ColorTab(self.tab('Primary'))
-        self.sec_colortab = ColorTab(self.tab('Secondary'))
-        self.ter_colortab = ColorTab(self.tab('Tertiary'))
-        self.emp_colortab = ColorTab(self.tab('Emphasis'))
+        self.primary_colortab = ColorTab(self.tab('Primary'))
+        self.secondary_colortab = ColorTab(self.tab('Secondary'))
+        self.tertiary_colortab = ColorTab(self.tab('Tertiary'))
+        self.emphasis_colortab = ColorTab(self.tab('Emphasis'))
 
 
         # Export Tab
         def export_yaml():
-            config_export = ctk.filedialog.asksaveasfile(title="Export YAML Config", initialdir="./save", filetypes=(("YAML Configuration", "*.yaml"), ("All Files", "*.*")), defaultextension='.yaml')
+            config_export = ctk.filedialog.asksaveasfile(
+                title="Export YAML Config", 
+                initialdir="./save", 
+                filetypes=(("YAML Configuration", "*.yaml"), ("All Files", "*.*")), 
+                defaultextension='.yaml'
+                )
+                
             if config_export is None:
                 return
-            color_config = str(f'color-code:\n  caption: \"{code_name.get()}\"\n  primcolor: \"{self.pri_colortab._hexentry.get()}\"\n  primopacity: \"FF\"\n  seccolor: \"{self.sec_colortab._hexentry.get()}\"\n  secopacity: \"FF\"\n  tertcolor: \"{self.ter_colortab._hexentry.get()}\"\n  tertopacity: \"FF\"\n  emphcolor: \"{self.emp_colortab._hexentry.get()}\"\n  emphopacity: \"FF\"\n  save: \"export\\\\\"')
+
+            color_config = str(
+                'color-code:\n' +
+                '  caption: ' + '\"' + code_name.get() + '\"\n' +
+
+                '  primcolor: ' + '\"' + self.primary_colortab._hexentry.get() + '\"\n' +
+                '  primopacity: ' + '\"' + 'FF\"\n' +
+
+                '  seccolor: ' + '\"' + self.secondary_colortab._hexentry.get() + '\"\n'
+                '  secopacity: ' + '\"' + 'FF\"\n' +
+
+                '  tertcolor: ' + '\"' + self.tertiary_colortab._hexentry.get() + '\"\n' +
+                '  tertopacity: ' + '\"' + 'FF\"\n' +
+
+                '  emphcolor: ' + '\"' + self.emphasis_colortab._hexentry.get() + '\"\n' +
+                '  emphopacity: ' + '\"' + 'FF\"\n' +
+
+                '  save: ' + '\"' + 'export\\\\\"'
+                ) # TODO: Test this.
             config_export.write(color_config)
             config_export.close() # can i optimize this?
 
@@ -118,17 +142,28 @@ class ColorTabList(ctk.CTkTabview):
 
             _zeroes = "0 00000000 "
 
-            ncl_save = ctk.filedialog.asksaveasfile(title="Export NCL Code", initialdir="export", filetypes=[("NetCheat List File", "*.ncl"), ("All Files", "*.*")], defaultextension=".ncl")
+            ncl_save = ctk.filedialog.asksaveasfile(
+                title="Export NCL Code", 
+                initialdir="export", 
+                filetypes=[("NetCheat List File", "*.ncl"), ("All Files", "*.*")], 
+                defaultextension=".ncl"
+                )
+
             if ncl_save is None:
                 return
+
             color_code = str(
                 db_config['caption'] + '\n' + '0\n' + 
+
                 '6 ' + player_id + ' ' + profile_id_1[0] + '\n' + 
                 _zeroes + db_config['primopacity'] + db_config['primcolor'] + '\n' + 
+
                 '6 ' + player_id + ' ' + profile_id_1[1] + '\n' + 
                 _zeroes + db_config['secopacity'] + db_config['seccolor'] + '\n' + 
+
                 '6 ' + player_id + ' ' + profile_id_1[2] + '\n' + 
                 _zeroes + db_config['tertopacity'] + db_config['tertcolor'] + '\n' + 
+                
                 '6 ' + player_id + ' ' + profile_id_1[3] + '\n' + 
                 _zeroes + db_config['emphopacity'] + db_config['emphcolor'] + '\n' + '#\n'
                 )
