@@ -5,7 +5,7 @@ A CustomTkinter GUI program that generates NetCheat List files to modify LittleB
 ## Doing so may result to loss of progress in your levels, profile, or even the whole game!
 
 ## How To Use
-The LittleBigPlanet Popit Color Generator was tested on WIndows 10 Python 3.8.0 with CustomTkinter, PyYAML, and Pyperclip. 
+The LittleBigPlanet Popit Color Generator was tested on Windows 10 Python 3.8.0 with CustomTkinter, PyYAML, and Pyperclip. 
 
 In order to install these libraries, create a virtual environment, and install them through this command:
 ```
@@ -56,7 +56,7 @@ First, the program will prompt you to open a YAML file. Then, it will prompt you
 
 As of now, keeping the default directories is essential for the programs functionality.
 
-Oncce you saved your .ncl file, you can import it to a memory editor for the PS3 and apply it in-game.
+Once you saved your .ncl file, you can import it to a memory editor for the PS3 and apply it in-game.
 
 ## How Cheat Codes Work
 
@@ -69,7 +69,7 @@ This pointer is found via the following:
 
 ## To-do List
 ### High Priority:
-- [ ] Develop a main window for selection of several game versions
+- [ ] ~~Develop a main window for selection of several game versions~~ Plan Cancelled
 
 ### Next:
 - [ ] Add functionality to change colors via hex color entry
@@ -77,8 +77,10 @@ This pointer is found via the following:
 ### Future Considerations:
 - [ ] ~~Complete and~~ polish README file
 - [ ] Create mock-up gameplay previews
+- [ ] Add Terminal "logs"
 
 More to add...
 
 ### Completed:
 - [x] ~~Rework the code into classes and functions for easier functionality with other games and versions (see the class-test branch)~~
+- [x] ~~Edit code functions, values, etc., for extra readability among project contributors~~
