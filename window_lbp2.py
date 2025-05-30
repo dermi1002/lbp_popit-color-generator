@@ -51,7 +51,7 @@ class ColorTabList(ctk.CTkTabview):
 
                 self.color_preview.place(y = 4)
 
-                slider_max_value:int = 255
+                slider_max_value: int = 255
                 slider_value_range: int = 256
                 slider_x_position: int = 260
 
@@ -88,9 +88,9 @@ class ColorTabList(ctk.CTkTabview):
                 self.blue_slider = RGBSlider(master, 116)
 
 
-                self.color_hexdisplay = ctk.CTkLabel(master, text = 'HEX Color:').place(x = rgb_letter_x_position, y = hex_related_y_position)
+                self.color_hex_label = ctk.CTkLabel(master, text = 'HEX Color:').place(x = rgb_letter_x_position, y = hex_related_y_position)
                 self.color_hex_entry = ctk.CTkEntry(master)
-                self.color_hexcopy = ctk.CTkButton(master, text = 'Copy', width = 50, command = copy_color_hex_entry).place(x = 450, y = hex_related_y_position)
+                self.color_hex_copy_button = ctk.CTkButton(master, text = 'Copy', width = 50, command = copy_color_hex_entry).place(x = 450, y = hex_related_y_position)
 
                 self.color_hex_entry.place(x = 297, y = hex_related_y_position)
                 self.color_hex_entry.insert(ctk.END, color_beginning_value)
@@ -99,7 +99,6 @@ class ColorTabList(ctk.CTkTabview):
         self.secondary_colortab = ColorTab(self.tab('Secondary'))
         self.tertiary_colortab = ColorTab(self.tab('Tertiary'))
         self.emphasis_colortab = ColorTab(self.tab('Emphasis'))
-
 
         # Export Tab Functions
         def export_yaml():
@@ -143,7 +142,7 @@ class ColorTabList(ctk.CTkTabview):
                 color_path_file.truncate(0)
                 color_path_file.write(
                     'color-path:\n' + 
-                    f'  set-yaml: \"{str(yaml_set)}\"' # path to recently saved color yaml file
+                    f'  set-yaml: \"{str(yaml_set)}\"' # Path to recently saved Color YAML file
                 )
 
         def export_ncl():
@@ -224,12 +223,12 @@ class WindowLBP2USNormal(ctk.CTk):
     def __init__(self):
         super().__init__()
 
-        # window setup
+        # Window Setup
         self.title("LBP2 Color Generator")
         self.geometry('540x260')
         self.resizable(False, False)
 
-        # program
+        # Program
         ColorTabList(self)
 
         self.mainloop()
