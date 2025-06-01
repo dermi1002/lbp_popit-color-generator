@@ -11,9 +11,9 @@ In order to install these libraries, create a virtual environment, and install t
 ```
 pip install -r requirements.txt
 ```
-Then, for the time being, you can open a window of the GUI program:
+Then, you can open the GUI program:
 ```
-python window_lbp2.py
+python main.py
 ```
 If done correctly, you'll end up with this:
 
