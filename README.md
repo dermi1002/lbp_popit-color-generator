@@ -1,10 +1,17 @@
 # LittleBigPlanet Popit Color Generator
 A CustomTkinter GUI program that generates NetCheat List files to modify LittleBigPlanet Popit Color Themes
 
-# THIS PROGRAM IS AN UNFINISHED WORK (IN PROGRESS) AND ONLY WORKS ON LBP2 US LATEST VERSION! DO NOT ATTEMPT ON OTHER GAMES OR VERSIONS!
-## Doing so may result to loss of progress in your levels, profile, or even the whole game!
+# CAUTION
+THIS PROGRAM IS AN UNFINISHED WORK (IN PROGRESS) AND ONLY WORKS ON LBP2 US LATEST VERSION! DO NOT ATTEMPT ON OTHER GAMES OR VERSIONS!
 
-## How To Use
+Doing so may result in the loss of progress in your levels, profile, or even the whole game!
+
+Please back them up before testing this software.
+
+# Using the Program
+If you use Windows, you can try a Package in the [Releases Page](https://github.com/dermi1002/lbp_popit-color-generator/releases).
+
+## Building From Source
 The LittleBigPlanet Popit Color Generator was tested on Windows 10 Python 3.8.0 with CustomTkinter, PyYAML, and Pyperclip. 
 
 In order to install these libraries, create a virtual environment, and install them through this command:
@@ -19,9 +26,10 @@ If done correctly, you'll end up with this:
 
 ![First look of the LBP Popit Color Generator GUI](./.readme_pictures/main_firstlook.png)
 
-In this window, there are five tabs, four of which are for changing color values. 
+## How To Use 
+When you open the program, there will be five tabs, four of which are for changing color values. 
 
-The Popit uses the first three of the values; Primary, Secondary, and Tertiary; and the fourth one, Emphasis, is used as "highlighted" text in level descriptions (and dialog bubbles (check)).
+The Popit uses the first three of the values; Primary, Secondary, and Tertiary; and the fourth one, Emphasis, is used as "highlighted" text in level descriptions.
 
 These four tabs appear in a layout like this:
 - On the right are three sliders; those of which "represent" values for red, green, and blue;
