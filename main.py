@@ -9,14 +9,6 @@ class ColorTabList(ctk.CTkTabview):
 
         self.place_configure(width = 530, height = 254)
 
-        self.add('Primary')
-        self.add('Secondary')
-        self.add('Tertiary')
-        self.add('Emphasis')
-        self.add('Export')
-
-        self.set('Primary')
- 
         # The Meat And Potatoes of the Program
         class ColorTab(ctk.CTkFrame):
             def __init__(self, master, *args, **kwargs):
@@ -111,6 +103,14 @@ class ColorTabList(ctk.CTkTabview):
                 self.color_hex_entry.place(x = 297, y = hex_related_y_position)
                 self.color_hex_entry.insert(ctk.END, color_beginning_value)
 
+        self.add('Primary')
+        self.add('Secondary')
+        self.add('Tertiary')
+        self.add('Emphasis')
+        self.add('Export')
+
+        self.set('Primary')
+ 
         self.primary_colortab = ColorTab(self.tab('Primary'))
         self.secondary_colortab = ColorTab(self.tab('Secondary'))
         self.tertiary_colortab = ColorTab(self.tab('Tertiary'))

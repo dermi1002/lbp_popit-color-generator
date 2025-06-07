@@ -77,7 +77,7 @@ This pointer is found via the following:
 
 ## To-do List
 ### High Priority:
-- [ ] ~~Develop a main window for selection of several game versions~~ Plan Cancelled
+- [ ] Add a fake toolbar to the program
 
 ### Next:
 - [ ] Add functionality to change colors via hex color entry
