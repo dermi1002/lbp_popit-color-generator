@@ -3,12 +3,17 @@ A Python GUI program that generates NetCheat List files to modify LittleBigPlane
 
 -# README Document written by dermi1002
 
-# CAUTION
+# Heads Up & Remark
+I'm going to be wrapping things up until I either make a new branch or make a new repository and make this one a **Public Archive.** If the former happens, support for the Python branch will be dropped. If the ladder happens, support for the whole repo will be dropped, and a link to the newer repo will be included in this document before it gets archived.
+
+Seeing as it takes extra steps to install CustomTkinter to Linux, I figured I might as well rewrite the whole project in Lua I so can embed it to a C# Plugin for NetCheat (or Nim if I can't. Either way they would significantly reduce resource usage). The least I could do for now is retheme it to get rid of those steps for Linux, at the cost of the GUI looking a little ugly in my opinion.
+
+# WARNING
 THIS PROGRAM IS AN UNFINISHED WORK (IN PROGRESS) AND ONLY WORKS ON LBP2 US LATEST VERSION! DO NOT ATTEMPT ON OTHER GAMES OR VERSIONS!
 
 Doing so may result in the loss of progress in your levels, profile, or even the whole game!
 
-Please back them up before testing this software.
+Please back them up before testing/using this software.
 
 # Using the Program
 If you use Windows, you can try a Package in the [Releases Page](https://github.com/dermi1002/lbp_popit-color-generator/releases).
@@ -95,6 +100,3 @@ More to add...
 ### Completed:
 - [x] ~~Rework the code into classes and functions for easier functionality with other games and versions (see the class-test branch)~~
 - [x] ~~Edit code functions, values, etc., for extra readability among project contributors~~
-
-# Remark
-Seeing as it takes extra steps to install CustomTkinter to Linux, I figured I might as well rewrite the whole project in Lua (or Nim if I can't embed it to a C# Plugin for NetCheat. Either way they would significantly reduce resource usage). The least I could do for now is retheme it to get rid of those steps for Linux, at the cost of the GUI looking a little ugly in my opinion.
