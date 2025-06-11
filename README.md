@@ -1,7 +1,7 @@
 # LittleBigPlanet Popit Color Generator
 A Python GUI program that generates NetCheat List files to modify LittleBigPlanet Popit Color Themes
 
--# README Document written by dermi1002
+README Document written by dermi1002
 
 # Heads Up & Remark
 I'm going to be wrapping things up until I either make a new branch or make a new repository and make this one a **Public Archive.** If the former happens, support for the Python branch will be dropped. If the ladder happens, support for the whole repo will be dropped, and a link to the newer repo will be included in this document before it gets archived.
@@ -63,7 +63,7 @@ Below is an entry that reads Code Name. As the label said, you can click on it a
 
 ![Entering a Code Name in the Export Tab of the LittleBigPlanet Color Generator GUI](./.readme_pictures/main_exportcodename.png)
 
-After that, you can click on the "Save YAML Config" button to store your Popit color values in a YAML "configuration" file.
+After that, you can click on the "Save YAML Config" button to store your Popit color values in a YAML dictionary file.
 
 Then, you can click on the "Concert to NCL" button to convert a YAML file to a .ncl NetCheat List file, which is a set of values to manipulate in a PS3 memory editor, such as NetCheat and Artemis.
 
@@ -85,7 +85,7 @@ This pointer is found via the following:
 # To-do List
 ### High Priority:
 - [ ] Retheme the GUI to Tkinter's TTK widget to remove CustomTkinter dependency and support most Linux devices out-of-the-box
-- [ ] Add a ~~fake~~ real toolbar to the program
+- [ ] Add a toolbar to the program
 
 ### Next:
 - [ ] ~~Add functionality to change colors via hex color entry~~
@@ -94,8 +94,6 @@ This pointer is found via the following:
 - [ ] ~~Complete and~~ polish README file
 - [ ] ~~Create mock-up gameplay previews~~
 - [ ] Add Terminal logs
-
-More to add...
 
 ### Completed:
 - [x] ~~Rework the code into classes and functions for easier functionality with other games and versions (see the class-test branch)~~
