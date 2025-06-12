@@ -3,11 +3,6 @@ A Python GUI program that generates NetCheat List files to modify LittleBigPlane
 
 README Document written by dermi1002
 
-# Heads Up & Remark
-I'm going to be wrapping things up until I either make a new branch or make a new repository and make this one a **Public Archive.** If the former happens, support for the Python branch will be dropped. If the ladder happens, support for the whole repo will be dropped, and a link to the newer repo will be included in this document before it gets archived.
-
-Seeing as it takes extra steps to install CustomTkinter to Linux, I figured I might as well rewrite the whole project in Lua I so can embed it to a C# Plugin for NetCheat (or Nim if I can't. Either way they would significantly reduce resource usage). The least I could do for now is retheme it to get rid of those steps for Linux, at the cost of the GUI looking a little ugly in my opinion.
-
 # WARNING
 THIS PROGRAM IS AN UNFINISHED WORK (IN PROGRESS) AND ONLY WORKS ON LBP2 US LATEST VERSION! DO NOT ATTEMPT ON OTHER GAMES OR VERSIONS!
 
@@ -19,7 +14,9 @@ Please back them up before testing/using this software.
 If you use Windows, you can try a Package in the [Releases Page](https://github.com/dermi1002/lbp_popit-color-generator/releases).
 
 ## Building From Source
-The LittleBigPlanet Popit Color Generator was tested on Windows 10 Python 3.8.0 with CustomTkinter, PyYAML, and Pyperclip. 
+The LittleBigPlanet Popit Color Generator was tested on Windows 10 Python 3.8.0 with CustomTkinter, PyYAML, and Pyperclip.
+
+Although CustomTkinter is only meant to work in Windows or MacOS, a Ttk version will be made to support Linux out-of-the-box.
 
 In order to install these libraries, create a virtual environment, and install them through this command:
 ```
@@ -44,11 +41,11 @@ If done correctly, you'll end up with this:
 
 ### Next:
 - [ ] Add a toolbar to the program
-- [ ] Retheme the GUI to Tkinter's TTK widget to remove CustomTkinter dependency and support most Linux devices out-of-the-box
-- [ ] ~~Add functionality to change colors via hex color entry~~
+- [ ] Retheme the GUI to Tkinter's Ttk widget to remove CustomTkinter dependency and support Linux out-of-the-box
+- [ ] Add functionality to change colors via hex color entry
 
 ### Future Considerations:
-- [ ] ~~Create mock-up gameplay previews~~
+- [ ] Create mock-up gameplay previews
 - [ ] Add Terminal logs
 
 ### Completed:
