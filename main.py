@@ -4,112 +4,104 @@ import pyperclip
 import yaml
 
 
-class ColorTabList(ctk.CTkTabview):
+class RGBSlider(ctk.CTkSlider):
+    def __init__(self, master, slider_y_position, *args, **kwargs):
+        super().__init__(master, slider_y_position, *args, **kwargs)
+
+        slider_max_value: int = 255
+        slider_value_range: int = 256
+                
+        slider_x_position: int = 260
+        slider_y_position: int = slider_y_position
+                        
+        self.configure(
+            from_ = 0, to = slider_max_value, 
+            width = slider_value_range, 
+            number_of_steps = slider_value_range
+            )
+
+        self.set(0)
+        self.place(x = slider_x_position, y = slider_y_position)
+
+
+class RGBLetter(ctk.CTkLabel):
+    def __init__(self, master, rgb_letter_selection, rgb_letter_y_position, *args, **kwargs):
+        super().__init__(master, rgb_letter_selection, rgb_letter_y_position, *args, **kwargs)
+
+        rgb_letter_x_position: int = 225
+        rgb_letter_y_position: int = rgb_letter_y_position
+
+        rgb_letter_text = ['R', 'G', 'B', 'H', 'S', 'V']
+        rgb_letter_selection: int = rgb_letter_text[rgb_letter_selection]
+
+        self.configure(text = rgb_letter_selection)
+
+        self.place(x = rgb_letter_x_position, y = rgb_letter_y_position)
+
+
+# The Meat And Potatoes of the Program
+class ColorTab(ctk.CTkFrame):
     def __init__(self, master, *args, **kwargs):
         super().__init__(master, *args, **kwargs)
 
-        self.place_configure(width = 530, height = 254)
+        def change_color(value):
+            self.Red = int(self.red_slider.get())
+            self.Green = int(self.green_slider.get())
+            self.Blue = int(self.blue_slider.get())
 
-        # The Meat And Potatoes of the Program
-        class ColorTab(ctk.CTkFrame):
-            def __init__(self, master, *args, **kwargs):
-                super().__init__(master, *args, **kwargs)
+            self.color_print_hex = '%02X%02X%02X' % (self.Red, self.Green, self.Blue)
 
-                def change_color(value):
-                    self.Red = int(self.red_slider.get())
-                    self.Green = int(self.green_slider.get())
-                    self.Blue = int(self.blue_slider.get())
+            self.color_preview.configure(background = f'#{self.color_print_hex}')
 
-                    # color slider debugging
-                    # print(f'Current Color: {self.Red}, {self.Green}, {self.Blue}')
+            self.color_hex_entry.delete(0, ctk.END)
+            self.color_hex_entry.insert(0, self.color_print_hex)
 
-                    self.color_print_hex = '%02X%02X%02X' % (self.Red, self.Green, self.Blue)
+        def copy_color_hex_entry():
+            pyperclip.copy(self.color_hex_entry.get())
 
-                    self.color_preview.configure(background = f'#{self.color_print_hex}')
+        color_beginning_value: str = '000000'
 
-                    self.color_hex_entry.delete(0, ctk.END)
-                    self.color_hex_entry.insert(0, self.color_print_hex)
+        self.color_preview = tk.Frame(
+            master, 
+            background = f'#{color_beginning_value}', 
+            width = 200, height = 200
+            )
 
-                def copy_color_hex_entry():
-                    pyperclip.copy(self.color_hex_entry.get())
+        self.color_preview.place(y = 4)
 
-                color_beginning_value: str = '000000'
-
-                self.color_preview = tk.Frame(
-                    master, 
-                    background = f'#{color_beginning_value}', 
-                    width = 200, height = 200
-                    )
-
-                self.color_preview.place(y = 4)
-
-                slider_max_value: int = 255
-                slider_value_range: int = 256
-                slider_x_position: int = 260
-
-
-                class RGBSlider(ctk.CTkSlider):
-                    def __init__(self, master, slider_y_position, *args, **kwargs):
-                        super().__init__(master, slider_y_position, *args, **kwargs)
-
-                        slider_x_position: int = 260
-                        slider_y_position: int = slider_y_position
-                        
-                        self.configure(
-                            from_ = 0, to = slider_max_value, 
-                            width = slider_value_range, 
-                            command = change_color, 
-                            number_of_steps = slider_value_range
-                            )
-
-                        self.set(0)
-                        self.place(x = slider_x_position, y = slider_y_position)
+        
+        self.letter_r = RGBLetter(master, 0, 17)
+        self.red_slider = RGBSlider(master, 16, command = change_color)
                 
+        self.letter_g = RGBLetter(master, 1, 50)
+        self.green_slider = RGBSlider(master, 66, command = change_color)
 
-                rgb_letter_x_position: int = 225
-                
-
-                class RGBLetter(ctk.CTkLabel):
-                    def __init__(self, master, rgb_letter_selection, rgb_letter_y_position, *args, **kwargs):
-                        super().__init__(master, rgb_letter_selection, rgb_letter_y_position, *args, **kwargs)
-
-                        rgb_letter_y_position: int = rgb_letter_y_position
-
-                        rgb_letter_text = ['R', 'G', 'B', 'H', 'S', 'V']
-                        rgb_letter_selection: int = rgb_letter_text[rgb_letter_selection]
-
-                        self.configure(text = rgb_letter_selection)
-
-                        self.place(x = rgb_letter_x_position, y = rgb_letter_y_position)
+        self.letter_b = RGBLetter(master, 2, 82)
+        self.blue_slider = RGBSlider(master, 116, command = change_color)
 
 
-                hex_related_y_position: int = 170
-                
-                # i made the class for the rgb letters just to get the question off my mind
-                self.letter_r = RGBLetter(master, 0, 17)
-                self.red_slider = RGBSlider(master, 16)
-                
-                self.letter_g = RGBLetter(master, 1, 50)
-                self.green_slider = RGBSlider(master, 66)
+        hex_related_x_position: int = 225
+        hex_related_y_position: int = 170
 
-                self.letter_b = RGBLetter(master, 2, 82)
-                self.blue_slider = RGBSlider(master, 116)
+        self.color_hex_label = ctk.CTkLabel(master, text = 'HEX Color:').place(
+            x = hex_related_x_position, y = hex_related_y_position)
+
+        self.color_hex_entry = ctk.CTkEntry(master)
+        self.color_hex_copy_button = ctk.CTkButton(
+            master, 
+            text = 'Copy', 
+            width = 50, 
+            command = copy_color_hex_entry
+            ).place(x = 450, y = hex_related_y_position)
+
+        self.color_hex_entry.place(x = 297, y = hex_related_y_position)
+        self.color_hex_entry.insert(ctk.END, color_beginning_value)
 
 
-                self.color_hex_label = ctk.CTkLabel(master, text = 'HEX Color:').place(
-                    x = rgb_letter_x_position, y = hex_related_y_position)
-
-                self.color_hex_entry = ctk.CTkEntry(master)
-                self.color_hex_copy_button = ctk.CTkButton(
-                    master, 
-                    text = 'Copy', 
-                    width = 50, 
-                    command = copy_color_hex_entry
-                    ).place(x = 450, y = hex_related_y_position)
-
-                self.color_hex_entry.place(x = 297, y = hex_related_y_position)
-                self.color_hex_entry.insert(ctk.END, color_beginning_value)
-
+class ColorTabList(ctk.CTkTabview):
+    def __init__(self, master, *args, **kwargs):
+        super().__init__(master, *args, **kwargs)
+        
         self.add('Primary')
         self.add('Secondary')
         self.add('Tertiary')
@@ -239,6 +231,8 @@ class ColorTabList(ctk.CTkTabview):
         save_yaml_button.grid(row = 2, pady = 10)
         export_ncl_button.grid(row = 3, pady = 10)
 
+
+        self.place_configure(width = 530, height = 254)
         self.place(x = 5)
 
     
