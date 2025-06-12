@@ -34,19 +34,20 @@ If done correctly, you'll end up with this:
 ![First look of the LBP Popit Color Generator GUI](./docs/resources/main_firstlook.png)
 
 # Documents
-[How To Use](./docs/how_to_use.md)
-[How NetCheat Codes Work](./docs/netcheat_pointer_codes.md)
+- [How To Use](./docs/how_to_use.md)
+
+- [How NetCheat Codes Work](./docs/netcheat_pointer_codes.md)
 
 # To-do List
 ### High Priority:
-- [ ] Retheme the GUI to Tkinter's TTK widget to remove CustomTkinter dependency and support most Linux devices out-of-the-box
-- [ ] Add a toolbar to the program
+- [ ] Separate functions to their own script
 
 ### Next:
+- [ ] Add a toolbar to the program
+- [ ] Retheme the GUI to Tkinter's TTK widget to remove CustomTkinter dependency and support most Linux devices out-of-the-box
 - [ ] ~~Add functionality to change colors via hex color entry~~
 
 ### Future Considerations:
-- [ ] ~~Complete and~~ polish README file
 - [ ] ~~Create mock-up gameplay previews~~
 - [ ] Add Terminal logs
 
