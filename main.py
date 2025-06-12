@@ -1,4 +1,3 @@
-import functions
 import tkinter as tk # yeah, i know, but hear me out
 import customtkinter as ctk
 import pyperclip
