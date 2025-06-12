@@ -1,3 +1,5 @@
+import functions
+import tkinter as tk # yeah, i know, but hear me out
 import customtkinter as ctk
 import pyperclip
 import yaml
@@ -13,7 +15,7 @@ class ColorTabList(ctk.CTkTabview):
         class ColorTab(ctk.CTkFrame):
             def __init__(self, master, *args, **kwargs):
                 super().__init__(master, *args, **kwargs)
-                
+
                 def change_color(value):
                     self.Red = int(self.red_slider.get())
                     self.Green = int(self.green_slider.get())
@@ -24,7 +26,7 @@ class ColorTabList(ctk.CTkTabview):
 
                     self.color_print_hex = '%02X%02X%02X' % (self.Red, self.Green, self.Blue)
 
-                    self.color_preview.configure(bg_color = f'#{self.color_print_hex}')
+                    self.color_preview.configure(background = f'#{self.color_print_hex}')
 
                     self.color_hex_entry.delete(0, ctk.END)
                     self.color_hex_entry.insert(0, self.color_print_hex)
@@ -34,10 +36,9 @@ class ColorTabList(ctk.CTkTabview):
 
                 color_beginning_value: str = '000000'
 
-                self.color_preview = ctk.CTkLabel(
+                self.color_preview = tk.Frame(
                     master, 
-                    text = '', 
-                    bg_color = f'#{color_beginning_value}', 
+                    background = f'#{color_beginning_value}', 
                     width = 200, height = 200
                     )
 
@@ -96,9 +97,16 @@ class ColorTabList(ctk.CTkTabview):
                 self.blue_slider = RGBSlider(master, 116)
 
 
-                self.color_hex_label = ctk.CTkLabel(master, text = 'HEX Color:').place(x = rgb_letter_x_position, y = hex_related_y_position)
+                self.color_hex_label = ctk.CTkLabel(master, text = 'HEX Color:').place(
+                    x = rgb_letter_x_position, y = hex_related_y_position)
+
                 self.color_hex_entry = ctk.CTkEntry(master)
-                self.color_hex_copy_button = ctk.CTkButton(master, text = 'Copy', width = 50, command = copy_color_hex_entry).place(x = 450, y = hex_related_y_position)
+                self.color_hex_copy_button = ctk.CTkButton(
+                    master, 
+                    text = 'Copy', 
+                    width = 50, 
+                    command = copy_color_hex_entry
+                    ).place(x = 450, y = hex_related_y_position)
 
                 self.color_hex_entry.place(x = 297, y = hex_related_y_position)
                 self.color_hex_entry.insert(ctk.END, color_beginning_value)
@@ -118,7 +126,7 @@ class ColorTabList(ctk.CTkTabview):
 
         # Export Tab Functions
         def export_yaml():
-            config_export = ctk.filedialog.asksaveasfile(
+            config_export = tk.filedialog.asksaveasfile(
                 title = "Export YAML Config", 
                 initialdir = "./save", 
                 filetypes = (("YAML Configuration", "*.yaml"), ("All Files", "*.*")), 
@@ -151,7 +159,7 @@ class ColorTabList(ctk.CTkTabview):
 
 
         def color_convert():
-            yaml_set = ctk.filedialog.askopenfilename(title = "Import YAML Config", initialdir = "./save")
+            yaml_set = tk.filedialog.askopenfilename(title = "Import YAML Config", initialdir = "./save")
             if yaml_set is None:
                 return
             with open("color_path.yaml", "w") as color_path_file:
@@ -181,7 +189,7 @@ class ColorTabList(ctk.CTkTabview):
 
             netcheat_zeroes: str = "0 00000000 "
 
-            ncl_save = ctk.filedialog.asksaveasfile(
+            ncl_save = tk.filedialog.asksaveasfile(
                 title = "Export NCL Code", 
                 initialdir = "export", 
                 filetypes = [("NetCheat List File", "*.ncl"), ("All Files", "*.*")], 
@@ -250,8 +258,5 @@ class MainProgram(ctk.CTk):
         self.mainloop()
 
 
-def main():
-    MainProgram()
-
 if __name__ == '__main__':
-    main()
+    MainProgram() # it was about time i did this
