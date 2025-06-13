@@ -25,8 +25,8 @@ class RGBSlider(ctk.CTkSlider):
 
 
 class RGBLetter(ctk.CTkLabel):
-    def __init__(self, master, rgb_letter_selection, rgb_letter_y_position, *args, **kwargs):
-        super().__init__(master, rgb_letter_selection, rgb_letter_y_position, *args, **kwargs)
+    def __init__(self, master, rgb_letter_selection, rgb_letter_y_position, *args):
+        super().__init__(master, rgb_letter_selection, rgb_letter_y_position, *args)
 
         rgb_letter_x_position: int = 225
         rgb_letter_y_position: int = rgb_letter_y_position
@@ -39,7 +39,6 @@ class RGBLetter(ctk.CTkLabel):
         self.place(x = rgb_letter_x_position, y = rgb_letter_y_position)
 
 
-# The Meat And Potatoes of the Program
 class ColorTab(ctk.CTkFrame):
     def __init__(self, master, *args, **kwargs):
         super().__init__(master, *args, **kwargs)
@@ -129,7 +128,7 @@ class ColorTabList(ctk.CTkTabview):
 
             color_config = str(
                 'color-code:\n' +
-                f'  caption: \"{code_name.get()}\"\n' +
+                f'  caption: \"{code_caption.get()}\"\n' +
 
                 f'  primcolor: \"{self.primary_colortab.color_hex_entry.get()}\"\n' +
                 f'  primopacity: \"FF\"\n' +
@@ -211,27 +210,27 @@ class ColorTabList(ctk.CTkTabview):
 
         # Export Tab UI
         export_tab = ctk.CTkFrame(self.tab('Export'))
-        export_tab.grid(row = 0, column = 0)
-
         export_text_preview = ctk.CTkLabel(
             export_tab, 
             text = f'If you are finished with your Popit color theme,\ngive it a Code Name and export a cheat file!', 
             width = 525
             )
 
-        export_text_preview.grid(row = 0, pady = 5)
-
-        code_name = ctk.CTkEntry(export_tab, placeholder_text = 'Code Name')
+        code_caption = ctk.CTkEntry(export_tab, placeholder_text = 'Code Name')
 
         save_yaml_button = ctk.CTkButton(export_tab, text = 'Save YAML Config', command = export_yaml)
 
         export_ncl_button = ctk.CTkButton(export_tab, text = "Convert to NCL", command = export_ncl)
 
-        code_name.grid(row = 1, pady = 10)
+        export_text_preview.grid(row = 0, pady = 5)
+        code_caption.grid(row = 1, pady = 10)
         save_yaml_button.grid(row = 2, pady = 10)
         export_ncl_button.grid(row = 3, pady = 10)
 
+        
+        export_tab.grid(row = 0, column = 0)
 
+        
         self.place_configure(width = 530, height = 254)
         self.place(x = 5)
 
