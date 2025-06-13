@@ -83,7 +83,8 @@ class ColorTab(ctk.CTkFrame):
         hex_related_y_position: int = 170
 
         self.color_hex_label = ctk.CTkLabel(master, text = 'HEX Color:').place(
-            x = hex_related_x_position, y = hex_related_y_position)
+            x = hex_related_x_position, y = hex_related_y_position
+            )
 
         self.color_hex_entry = ctk.CTkEntry(master)
         self.color_hex_copy_button = ctk.CTkButton(
@@ -95,6 +96,46 @@ class ColorTab(ctk.CTkFrame):
 
         self.color_hex_entry.place(x = 297, y = hex_related_y_position)
         self.color_hex_entry.insert(ctk.END, color_beginning_value)
+
+
+def export_yaml(
+    caption, 
+    primary_color, 
+    secondary_color, 
+    tertiary_color, 
+    emphasis_color
+    ):
+
+    config_export = tk.filedialog.asksaveasfile(
+        title = "Export YAML Config", 
+        initialdir = "./save", 
+        filetypes = (("YAML Configuration", "*.yaml"), ("All Files", "*.*")), 
+        defaultextension = '.yaml'
+        )
+                
+    if config_export is None:
+        return
+
+    color_config = str(
+        'color-code:\n' +
+        '  caption: \"' + caption + '\"\n' +
+
+        '  primcolor: \"' + primary_color + '\"\n' +
+        '  primopacity: \"FF\"\n' +
+
+        '  seccolor: \"' + secondary_color + '\"\n' +
+        '  secopacity: \"FF\"\n' +
+
+        '  tertcolor: \"' + tertiary_color + '\"\n' +
+        '  tertopacity: \"FF\"\n' +
+
+        '  emphcolor: \"' + emphasis_color + '\"\n' +
+        '  emphopacity: \"FF\"\n' +
+
+        '  save: \"export\\\\\"'
+        )
+    config_export.write(color_config)
+    config_export.close()
 
 
 class ColorTabList(ctk.CTkTabview):
@@ -115,40 +156,7 @@ class ColorTabList(ctk.CTkTabview):
         self.emphasis_colortab = ColorTab(self.tab('Emphasis'))
 
         # Export Tab Functions
-        def export_yaml():
-            config_export = tk.filedialog.asksaveasfile(
-                title = "Export YAML Config", 
-                initialdir = "./save", 
-                filetypes = (("YAML Configuration", "*.yaml"), ("All Files", "*.*")), 
-                defaultextension = '.yaml'
-                )
-                
-            if config_export is None:
-                return
-
-            color_config = str(
-                'color-code:\n' +
-                f'  caption: \"{code_caption.get()}\"\n' +
-
-                f'  primcolor: \"{self.primary_colortab.color_hex_entry.get()}\"\n' +
-                f'  primopacity: \"FF\"\n' +
-
-                f'  seccolor: \"{self.secondary_colortab.color_hex_entry.get()}\"\n'
-                f'  secopacity: \"FF\"\n' +
-
-                f'  tertcolor: \"{self.tertiary_colortab.color_hex_entry.get()}\"\n' +
-                f'  tertopacity: \"FF\"\n' +
-
-                f'  emphcolor: \"{self.emphasis_colortab.color_hex_entry.get()}\"\n' +
-                f'  emphopacity: \"FF\"\n' +
-
-                f'  save: \"export\\\\\"'
-                )
-            config_export.write(color_config)
-            config_export.close()
-
-
-        def color_convert():
+        def import_yaml():
             yaml_set = tk.filedialog.askopenfilename(title = "Import YAML Config", initialdir = "./save")
             if yaml_set is None:
                 return
@@ -157,10 +165,10 @@ class ColorTabList(ctk.CTkTabview):
                 color_path_file.write(
                     'color-path:\n' + 
                     f'  set-yaml: \"{str(yaml_set)}\"' # Path to recently saved Color YAML file
-                )
+                    )
 
-        def export_ncl():
-            color_convert()
+        def convert_yaml_to_ncl():
+            import_yaml()
             
             with open("color_path.yaml", 'r') as path_set:
                 current_yaml = yaml.safe_load(path_set)
@@ -179,14 +187,14 @@ class ColorTabList(ctk.CTkTabview):
 
             netcheat_zeroes: str = "0 00000000 "
 
-            ncl_save = tk.filedialog.asksaveasfile(
+            ncl_save_location = tk.filedialog.asksaveasfile(
                 title = "Export NCL Code", 
                 initialdir = "export", 
                 filetypes = [("NetCheat List File", "*.ncl"), ("All Files", "*.*")], 
                 defaultextension = ".ncl"
                 )
 
-            if ncl_save is None:
+            if ncl_save_location is None:
                 return
 
             color_code = str(
@@ -205,8 +213,8 @@ class ColorTabList(ctk.CTkTabview):
                 f'6 {player_color_pointer} {player_color_pointer_value[3]}\n' + 
                 netcheat_zeroes + yaml_config['emphopacity'] + yaml_config['emphcolor'] + '\n#\n'
                 )
-            ncl_save.write(color_code)
-            ncl_save.close()
+            ncl_save_location.write(color_code)
+            ncl_save_location.close()
 
         # Export Tab UI
         export_tab = ctk.CTkFrame(self.tab('Export'))
@@ -218,9 +226,23 @@ class ColorTabList(ctk.CTkTabview):
 
         code_caption = ctk.CTkEntry(export_tab, placeholder_text = 'Code Name')
 
-        save_yaml_button = ctk.CTkButton(export_tab, text = 'Save YAML Config', command = export_yaml)
+        save_yaml_button = ctk.CTkButton(
+            export_tab, 
+            text = 'Save YAML Config', 
+            command = lambda: export_yaml(
+                code_caption.get(),
+                self.primary_colortab.color_preview.cget('background')[1:],
+                self.secondary_colortab.color_preview.cget('background')[1:],
+                self.tertiary_colortab.color_preview.cget('background')[1:],
+                self.emphasis_colortab.color_preview.cget('background')[1:]
+                )
+            )
 
-        export_ncl_button = ctk.CTkButton(export_tab, text = "Convert to NCL", command = export_ncl)
+        export_ncl_button = ctk.CTkButton(
+            export_tab, 
+            text = "Convert to NCL", 
+            command = convert_yaml_to_ncl
+            )
 
         export_text_preview.grid(row = 0, pady = 5)
         code_caption.grid(row = 1, pady = 10)
