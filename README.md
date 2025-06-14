@@ -37,10 +37,10 @@ If done correctly, you'll end up with this:
 
 # To-do List
 ### High Priority:
-- [ ] Separate functions to their own script
+- [x] Separate functions to their own script
+- [ ] Add a toolbar to the program
 
 ### Next:
-- [ ] Add a toolbar to the program
 - [ ] Retheme the GUI to Tkinter's Ttk widget to remove CustomTkinter dependency and support Linux out-of-the-box
 - [ ] Add functionality to change colors via hex color entry
 
@@ -49,5 +49,5 @@ If done correctly, you'll end up with this:
 - [ ] Add Terminal logs
 
 ### Completed:
-- [x] ~~Rework the code into classes and functions for easier functionality with other games and versions (see the class-test branch)~~
-- [x] ~~Edit code functions, values, etc., for extra readability among project contributors~~
+- [x] Rework the code into classes and functions for easier functionality with other games and versions (see the class-test branch)
+- [x] Edit code functions, values, etc., for extra readability among project contributors

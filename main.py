@@ -1,7 +1,50 @@
+import file_management
 import tkinter as tk # yeah, i know, but hear me out
 import customtkinter as ctk
 import pyperclip
 import yaml
+
+
+class Toolbar(tk.Menu):
+    def __init__(self, master, *args, **kwargs):
+        super().__init__(master, *args, **kwargs)
+
+        # File
+        self.file_option = tk.Menu(self, tearoff = 0)
+
+
+        self.add_cascade(
+            label = 'File',
+            menu = self.file_option
+        )
+
+
+        self.file_option.add_command(
+            label = 'Save YAML', 
+            command = lambda: export_yaml(
+                code_caption.get(),
+                self.primary_colortab.color_preview.cget('background')[1:],
+                self.secondary_colortab.color_preview.cget('background')[1:],
+                self.tertiary_colortab.color_preview.cget('background')[1:],
+                self.emphasis_colortab.color_preview.cget('background')[1:]
+                )
+            )
+
+        self.file_option.add_command(
+            label = 'Save NCL', 
+            command = lambda: export_ncl(
+                code_caption.get(),
+                self.primary_colortab.color_preview.cget('background')[1:],
+                self.secondary_colortab.color_preview.cget('background')[1:],
+                self.tertiary_colortab.color_preview.cget('background')[1:],
+                self.emphasis_colortab.color_preview.cget('background')[1:]
+                )
+            )
+
+        self.file_option.add_command(
+            label = f'can\'t open files for now',
+            command = None
+        )
 
 
 class RGBSlider(ctk.CTkSlider):
@@ -98,50 +141,10 @@ class ColorTab(ctk.CTkFrame):
         self.color_hex_entry.insert(ctk.END, color_beginning_value)
 
 
-def export_yaml(
-    caption, 
-    primary_color, 
-    secondary_color, 
-    tertiary_color, 
-    emphasis_color
-    ):
-
-    config_export = tk.filedialog.asksaveasfile(
-        title = "Export YAML Config", 
-        initialdir = "./save", 
-        filetypes = (("YAML Configuration", "*.yaml"), ("All Files", "*.*")), 
-        defaultextension = '.yaml'
-        )
-                
-    if config_export is None:
-        return
-
-    color_config = str(
-        'color-code:\n' +
-        '  caption: \"' + caption + '\"\n' +
-
-        '  primcolor: \"' + primary_color + '\"\n' +
-        '  primopacity: \"FF\"\n' +
-
-        '  seccolor: \"' + secondary_color + '\"\n' +
-        '  secopacity: \"FF\"\n' +
-
-        '  tertcolor: \"' + tertiary_color + '\"\n' +
-        '  tertopacity: \"FF\"\n' +
-
-        '  emphcolor: \"' + emphasis_color + '\"\n' +
-        '  emphopacity: \"FF\"\n' +
-
-        '  save: \"export\\\\\"'
-        )
-    config_export.write(color_config)
-    config_export.close()
-
-
 class ColorTabList(ctk.CTkTabview):
     def __init__(self, master, *args, **kwargs):
         super().__init__(master, *args, **kwargs)
-        
+
         self.add('Primary')
         self.add('Secondary')
         self.add('Tertiary')
@@ -156,65 +159,22 @@ class ColorTabList(ctk.CTkTabview):
         self.emphasis_colortab = ColorTab(self.tab('Emphasis'))
 
         # Export Tab Functions
-        def import_yaml():
-            yaml_set = tk.filedialog.askopenfilename(title = "Import YAML Config", initialdir = "./save")
-            if yaml_set is None:
-                return
-            with open("color_path.yaml", "w") as color_path_file:
-                color_path_file.truncate(0)
-                color_path_file.write(
-                    'color-path:\n' + 
-                    f'  set-yaml: \"{str(yaml_set)}\"' # Path to recently saved Color YAML file
-                    )
+        # def import_yaml():
+        #     yaml_load_location = tk.filedialog.askopenfilename(
+        #         title = "Import YAML Config", 
+        #         initialdir = "./save"
+        #         )
+        # 
+        #     if yaml_load_location is None:
+        #         return
+        # 
+        #     with open("color_path.yaml", "w") as color_path_file:
+        #         color_path_file.truncate(0)
+        #         color_path_file.write(
+        #             'color-path:\n' + 
+        #             f'  set-yaml: \"{str(yaml_load_location)}\"' # Path to recently saved Color YAML file
+        #             )
 
-        def convert_yaml_to_ncl():
-            import_yaml()
-            
-            with open("color_path.yaml", 'r') as path_set:
-                current_yaml = yaml.safe_load(path_set)
-
-            current_color = current_yaml['color-path']
-
-            with open(current_color['set-yaml'], 'r') as file:
-                config = yaml.safe_load(file)
-
-            yaml_config = config['color-code']
-
-
-            player_color_pointer: str = "00DC5E8C"
-
-            player_color_pointer_value = ["00000000", "00000004", "00000008", "0000000C"]
-
-            netcheat_zeroes: str = "0 00000000 "
-
-            ncl_save_location = tk.filedialog.asksaveasfile(
-                title = "Export NCL Code", 
-                initialdir = "export", 
-                filetypes = [("NetCheat List File", "*.ncl"), ("All Files", "*.*")], 
-                defaultextension = ".ncl"
-                )
-
-            if ncl_save_location is None:
-                return
-
-            color_code = str(
-                yaml_config['caption'] + '\n0\n' + 
-
-                # i couldn't put yaml variables inside formatted strings so
-                f'6 {player_color_pointer} {player_color_pointer_value[0]}\n' + 
-                netcheat_zeroes + yaml_config['primopacity'] + yaml_config['primcolor'] + '\n' + 
-
-                f'6 {player_color_pointer} {player_color_pointer_value[1]}\n' + 
-                netcheat_zeroes + yaml_config['secopacity'] + yaml_config['seccolor']+ '\n' + 
-
-                f'6 {player_color_pointer} {player_color_pointer_value[2]}\n' + 
-                netcheat_zeroes + yaml_config['tertopacity'] + yaml_config['tertcolor'] + '\n' + 
-                
-                f'6 {player_color_pointer} {player_color_pointer_value[3]}\n' + 
-                netcheat_zeroes + yaml_config['emphopacity'] + yaml_config['emphcolor'] + '\n#\n'
-                )
-            ncl_save_location.write(color_code)
-            ncl_save_location.close()
 
         # Export Tab UI
         export_tab = ctk.CTkFrame(self.tab('Export'))
@@ -228,8 +188,8 @@ class ColorTabList(ctk.CTkTabview):
 
         save_yaml_button = ctk.CTkButton(
             export_tab, 
-            text = 'Save YAML Config', 
-            command = lambda: export_yaml(
+            text = 'Save YAML', 
+            command = lambda: file_management.export_yaml(
                 code_caption.get(),
                 self.primary_colortab.color_preview.cget('background')[1:],
                 self.secondary_colortab.color_preview.cget('background')[1:],
@@ -238,16 +198,30 @@ class ColorTabList(ctk.CTkTabview):
                 )
             )
 
-        export_ncl_button = ctk.CTkButton(
+        save_ncl_button = ctk.CTkButton(
             export_tab, 
-            text = "Convert to NCL", 
-            command = convert_yaml_to_ncl
+            text = 'Save NCL', 
+            command = lambda: file_management.export_ncl(
+                code_caption.get(),
+                self.primary_colortab.color_preview.cget('background')[1:],
+                self.secondary_colortab.color_preview.cget('background')[1:],
+                self.tertiary_colortab.color_preview.cget('background')[1:],
+                self.emphasis_colortab.color_preview.cget('background')[1:]
+                )
             )
+
+        # export_ncl_button = ctk.CTkButton(
+            # export_tab, 
+            # text = "import yaml", 
+            # command = lambda: convert_yaml_to_ncl()
+            # )
 
         export_text_preview.grid(row = 0, pady = 5)
         code_caption.grid(row = 1, pady = 10)
         save_yaml_button.grid(row = 2, pady = 10)
-        export_ncl_button.grid(row = 3, pady = 10)
+        save_ncl_button.grid(row = 3, pady = 10)
+
+        # export_ncl_button.grid(row = 3, pady = 10)
 
         
         export_tab.grid(row = 0, column = 0)
@@ -267,6 +241,10 @@ class MainProgram(ctk.CTk):
         self.resizable(False, False)
 
         # Program
+        # self.test_toolbar = Toolbar(self)
+
+        # self.configure(menu = self.test_toolbar)
+
         ColorTabList(self)
 
         self.mainloop()
