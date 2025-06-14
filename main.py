@@ -12,41 +12,14 @@ class Toolbar(tk.Menu):
         # File
         self.file_option = tk.Menu(self, tearoff = 0)
 
+        self.add_cascade(label = 'File', menu = self.file_option)
 
-        self.add_cascade(
-            label = 'File',
-            menu = self.file_option
-        )
+        # Help
+        self.help_option = tk.Menu(self, tearoff = 0)
 
+        self.add_cascade(label = 'Help', menu = self.help_option)
 
-        self.file_option.add_command(
-            label = 'Save YAML', 
-            command = lambda: export_yaml(
-                code_caption.get(),
-                self.primary_colortab.color_preview.cget('background')[1:],
-                self.secondary_colortab.color_preview.cget('background')[1:],
-                self.tertiary_colortab.color_preview.cget('background')[1:],
-                self.emphasis_colortab.color_preview.cget('background')[1:]
-                )
-            )
-
-        self.file_option.add_command(
-            label = 'Save NCL', 
-            command = lambda: export_ncl(
-                code_caption.get(),
-                self.primary_colortab.color_preview.cget('background')[1:],
-                self.secondary_colortab.color_preview.cget('background')[1:],
-                self.tertiary_colortab.color_preview.cget('background')[1:],
-                self.emphasis_colortab.color_preview.cget('background')[1:]
-                )
-            )
-
-        self.file_option.add_command(
-            label = f'can\'t open files for now',
-            command = None
-        )
-
-
+        
 class RGBSlider(ctk.CTkSlider):
     def __init__(self, master, slider_y_position, *args, **kwargs):
         super().__init__(master, slider_y_position, *args, **kwargs)
@@ -56,7 +29,7 @@ class RGBSlider(ctk.CTkSlider):
                 
         slider_x_position: int = 260
         slider_y_position: int = slider_y_position
-                        
+
         self.configure(
             from_ = 0, to = slider_max_value, 
             width = slider_value_range, 
@@ -125,17 +98,22 @@ class ColorTab(ctk.CTkFrame):
         hex_related_x_position: int = 225
         hex_related_y_position: int = 170
 
-        self.color_hex_label = ctk.CTkLabel(master, text = 'HEX Color:').place(
-            x = hex_related_x_position, y = hex_related_y_position
-            )
-
+        self.color_hex_label = ctk.CTkLabel(master, text = 'HEX Color:')
+        
+        
         self.color_hex_entry = ctk.CTkEntry(master)
+        
         self.color_hex_copy_button = ctk.CTkButton(
             master, 
             text = 'Copy', 
             width = 50, 
             command = copy_color_hex_entry
-            ).place(x = 450, y = hex_related_y_position)
+            )
+        
+            
+        self.color_hex_label.place(x = hex_related_x_position, y = hex_related_y_position)
+        
+        self.color_hex_copy_button.place(x = 450, y = hex_related_y_position)
 
         self.color_hex_entry.place(x = 297, y = hex_related_y_position)
         self.color_hex_entry.insert(ctk.END, color_beginning_value)
@@ -144,6 +122,46 @@ class ColorTab(ctk.CTkFrame):
 class ColorTabList(ctk.CTkTabview):
     def __init__(self, master, *args, **kwargs):
         super().__init__(master, *args, **kwargs)
+
+        self.test_toolbar = Toolbar(master)
+
+        master.configure(menu = self.test_toolbar)
+
+        self.test_toolbar.file_option.add_command(
+            label = 'Save YAML', 
+            command = lambda: file_management.export_yaml(
+                code_caption.get(),
+                self.primary_colortab.color_preview.cget('background')[1:],
+                self.secondary_colortab.color_preview.cget('background')[1:],
+                self.tertiary_colortab.color_preview.cget('background')[1:],
+                self.emphasis_colortab.color_preview.cget('background')[1:]
+                )
+            )
+
+        self.test_toolbar.file_option.add_command(
+            label = 'Save NCL', 
+            command = lambda: file_management.export_ncl(
+                code_caption.get(),
+                self.primary_colortab.color_preview.cget('background')[1:],
+                self.secondary_colortab.color_preview.cget('background')[1:],
+                self.tertiary_colortab.color_preview.cget('background')[1:],
+                self.emphasis_colortab.color_preview.cget('background')[1:]
+                )
+            )
+
+        self.test_toolbar.file_option.add_command(
+            state = tk.DISABLED,
+            label = f'can\'t open files for now',
+            command = None
+            )
+
+
+        # Help Commands
+        self.test_toolbar.help_option.add_command(
+            label = 'About',
+            command = None
+            )
+
 
         self.add('Primary')
         self.add('Secondary')
@@ -225,7 +243,7 @@ class ColorTabList(ctk.CTkTabview):
 
         
         export_tab.grid(row = 0, column = 0)
-
+        
         
         self.place_configure(width = 530, height = 254)
         self.place(x = 5)
@@ -241,12 +259,10 @@ class MainProgram(ctk.CTk):
         self.resizable(False, False)
 
         # Program
-        # self.test_toolbar = Toolbar(self)
-
-        # self.configure(menu = self.test_toolbar)
-
         ColorTabList(self)
 
+        self._set_appearance_mode('light')
+        self.configure(fg_color = '#242424')
         self.mainloop()
 
 

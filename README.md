@@ -37,12 +37,12 @@ If done correctly, you'll end up with this:
 
 # To-do List
 ### High Priority:
-- [x] Separate functions to their own script
-- [ ] Add a toolbar to the program
+- [x] Add a toolbar to the program
+- [ ] Add top-level windows for File Export and window closing prompt
 
 ### Next:
+- [ ] Add functionality to change colors via hex color entry and YAML importing
 - [ ] Retheme the GUI to Tkinter's Ttk widget to remove CustomTkinter dependency and support Linux out-of-the-box
-- [ ] Add functionality to change colors via hex color entry
 
 ### Future Considerations:
 - [ ] Create mock-up gameplay previews
@@ -51,3 +51,4 @@ If done correctly, you'll end up with this:
 ### Completed:
 - [x] Rework the code into classes and functions for easier functionality with other games and versions (see the class-test branch)
 - [x] Edit code functions, values, etc., for extra readability among project contributors
+- [x] Separate functions to their own script
