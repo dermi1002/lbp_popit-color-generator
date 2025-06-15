@@ -168,6 +168,7 @@ class ColorTabList(ctk.CTkTabview):
         self.add('Tertiary')
         self.add('Emphasis')
         self.add('Export')
+        self.add('Test')
 
         self.set('Primary')
  
@@ -243,6 +244,24 @@ class ColorTabList(ctk.CTkTabview):
 
         
         export_tab.grid(row = 0, column = 0)
+
+
+        # new_export_ui = ctk.CTkFrame(self.tab('Test'), width = 200, height = 150)
+
+
+        # code caption
+        # caption entry
+
+        # game title
+        # option menu
+
+        # file type
+
+        # export??
+
+
+        # new_export_ui.configure(bg_color = 'red')
+        # new_export_ui.place(x = 150, y = 20)
         
         
         self.place_configure(width = 530, height = 254)
@@ -261,8 +280,6 @@ class MainProgram(ctk.CTk):
         # Program
         ColorTabList(self)
 
-        self._set_appearance_mode('light')
-        self.configure(fg_color = '#242424')
         self.mainloop()
 
 

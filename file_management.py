@@ -10,9 +10,9 @@ def export_yaml(
     ):
 
     yaml_save_location = tk.filedialog.asksaveasfile(
-        title = "Export YAML Config", 
+        title = "Export YAML Dictionary", 
         initialdir = "./save", 
-        filetypes = (("YAML Configuration", "*.yaml"), ("All Files", "*.*")), 
+        filetypes = (("YAML Dictionary File", "*.yaml"), ("All Files", "*.*")), 
         defaultextension = '.yaml'
         )
                 
@@ -56,7 +56,7 @@ def export_ncl(
     netcheat_zeroes: str = "0 00000000"
 
     ncl_save_location = tk.filedialog.asksaveasfile(
-        title = "Export NCL Code", 
+        title = "Export NetCheat List", 
         initialdir = "export", 
         filetypes = [("NetCheat List File", "*.ncl"), ("All Files", "*.*")], 
         defaultextension = ".ncl"
