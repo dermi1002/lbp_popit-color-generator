@@ -246,22 +246,35 @@ class ColorTabList(ctk.CTkTabview):
         export_tab.grid(row = 0, column = 0)
 
 
-        # new_export_ui = ctk.CTkFrame(self.tab('Test'), width = 200, height = 150)
+        new_export_ui = ctk.CTkFrame(self.tab('Test'), width = 250, height = 150)
 
 
-        # code caption
-        # caption entry
-
-        # game title
-        # option menu
-
-        # file type
-
-        # export??
+        def disable_export_ncl_button():
+            ...
 
 
-        # new_export_ui.configure(bg_color = 'red')
-        # new_export_ui.place(x = 150, y = 20)
+        code_caption_label = ctk.CTkLabel(new_export_ui, text = 'Caption for NCL')
+        code_caption_entry = ctk.CTkEntry(new_export_ui)
+
+        game_title = ctk.CTkLabel(new_export_ui, text = 'Game Title')
+        game_title_option = ctk.CTkOptionMenu(new_export_ui)
+
+        new_export_yaml_button = ctk.CTkButton(new_export_ui, text = 'Export YAML')
+        new_export_ncl_button = ctk.CTkButton(new_export_ui, text = 'Export NCL')
+        
+
+        code_caption_label.pack(anchor = 'center')
+        code_caption_entry.pack(anchor = 'center')
+
+        game_title.pack(anchor = 'center')
+        game_title_option.pack(anchor = 'center')
+
+        new_export_yaml_button.pack(anchor = 'center')
+        new_export_ncl_button.pack(anchor = 'center')
+
+
+        new_export_ui.configure(fg_color = 'red')
+        new_export_ui.place(x = 125, y = 20)
         
         
         self.place_configure(width = 530, height = 254)
