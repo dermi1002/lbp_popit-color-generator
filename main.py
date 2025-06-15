@@ -168,6 +168,7 @@ class ColorTabList(ctk.CTkTabview):
         self.add('Tertiary')
         self.add('Emphasis')
         self.add('Export')
+        self.add('Test')
 
         self.set('Primary')
  
@@ -243,6 +244,37 @@ class ColorTabList(ctk.CTkTabview):
 
         
         export_tab.grid(row = 0, column = 0)
+
+
+        new_export_ui = ctk.CTkFrame(self.tab('Test'), width = 250, height = 150)
+
+
+        def disable_export_ncl_button():
+            ...
+
+
+        code_caption_label = ctk.CTkLabel(new_export_ui, text = 'Caption for NCL')
+        code_caption_entry = ctk.CTkEntry(new_export_ui)
+
+        game_title = ctk.CTkLabel(new_export_ui, text = 'Game Title')
+        game_title_option = ctk.CTkOptionMenu(new_export_ui)
+
+        new_export_yaml_button = ctk.CTkButton(new_export_ui, text = 'Export YAML')
+        new_export_ncl_button = ctk.CTkButton(new_export_ui, text = 'Export NCL')
+        
+
+        code_caption_label.pack(anchor = 'center')
+        code_caption_entry.pack(anchor = 'center')
+
+        game_title.pack(anchor = 'center')
+        game_title_option.pack(anchor = 'center')
+
+        new_export_yaml_button.pack(anchor = 'center')
+        new_export_ncl_button.pack(anchor = 'center')
+
+
+        new_export_ui.configure(fg_color = 'red')
+        new_export_ui.place(x = 125, y = 20)
         
         
         self.place_configure(width = 530, height = 254)
@@ -261,8 +293,6 @@ class MainProgram(ctk.CTk):
         # Program
         ColorTabList(self)
 
-        self._set_appearance_mode('light')
-        self.configure(fg_color = '#242424')
         self.mainloop()
 
 
