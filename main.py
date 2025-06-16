@@ -123,14 +123,21 @@ class ExportWindow(ctk.CTkToplevel):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         
+        export_toplevel_width: int = 350
+        export_toplevel_height: int = 225
+        
         self.title('Export Code')
-        self.geometry('350x225')
+        self.geometry(f'{export_toplevel_width}x{export_toplevel_height}')
         self.resizable(False, False)
 
 
-        def disable_export_ncl_button():
-            ...
-
+        def disable_export_ncl_button(value):
+            # use 'or' to apply this conditional to multiple supported versions
+            if game_title_option.get() != 'LBP2': 
+                new_export_ncl_button.configure(state = 'disabled')
+            else:
+                new_export_ncl_button.configure(state = 'normal')
+        
 
         code_caption_label = ctk.CTkLabel(self, text = 'Caption for NCL:')
         code_caption_entry = ctk.CTkEntry(self, width = 190)
@@ -138,21 +145,96 @@ class ExportWindow(ctk.CTkToplevel):
         
 
         game_title = ctk.CTkLabel(self, text = 'Game Title:')
-        game_title_option = ctk.CTkOptionMenu(self)
 
-        new_export_yaml_button = ctk.CTkButton(self, text = 'Export YAML')
-        new_export_ncl_button = ctk.CTkButton(self, text = 'Export NCL')
+        game_title_default_option = ctk.StringVar(value = 'LBP2')
+        game_title_option = ctk.CTkOptionMenu(self)
+        game_title_option.configure(
+            values = [
+                    'LBP1',
+                    'LBP2',
+                    'LBP3'
+                ],
+            variable = game_title_default_option,
+            command = disable_export_ncl_button
+            )
+
+        game_title_note = ctk.CTkLabel(self, text = 'LBP1 doesn\'t use the Emphasis Color.')
+
+        new_export_yaml_button = ctk.CTkButton(
+            self, 
+            text = 'Export YAML',
+            command = None
+            )
+
+        new_export_ncl_button = ctk.CTkButton(
+            self, 
+            text = 'Export NCL',
+            command = None
+            )
+
+
+        # Edit these values to change the Widgets' Position
+        export_row_1: int = 17
+        export_row_2: int = 70
+
+        export_text_x_position: int = 22
+        export_option_x_offset: int = 20
+        export_note_y_position: int = 30
+
+        export_code_buttons_x_offset: int = 90
+        export_code_buttons_y_position: int = 45
         
 
-        code_caption_label.place(anchor = 'nw', x = 25, y = 25)
-        code_caption_entry.place(anchor = 'ne', x = 330, y = 25)
-        code_caption_note.place(anchor = 'n', x = 233, y = 55)
+        # Do NOT look at the mess overloaded with Variables
+        code_caption_label.place(
+            anchor = 'nw', 
+            x = export_text_x_position, 
+            y = export_row_1
+            )
 
-        game_title.place(anchor = 'nw', x = 25, y = 95)
-        game_title_option.place(anchor = 'ne', x = 330, y = 95)
+        code_caption_entry.place(
+            anchor = 'ne', 
+            x = (export_toplevel_width - export_option_x_offset), 
+            y = export_row_1
+            )
 
-        new_export_yaml_button.place(anchor = 'center')
-        new_export_ncl_button.place(anchor = 'center')
+        code_caption_note.place(
+            anchor = 'n', 
+            x = 233, 
+            y = (export_row_1 + export_note_y_position)
+            )
+
+
+        game_title.place(
+            anchor = 'nw', 
+            x = export_text_x_position, 
+            y = (export_row_1 + export_row_2)
+            )
+
+        game_title_option.place(
+            anchor = 'ne', 
+            x = (export_toplevel_width - export_option_x_offset), 
+            y = (export_row_1 + export_row_2)
+            )
+        
+        game_title_note.place(
+            anchor = 'n', 
+            x = 233, 
+            y = (export_row_1 + export_row_2 + export_note_y_position)
+            )
+
+
+        new_export_yaml_button.place(
+            anchor = 'n', 
+            x = export_code_buttons_x_offset, 
+            y = (export_toplevel_height - export_code_buttons_y_position)
+            )
+        
+        new_export_ncl_button.place(
+            anchor = 'n', 
+            x = (export_toplevel_width - export_code_buttons_x_offset), 
+            y = (export_toplevel_height - export_code_buttons_y_position)
+            )
 
 
 class ColorTabList(ctk.CTkTabview):
