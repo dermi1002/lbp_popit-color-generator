@@ -119,6 +119,42 @@ class ColorTab(ctk.CTkFrame):
         self.color_hex_entry.insert(ctk.END, color_beginning_value)
 
 
+class ExportWindow(ctk.CTkToplevel):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        self.title('Export Code')
+        self.geometry('350x225')
+        self.resizable(False, False)
+
+
+        def disable_export_ncl_button():
+            ...
+
+
+        code_caption_label = ctk.CTkLabel(self, text = 'Caption for NCL:')
+        code_caption_entry = ctk.CTkEntry(self, width = 190)
+        code_caption_note = ctk.CTkLabel(self, text = 'It\'s optional, but it helps.')
+        
+
+        game_title = ctk.CTkLabel(self, text = 'Game Title:')
+        game_title_option = ctk.CTkOptionMenu(self)
+
+        new_export_yaml_button = ctk.CTkButton(self, text = 'Export YAML')
+        new_export_ncl_button = ctk.CTkButton(self, text = 'Export NCL')
+        
+
+        code_caption_label.place(anchor = 'nw', x = 25, y = 25)
+        code_caption_entry.place(anchor = 'ne', x = 330, y = 25)
+        code_caption_note.place(anchor = 'n', x = 233, y = 55)
+
+        game_title.place(anchor = 'nw', x = 25, y = 95)
+        game_title_option.place(anchor = 'ne', x = 330, y = 95)
+
+        new_export_yaml_button.place(anchor = 'center')
+        new_export_ncl_button.place(anchor = 'center')
+
+
 class ColorTabList(ctk.CTkTabview):
     def __init__(self, master, *args, **kwargs):
         super().__init__(master, *args, **kwargs)
@@ -249,28 +285,13 @@ class ColorTabList(ctk.CTkTabview):
         new_export_ui = ctk.CTkFrame(self.tab('Test'), width = 250, height = 150)
 
 
-        def disable_export_ncl_button():
-            ...
+        def show_export_toplevel():
+            test_export_window = ExportWindow(self)
 
 
-        code_caption_label = ctk.CTkLabel(new_export_ui, text = 'Caption for NCL')
-        code_caption_entry = ctk.CTkEntry(new_export_ui)
-
-        game_title = ctk.CTkLabel(new_export_ui, text = 'Game Title')
-        game_title_option = ctk.CTkOptionMenu(new_export_ui)
-
-        new_export_yaml_button = ctk.CTkButton(new_export_ui, text = 'Export YAML')
-        new_export_ncl_button = ctk.CTkButton(new_export_ui, text = 'Export NCL')
+        show_export_toplevel_button = ctk.CTkButton(new_export_ui, text = 'Show Toplevel', command = show_export_toplevel)
         
-
-        code_caption_label.pack(anchor = 'center')
-        code_caption_entry.pack(anchor = 'center')
-
-        game_title.pack(anchor = 'center')
-        game_title_option.pack(anchor = 'center')
-
-        new_export_yaml_button.pack(anchor = 'center')
-        new_export_ncl_button.pack(anchor = 'center')
+        show_export_toplevel_button.place(anchor = 'center', x = 125, y = 75)
 
 
         new_export_ui.configure(fg_color = 'red')
