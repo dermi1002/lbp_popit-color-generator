@@ -123,7 +123,7 @@ class ExportWindow(ctk.CTkToplevel):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         
-        export_toplevel_width: int = 350
+        export_toplevel_width: int = 375
         export_toplevel_height: int = 225
         
         self.title('Export Code')
@@ -133,26 +133,29 @@ class ExportWindow(ctk.CTkToplevel):
 
         def disable_export_ncl_button(value):
             # use 'or' to apply this conditional to multiple supported versions
-            if game_title_option.get() != 'LBP2': 
+            if game_title_option.get() != 'LBP2 US (BCUS98245)': 
                 new_export_ncl_button.configure(state = 'disabled')
             else:
                 new_export_ncl_button.configure(state = 'normal')
-        
 
-        code_caption_label = ctk.CTkLabel(self, text = 'Caption for NCL:')
-        code_caption_entry = ctk.CTkEntry(self, width = 190)
+
+        export_option_width: int = 190
+        
+        code_caption_label = ctk.CTkLabel(self, text = 'NetCheat Code Name:')
+        code_caption_entry = ctk.CTkEntry(self, width = export_option_width)
         code_caption_note = ctk.CTkLabel(self, text = 'It\'s optional, but it helps.')
         
 
         game_title = ctk.CTkLabel(self, text = 'Game Title:')
 
-        game_title_default_option = ctk.StringVar(value = 'LBP2')
+        game_title_default_option = ctk.StringVar(value = 'LBP2 US (BCUS98245)')
         game_title_option = ctk.CTkOptionMenu(self)
         game_title_option.configure(
+            width = export_option_width,
             values = [
-                    'LBP1',
-                    'LBP2',
-                    'LBP3'
+                    'LBP1 US (BCUS98148)',
+                    'LBP2 US (BCUS98245)',
+                    'LBP3 US'
                 ],
             variable = game_title_default_option,
             command = disable_export_ncl_button
@@ -185,7 +188,7 @@ class ExportWindow(ctk.CTkToplevel):
         export_code_buttons_y_position: int = 45
         
 
-        # Do NOT look at the mess overloaded with Variables
+        # Do NOT look at this mess full of Variables
         code_caption_label.place(
             anchor = 'nw', 
             x = export_text_x_position, 
@@ -199,8 +202,8 @@ class ExportWindow(ctk.CTkToplevel):
             )
 
         code_caption_note.place(
-            anchor = 'n', 
-            x = 233, 
+            anchor = 'ne', 
+            x = (export_toplevel_width - export_option_x_offset), 
             y = (export_row_1 + export_note_y_position)
             )
 
@@ -218,8 +221,8 @@ class ExportWindow(ctk.CTkToplevel):
             )
         
         game_title_note.place(
-            anchor = 'n', 
-            x = 233, 
+            anchor = 'ne', 
+            x = (export_toplevel_width - export_option_x_offset), 
             y = (export_row_1 + export_row_2 + export_note_y_position)
             )
 
