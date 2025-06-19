@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 
 
 def export_yaml(
@@ -57,7 +58,7 @@ def export_ncl(
 
     ncl_save_location = tk.filedialog.asksaveasfile(
         title = "Export NetCheat List", 
-        initialdir = "export", 
+        initialdir = "./save", 
         filetypes = [("NetCheat List File", "*.ncl"), ("All Files", "*.*")], 
         defaultextension = ".ncl"
         )
@@ -82,3 +83,23 @@ def export_ncl(
         )
     ncl_save_location.write(ncl_content)
     ncl_save_location.close()
+
+
+def closing_prompt(master):
+    if messagebox.askyesno('Close the Program?', 'Are you sure you want to close the program?'):
+        master.destroy()
+
+
+class Toolbar(tk.Menu):
+    def __init__(self, master, *args, **kwargs):
+        super().__init__(master, *args, **kwargs)
+
+        # File
+        self.file_option = tk.Menu(self, tearoff = 0)
+
+        self.add_cascade(label = 'File', menu = self.file_option)
+
+        # Help
+        self.help_option = tk.Menu(self, tearoff = 0)
+
+        self.add_cascade(label = 'Help', menu = self.help_option)

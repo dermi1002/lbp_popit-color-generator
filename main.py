@@ -1,25 +1,11 @@
-import file_management
+import external_objects
 import tkinter as tk # yeah, i know, but hear me out
+from tkinter import messagebox
 import customtkinter as ctk
 import pyperclip
 import yaml
 
 
-class Toolbar(tk.Menu):
-    def __init__(self, master, *args, **kwargs):
-        super().__init__(master, *args, **kwargs)
-
-        # File
-        self.file_option = tk.Menu(self, tearoff = 0)
-
-        self.add_cascade(label = 'File', menu = self.file_option)
-
-        # Help
-        self.help_option = tk.Menu(self, tearoff = 0)
-
-        self.add_cascade(label = 'Help', menu = self.help_option)
-
-        
 class RGBSlider(ctk.CTkSlider):
     def __init__(self, master, slider_y_position, *args, **kwargs):
         super().__init__(master, slider_y_position, *args, **kwargs)
@@ -255,73 +241,17 @@ class ExportWindow(ctk.CTkToplevel):
             )
 
 
-class ClosePrompt(ctk.CTk):
-    def __init__(self):
-        super().__init__()
-
-        close_prompt_width: int = 350
-        close_prompt_height: int = 150
-
-        self.title('Close the Program?')
-        self.geometry(f'{close_prompt_width}x{close_prompt_height}')
-        self.resizable(False, False)
-
-        close_button_width: int = 100
-
-        close_prompt_text = ctk.CTkLabel(
-            self,
-            text = 'Are you sure you want to close the program?'
-            )
-
-        close_yes_button = ctk.CTkButton(
-            self,
-            text = 'Yes',
-            width = close_button_width,
-            command = self.destroy
-            )
-
-        close_no_button = ctk.CTkButton(
-            self,
-            text = 'No',
-            width = close_button_width,
-            )
-
-
-        close_button_x_offset: int = 50
-        close_button_y_offset: int = 20
-
-        close_prompt_text.place(
-            anchor = 'n',
-            x = int(close_prompt_width / 2),
-            y = int(close_prompt_height / 4)        
-        )
-
-        close_yes_button.place(
-            anchor = 'sw',
-            x = close_button_x_offset,
-            y = (close_prompt_height - close_button_y_offset)
-        )
-
-        close_no_button.place(
-            anchor = 'se',
-            x = (close_prompt_width - close_button_x_offset),
-            y = (close_prompt_height - close_button_y_offset)
-        )
-
-        # self.mainloop()
-
-
 class ColorTabList(ctk.CTkTabview):
     def __init__(self, master, *args, **kwargs):
         super().__init__(master, *args, **kwargs)
 
-        self.test_toolbar = Toolbar(master)
+        self.test_toolbar = external_objects.Toolbar(master)
 
         master.configure(menu = self.test_toolbar)
 
         self.test_toolbar.file_option.add_command(
             label = 'Save YAML', 
-            command = lambda: file_management.export_yaml(
+            command = lambda: external_objects.export_yaml(
                 code_caption.get(),
                 self.primary_colortab.color_preview.cget('background')[1:],
                 self.secondary_colortab.color_preview.cget('background')[1:],
@@ -332,7 +262,7 @@ class ColorTabList(ctk.CTkTabview):
 
         self.test_toolbar.file_option.add_command(
             label = 'Save NCL', 
-            command = lambda: file_management.export_ncl(
+            command = lambda: external_objects.export_ncl(
                 code_caption.get(),
                 self.primary_colortab.color_preview.cget('background')[1:],
                 self.secondary_colortab.color_preview.cget('background')[1:],
@@ -400,7 +330,7 @@ class ColorTabList(ctk.CTkTabview):
         save_yaml_button = ctk.CTkButton(
             export_tab, 
             text = 'Save YAML', 
-            command = lambda: file_management.export_yaml(
+            command = lambda: external_objects.export_yaml(
                 code_caption.get(),
                 self.primary_colortab.color_preview.cget('background')[1:],
                 self.secondary_colortab.color_preview.cget('background')[1:],
@@ -412,7 +342,7 @@ class ColorTabList(ctk.CTkTabview):
         save_ncl_button = ctk.CTkButton(
             export_tab, 
             text = 'Save NCL', 
-            command = lambda: file_management.export_ncl(
+            command = lambda: external_objects.export_ncl(
                 code_caption.get(),
                 self.primary_colortab.color_preview.cget('background')[1:],
                 self.secondary_colortab.color_preview.cget('background')[1:],
@@ -470,6 +400,7 @@ class MainProgram(ctk.CTk):
         # Program
         ColorTabList(self)
 
+        self.protocol('WM_DELETE_WINDOW', lambda: external_objects.closing_prompt(self))
         self.mainloop()
 
 
