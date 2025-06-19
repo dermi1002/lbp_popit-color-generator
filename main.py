@@ -163,28 +163,37 @@ class ExportWindow(ctk.CTkToplevel):
 
         game_title_note = ctk.CTkLabel(self, text = 'LBP1 doesn\'t use the Emphasis Color.')
 
-        new_export_yaml_button = ctk.CTkButton(
+        new_export_ncl_button = ctk.CTkButton(
             self, 
-            text = 'Export YAML',
+            text = 'Save NCL',
+            width = 85,
             command = None
             )
 
-        new_export_ncl_button = ctk.CTkButton(
+        new_save_text_button = ctk.CTkButton(
             self, 
-            text = 'Export NCL',
+            text = 'Save Text List',
+            width = 105,
+            command = None
+            )
+
+        new_export_yaml_button = ctk.CTkButton(
+            self, 
+            text = 'Save YAML (Old)',
+            width = 125,
             command = None
             )
 
 
         # Edit these values to change the Widgets' Position
         export_row_1: int = 17
-        export_row_2: int = 70
+        export_next_row: int = 70
 
         export_text_x_position: int = 22
         export_option_x_offset: int = 20
         export_note_y_position: int = 30
 
-        export_code_buttons_x_offset: int = 90
+        export_code_buttons_x_offset: int = 20
         export_code_buttons_y_position: int = 45
         
 
@@ -211,33 +220,95 @@ class ExportWindow(ctk.CTkToplevel):
         game_title.place(
             anchor = 'nw', 
             x = export_text_x_position, 
-            y = (export_row_1 + export_row_2)
+            y = (export_row_1 + export_next_row)
             )
 
         game_title_option.place(
             anchor = 'ne', 
             x = (export_toplevel_width - export_option_x_offset), 
-            y = (export_row_1 + export_row_2)
+            y = (export_row_1 + export_next_row)
             )
         
         game_title_note.place(
             anchor = 'ne', 
             x = (export_toplevel_width - export_option_x_offset), 
-            y = (export_row_1 + export_row_2 + export_note_y_position)
+            y = (export_row_1 + export_next_row + export_note_y_position)
             )
 
-
-        new_export_yaml_button.place(
-            anchor = 'n', 
-            x = export_code_buttons_x_offset, 
-            y = (export_toplevel_height - export_code_buttons_y_position)
-            )
         
         new_export_ncl_button.place(
-            anchor = 'n', 
-            x = (export_toplevel_width - export_code_buttons_x_offset), 
+            anchor = 'nw', 
+            x =  export_code_buttons_x_offset, 
             y = (export_toplevel_height - export_code_buttons_y_position)
             )
+
+        new_save_text_button.place(
+            anchor = 'n', 
+            x = 167, 
+            y = (export_toplevel_height - export_code_buttons_y_position)
+            )
+
+        new_export_yaml_button.place(
+            anchor = 'ne', 
+            x = (export_toplevel_width - export_code_buttons_x_offset),
+            y = (export_toplevel_height - export_code_buttons_y_position)
+            )
+
+
+class ClosePrompt(ctk.CTk):
+    def __init__(self):
+        super().__init__()
+
+        close_prompt_width: int = 350
+        close_prompt_height: int = 150
+
+        self.title('Close the Program?')
+        self.geometry(f'{close_prompt_width}x{close_prompt_height}')
+        self.resizable(False, False)
+
+        close_button_width: int = 100
+
+        close_prompt_text = ctk.CTkLabel(
+            self,
+            text = 'Are you sure you want to close the program?'
+            )
+
+        close_yes_button = ctk.CTkButton(
+            self,
+            text = 'Yes',
+            width = close_button_width,
+            command = self.destroy
+            )
+
+        close_no_button = ctk.CTkButton(
+            self,
+            text = 'No',
+            width = close_button_width,
+            )
+
+
+        close_button_x_offset: int = 50
+        close_button_y_offset: int = 20
+
+        close_prompt_text.place(
+            anchor = 'n',
+            x = int(close_prompt_width / 2),
+            y = int(close_prompt_height / 4)        
+        )
+
+        close_yes_button.place(
+            anchor = 'sw',
+            x = close_button_x_offset,
+            y = (close_prompt_height - close_button_y_offset)
+        )
+
+        close_no_button.place(
+            anchor = 'se',
+            x = (close_prompt_width - close_button_x_offset),
+            y = (close_prompt_height - close_button_y_offset)
+        )
+
+        # self.mainloop()
 
 
 class ColorTabList(ctk.CTkTabview):
