@@ -85,6 +85,36 @@ def export_ncl(
     ncl_save_location.close()
 
 
+def export_text_list(
+    game, 
+    primary_color, 
+    secondary_color, 
+    tertiary_color, 
+    emphasis_color
+    ):
+
+    shortened_game = game[:4]
+
+    if game == 'LBP1 (BCUS98148 | 1.30)':
+        test_output = str(
+            f'Game: {shortened_game}\n' +
+            f'Primary: {primary_color}FF\n' +
+            f'Secondary: {secondary_color}FF\n' +
+            f'Tertiary: {tertiary_color}FF\n'
+        )
+    else:
+        test_output = str(
+            f'Game: {shortened_game}\n' +
+            f'Primary: FF{primary_color}\n' +
+            f'Secondary: FF{secondary_color}\n' +
+            f'Tertiary: FF{tertiary_color}\n' +
+            f'Emphasis: FF{emphasis_color}\n'
+        )
+
+    print(test_output)
+
+
+
 def closing_prompt(master):
     if messagebox.askyesno('Close the Program?', 'Are you sure you want to close the program?'):
         master.destroy()

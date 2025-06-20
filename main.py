@@ -106,8 +106,13 @@ class ColorTab(ctk.CTkFrame):
 
 
 class ExportWindow(ctk.CTkToplevel):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, primary_color, secondary_color, tertiary_color, emphasis_color, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+        self.primary_color = primary_color
+        self.secondary_color = secondary_color
+        self.tertiary_color = tertiary_color
+        self.emphyasis_color = emphasis_color
         
         export_toplevel_width: int = 375
         export_toplevel_height: int = 225
@@ -119,7 +124,7 @@ class ExportWindow(ctk.CTkToplevel):
 
         def disable_export_ncl_button(value):
             # use 'or' to apply this conditional to multiple supported versions
-            if game_title_option.get() != 'LBP2 US (BCUS98245)': 
+            if game_title_option.get() != 'LBP2 (BCUS98245 | 1.33)': 
                 new_export_ncl_button.configure(state = 'disabled')
             else:
                 new_export_ncl_button.configure(state = 'normal')
@@ -134,15 +139,11 @@ class ExportWindow(ctk.CTkToplevel):
 
         game_title = ctk.CTkLabel(self, text = 'Game Title:')
 
-        game_title_default_option = ctk.StringVar(value = 'LBP2 US (BCUS98245)')
+        game_title_default_option = ctk.StringVar(value = 'LBP2 (BCUS98245 | 1.33)')
         game_title_option = ctk.CTkOptionMenu(self)
         game_title_option.configure(
             width = export_option_width,
-            values = [
-                    'LBP1 US (BCUS98148)',
-                    'LBP2 US (BCUS98245)',
-                    'LBP3 US'
-                ],
+            values = ['LBP1 (BCUS98148 | 1.30)', 'LBP2 (BCUS98245 | 1.33)', 'LBP3 (BCUS98362 | 1.26)'],
             variable = game_title_default_option,
             command = disable_export_ncl_button
             )
@@ -160,7 +161,13 @@ class ExportWindow(ctk.CTkToplevel):
             self, 
             text = 'Save Text List',
             width = 105,
-            command = None
+            command = lambda: external_objects.export_text_list(
+                game_title_option.get(),
+                self.primary_color,
+                self.secondary_color,
+                self.tertiary_color,
+                self.emphyasis_color
+                )
             )
 
         new_export_yaml_button = ctk.CTkButton(
@@ -241,7 +248,7 @@ class ExportWindow(ctk.CTkToplevel):
             )
 
 class ExportWindowII(ctk.CTkToplevel):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, primary_color, secondary_color, tertiary_color, emphasis_color, *args, **kwargs):
         super().__init__(*args, **kwargs)
         
         export_toplevel_width: int = 385
@@ -419,7 +426,7 @@ class ExportWindowII(ctk.CTkToplevel):
         new_export_button.place(anchor = 'se', x = export_object_right, y = export_code_buttons_bottom)
 
 class ExportWindowIII(ctk.CTkToplevel):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, primary_color, secondary_color, tertiary_color, emphasis_color, *args, **kwargs):
         super().__init__(*args, **kwargs)
         
         export_toplevel_width: int = 385
@@ -691,13 +698,28 @@ class ColorTabList(ctk.CTkTabview):
 
 
         def show_export_window():
-            test_export_window = ExportWindow(self)
+            test_export_window = ExportWindow(
+                self.primary_colortab.color_preview.cget('background')[1:],
+                self.secondary_colortab.color_preview.cget('background')[1:],
+                self.tertiary_colortab.color_preview.cget('background')[1:],
+                self.emphasis_colortab.color_preview.cget('background')[1:]
+                )
 
         def show_export_window_ii():
-            test_export_window_ii = ExportWindowII(self)
+            test_export_window_ii = ExportWindowII(
+                self.primary_colortab.color_preview.cget('background')[1:],
+                self.secondary_colortab.color_preview.cget('background')[1:],
+                self.tertiary_colortab.color_preview.cget('background')[1:],
+                self.emphasis_colortab.color_preview.cget('background')[1:]
+                )
 
         def show_export_window_iii():
-            test_export_window_iii = ExportWindowIII(self)
+            test_export_window_iii = ExportWindowIII(
+                self.primary_colortab.color_preview.cget('background')[1:],
+                self.secondary_colortab.color_preview.cget('background')[1:],
+                self.tertiary_colortab.color_preview.cget('background')[1:],
+                self.emphasis_colortab.color_preview.cget('background')[1:]
+                )
 
 
         show_export_window_button = ctk.CTkButton(
