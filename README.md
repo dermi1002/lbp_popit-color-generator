@@ -37,11 +37,11 @@ If done correctly, you'll end up with this:
 
 # To-do List
 ### High Priority:
-- [x] Add a toolbar to the program
 - [ ] Add top-level windows for File Export and window closing prompt
+- [ ] Add a new Plain Text value list to deprecate .YAML support
 
 ### Next:
-- [ ] Add functionality to change colors via hex color entry and YAML importing
+- [ ] Add functionality to change colors via hex color entry and .TXT/.YAML importing
 - [ ] Retheme the GUI to Tkinter's Ttk widget to remove CustomTkinter dependency and support Linux out-of-the-box
 
 ### Future Considerations:
@@ -52,3 +52,4 @@ If done correctly, you'll end up with this:
 - [x] Rework the code into classes and functions for easier functionality with other games and versions (see the class-test branch)
 - [x] Edit code functions, values, etc., for extra readability among project contributors
 - [x] Separate functions to their own script
+- [x] Add a toolbar to the program

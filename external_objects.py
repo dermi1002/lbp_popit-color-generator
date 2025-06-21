@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 
 
 def export_yaml(
@@ -10,9 +11,9 @@ def export_yaml(
     ):
 
     yaml_save_location = tk.filedialog.asksaveasfile(
-        title = "Export YAML Config", 
+        title = "Export YAML Dictionary", 
         initialdir = "./save", 
-        filetypes = (("YAML Configuration", "*.yaml"), ("All Files", "*.*")), 
+        filetypes = (("YAML Dictionary File", "*.yaml"), ("All Files", "*.*")), 
         defaultextension = '.yaml'
         )
                 
@@ -35,7 +36,7 @@ def export_yaml(
         '  emphcolor: \"' + emphasis_color + '\"\n' +
         '  emphopacity: \"FF\"\n' +
 
-        '  save: \"export\\\\\"'
+        '  save: \"save\\\\\"'
         )
     yaml_save_location.write(yaml_content)
     yaml_save_location.close()
@@ -56,8 +57,8 @@ def export_ncl(
     netcheat_zeroes: str = "0 00000000"
 
     ncl_save_location = tk.filedialog.asksaveasfile(
-        title = "Export NCL Code", 
-        initialdir = "export", 
+        title = "Export NetCheat List", 
+        initialdir = "./save", 
         filetypes = [("NetCheat List File", "*.ncl"), ("All Files", "*.*")], 
         defaultextension = ".ncl"
         )
@@ -82,3 +83,66 @@ def export_ncl(
         )
     ncl_save_location.write(ncl_content)
     ncl_save_location.close()
+
+
+def export_text_list(
+    game, 
+    primary_color, 
+    secondary_color, 
+    tertiary_color, 
+    emphasis_color
+    ):
+
+    shortened_game = game[:4]
+
+    if game == 'LBP1 (BCUS98148 | 1.30)':
+        test_output = str(
+            f'Game: {shortened_game}\n' +
+            f'Primary: {primary_color}FF\n' +
+            f'Secondary: {secondary_color}FF\n' +
+            f'Tertiary: {tertiary_color}FF\n'
+        )
+    else:
+        test_output = str(
+            f'Game: {shortened_game}\n' +
+            f'Primary: FF{primary_color}\n' +
+            f'Secondary: FF{secondary_color}\n' +
+            f'Tertiary: FF{tertiary_color}\n' +
+            f'Emphasis: FF{emphasis_color}\n'
+        )
+
+    print(test_output)
+
+
+
+def closing_prompt(master):
+    if messagebox.askyesno('Close the Program?', 'Are you sure you want to close the program?'):
+        master.destroy()
+
+
+class Toolbar(tk.Menu):
+    def __init__(self, master, *args, **kwargs):
+        super().__init__(master, *args, **kwargs)
+
+        # File
+        self.file_option = tk.Menu(self, tearoff = 0)
+
+        self.add_cascade(label = 'File', menu = self.file_option)
+
+        # Help
+        self.help_option = tk.Menu(self, tearoff = 0)
+
+        self.add_cascade(label = 'Help', menu = self.help_option)
+
+        self.help_option.add_command(
+            label = 'About',
+            command = None
+            )
+
+
+if __name__ == '__main__':
+    print(
+        'This is an external module loaded by the LBP Popit Color Generator\'s Main Program, main.py.\n' +
+        'It is not meant to be loaded as a standalone script.\n' +
+        'If you want to use its functions, use the Main Program (for the time being).'
+        ) # just because
