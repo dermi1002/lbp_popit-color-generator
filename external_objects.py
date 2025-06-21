@@ -36,7 +36,7 @@ def export_yaml(
         '  emphcolor: \"' + emphasis_color + '\"\n' +
         '  emphopacity: \"FF\"\n' +
 
-        '  save: \"export\\\\\"'
+        '  save: \"save\\\\\"'
         )
     yaml_save_location.write(yaml_content)
     yaml_save_location.close()
@@ -133,3 +133,16 @@ class Toolbar(tk.Menu):
         self.help_option = tk.Menu(self, tearoff = 0)
 
         self.add_cascade(label = 'Help', menu = self.help_option)
+
+        self.help_option.add_command(
+            label = 'About',
+            command = None
+            )
+
+
+if __name__ == '__main__':
+    print(
+        'This is an external module loaded by the LBP Popit Color Generator\'s Main Program, main.py.\n' +
+        'It is not meant to be loaded as a standalone script.\n' +
+        'If you want to use its functions, use the Main Program (for the time being).'
+        ) # just because

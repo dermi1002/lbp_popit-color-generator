@@ -159,7 +159,7 @@ class ExportWindow(ctk.CTkToplevel):
 
         new_save_text_button = ctk.CTkButton(
             self, 
-            text = 'Save Text List',
+            text = 'Save Value List',
             width = 105,
             command = lambda: external_objects.export_text_list(
                 game_title_option.get(),
@@ -262,15 +262,15 @@ class ExportWindowII(ctk.CTkToplevel):
         def disable_filetype_ncl(value):
             if game_title_option.get() != 'LBP2 (BCUS98245 | 1.33)': 
                 export_filetype_option.configure(
-                    values = ['Text List (.TXT)', 'YAML Dictionary (Old)']
+                    values = ['Value List (.TXT)', 'YAML Dictionary (Old)']
                     )
             else:
                 export_filetype_option.configure(
-                    values = ['NetCheat List (.NCL)', 'Text List (.TXT)', 'YAML Dictionary (Old)']
+                    values = ['NetCheat List (.NCL)', 'Value List (.TXT)', 'YAML Dictionary (Old)']
                     )
 
             if export_filetype_option.get() == 'NetCheat List (.NCL)' and game_title_option.get() != 'LBP2 (BCUS98245 | 1.33)':
-                export_filetype_option.set('Text List (.TXT)')
+                export_filetype_option.set('Value List (.TXT)')
 
 
         export_option_width: int = 190
@@ -322,13 +322,13 @@ class ExportWindowII(ctk.CTkToplevel):
 
         export_filetype = ctk.CTkLabel(self, text = 'File Type:')
 
-        export_filetype_default_option = ctk.StringVar(value = 'Text List (.TXT)')
+        export_filetype_default_option = ctk.StringVar(value = 'Value List (.TXT)')
         export_filetype_option = ctk.CTkOptionMenu(self)
         export_filetype_option.configure(
             width = export_option_width,
             values = [
                     'NetCheat List (.NCL)',
-                    'Text List (.TXT)',
+                    'Value List (.TXT)',
                     'YAML Dictionary (Old)'
                 ],
             variable = export_filetype_default_option,
@@ -439,14 +439,14 @@ class ExportWindowIII(ctk.CTkToplevel):
 
         def disable_filetype_ncl(value):
             if game_title_option.get() != 'LBP2 (BCUS98245 | 1.33)': 
-                export_filetype_option.configure(values = ['Text List (.TXT)', 'YAML Dictionary (Old)'])
+                export_filetype_option.configure(values = ['Value List (.TXT)', 'YAML Dictionary (Old)'])
             else:
                 export_filetype_option.configure(
-                    values = ['NetCheat List (.NCL)', 'Text List (.TXT)', 'YAML Dictionary (Old)']
+                    values = ['NetCheat List (.NCL)', 'Value List (.TXT)', 'YAML Dictionary (Old)']
                     )
 
             if export_filetype_option.get() == 'NetCheat List (.NCL)' and game_title_option.get() != 'LBP2 (BCUS98245 | 1.33)':
-                export_filetype_option.set('Text List (.TXT)')
+                export_filetype_option.set('Value List (.TXT)')
 
         test_grid = ctk.CTkFrame(self, fg_color = 'transparent')
 
@@ -491,13 +491,13 @@ class ExportWindowIII(ctk.CTkToplevel):
 
         export_filetype = ctk.CTkLabel(test_grid, text = 'File Type:')
 
-        export_filetype_default_option = ctk.StringVar(value = 'Text List (.TXT)')
+        export_filetype_default_option = ctk.StringVar(value = 'Value List (.TXT)')
         export_filetype_option = ctk.CTkOptionMenu(test_grid)
         export_filetype_option.configure(
             width = export_option_width,
             values = [
                     'NetCheat List (.NCL)',
-                    'Text List (.TXT)',
+                    'Value List (.TXT)',
                     'YAML Dictionary (Old)'
                 ],
             variable = export_filetype_default_option,
@@ -604,13 +604,6 @@ class ColorTabList(ctk.CTkTabview):
             )
 
 
-        # Help Commands
-        self.test_toolbar.help_option.add_command(
-            label = 'About',
-            command = None
-            )
-
-
         self.add('Primary')
         self.add('Secondary')
         self.add('Tertiary')
@@ -697,29 +690,45 @@ class ColorTabList(ctk.CTkTabview):
         new_export_ui = ctk.CTkFrame(self.tab('Test'), width = 250, height = 150)
 
 
+        self.test_export_window = None
+        self.test_export_window_ii = None
+        self.test_export_window_iii = None
+
         def show_export_window():
-            test_export_window = ExportWindow(
-                self.primary_colortab.color_preview.cget('background')[1:],
-                self.secondary_colortab.color_preview.cget('background')[1:],
-                self.tertiary_colortab.color_preview.cget('background')[1:],
-                self.emphasis_colortab.color_preview.cget('background')[1:]
-                )
+            if self.test_export_window is None or not self.test_export_window.winfo_exists():
+                self.test_export_window = ExportWindow(
+                    self.primary_colortab.color_preview.cget('background')[1:],
+                    self.secondary_colortab.color_preview.cget('background')[1:],
+                    self.tertiary_colortab.color_preview.cget('background')[1:],
+                    self.emphasis_colortab.color_preview.cget('background')[1:]
+                    )
+                self.test_export_window.focus()
+            else:
+                self.test_export_window.focus()
 
         def show_export_window_ii():
-            test_export_window_ii = ExportWindowII(
-                self.primary_colortab.color_preview.cget('background')[1:],
-                self.secondary_colortab.color_preview.cget('background')[1:],
-                self.tertiary_colortab.color_preview.cget('background')[1:],
-                self.emphasis_colortab.color_preview.cget('background')[1:]
-                )
+            if self.test_export_window_ii is None or not self.test_export_window_ii.winfo_exists():
+                self.test_export_window_ii = ExportWindowII(
+                    self.primary_colortab.color_preview.cget('background')[1:],
+                    self.secondary_colortab.color_preview.cget('background')[1:],
+                    self.tertiary_colortab.color_preview.cget('background')[1:],
+                    self.emphasis_colortab.color_preview.cget('background')[1:]
+                    )
+                self.test_export_window_ii.focus()
+            else:
+                self.test_export_window_ii.focus()
 
         def show_export_window_iii():
-            test_export_window_iii = ExportWindowIII(
-                self.primary_colortab.color_preview.cget('background')[1:],
-                self.secondary_colortab.color_preview.cget('background')[1:],
-                self.tertiary_colortab.color_preview.cget('background')[1:],
-                self.emphasis_colortab.color_preview.cget('background')[1:]
-                )
+            if self.test_export_window_iii is None or not self.test_export_window_iii.winfo_exists():
+                self.test_export_window_iii = ExportWindowIII(
+                    self.primary_colortab.color_preview.cget('background')[1:],
+                    self.secondary_colortab.color_preview.cget('background')[1:],
+                    self.tertiary_colortab.color_preview.cget('background')[1:],
+                    self.emphasis_colortab.color_preview.cget('background')[1:]
+                    )
+                self.test_export_window_iii.focus()
+            else:
+                self.test_export_window_iii.focus()
 
 
         show_export_window_button = ctk.CTkButton(
