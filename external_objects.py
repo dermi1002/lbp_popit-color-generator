@@ -114,7 +114,26 @@ def export_text_list(
     print(test_output)
 
 
+def read_text_list():
+    valuelist_load = tk.filedialog.askopenfilename(
+        title = 'Test - Load Value List',
+        initialdir = './save',
+        filetypes = [('Value List', '*.txt'), ('All Files', '*.*')],
+        defaultextension = '.txt'
+        )
 
+    if valuelist_load is None:
+        return
+
+    with open(valuelist_load) as valuelist_content:
+        if valuelist_content.read()[6:10] == 'LBP1':
+            print(
+                'The Game selected in this file is LittleBigPlanet 1.\n' +
+                'Therefore, the program will read the first six hexadecimals of a Value as the Color,\n' +
+                'and potentially the last two as its Transparency.\n\n' +
+                f'Primary Color = {valuelist_content.read()}'
+                )
+    
 def closing_prompt(master):
     if messagebox.askyesno('Close the Program?', 'Are you sure you want to close the program?'):
         master.destroy()

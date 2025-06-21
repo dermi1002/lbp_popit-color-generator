@@ -571,39 +571,6 @@ class ColorTabList(ctk.CTkTabview):
     def __init__(self, master, *args, **kwargs):
         super().__init__(master, *args, **kwargs)
 
-        self.test_toolbar = external_objects.Toolbar(master)
-
-        master.configure(menu = self.test_toolbar)
-
-        self.test_toolbar.file_option.add_command(
-            label = 'Save YAML', 
-            command = lambda: external_objects.export_yaml(
-                code_caption.get(),
-                self.primary_colortab.color_preview.cget('background')[1:],
-                self.secondary_colortab.color_preview.cget('background')[1:],
-                self.tertiary_colortab.color_preview.cget('background')[1:],
-                self.emphasis_colortab.color_preview.cget('background')[1:]
-                )
-            )
-
-        self.test_toolbar.file_option.add_command(
-            label = 'Save NCL', 
-            command = lambda: external_objects.export_ncl(
-                code_caption.get(),
-                self.primary_colortab.color_preview.cget('background')[1:],
-                self.secondary_colortab.color_preview.cget('background')[1:],
-                self.tertiary_colortab.color_preview.cget('background')[1:],
-                self.emphasis_colortab.color_preview.cget('background')[1:]
-                )
-            )
-
-        self.test_toolbar.file_option.add_command(
-            state = tk.DISABLED,
-            label = f'can\'t open files for now',
-            command = None
-            )
-
-
         self.add('Primary')
         self.add('Secondary')
         self.add('Tertiary')
@@ -761,6 +728,43 @@ class ColorTabList(ctk.CTkTabview):
         new_export_ui.place(x = 125, y = 20)
         
         
+        self.test_toolbar = external_objects.Toolbar(master)
+
+        master.configure(menu = self.test_toolbar)
+
+        self.test_toolbar.file_option.add_command(
+            label = 'Save YAML', 
+            command = lambda: external_objects.export_yaml(
+                code_caption.get(),
+                self.primary_colortab.color_preview.cget('background')[1:],
+                self.secondary_colortab.color_preview.cget('background')[1:],
+                self.tertiary_colortab.color_preview.cget('background')[1:],
+                self.emphasis_colortab.color_preview.cget('background')[1:]
+                )
+            )
+
+        self.test_toolbar.file_option.add_command(
+            label = 'Save NCL', 
+            command = lambda: external_objects.export_ncl(
+                code_caption.get(),
+                self.primary_colortab.color_preview.cget('background')[1:],
+                self.secondary_colortab.color_preview.cget('background')[1:],
+                self.tertiary_colortab.color_preview.cget('background')[1:],
+                self.emphasis_colortab.color_preview.cget('background')[1:]
+                )
+            )
+
+        self.test_toolbar.file_option.add_command(
+            state = tk.DISABLED,
+            label = f'can\'t open files for now',
+            command = None
+            )
+
+        self.test_toolbar.file_option.add_command(
+            label = '[Test] Open Value List',
+            command = lambda: external_objects.read_text_list()
+        )
+
         self.place_configure(width = 530, height = 254)
         self.place(x = 5)
 
