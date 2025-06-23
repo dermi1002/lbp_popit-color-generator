@@ -114,6 +114,21 @@ def export_text_list(
     print(test_output)
 
 
+# codename won't be listed in value list
+# ncl and yaml won't use game
+def export_any_format(
+    file_type,
+    game,
+    caption,  
+    primary_color, 
+    secondary_color, 
+    tertiary_color, 
+    emphasis_color
+    ):
+
+   print(f'TEST:\n{file_type}\n{game}\n{caption}\n{primary_color}\n{secondary_color}\n{tertiary_color}\n{emphasis_color}') 
+
+
 def read_text_list():
     valuelist_load = tk.filedialog.askopenfilename(
         title = 'Test - Load Value List',

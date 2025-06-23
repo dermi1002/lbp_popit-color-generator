@@ -428,7 +428,12 @@ class ExportWindowII(ctk.CTkToplevel):
 class ExportWindowIII(ctk.CTkToplevel):
     def __init__(self, primary_color, secondary_color, tertiary_color, emphasis_color, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        
+
+        self.primary_color = primary_color
+        self.secondary_color = secondary_color
+        self.tertiary_color = tertiary_color
+        self.emphasis_color = emphasis_color
+
         export_toplevel_width: int = 385
         export_toplevel_height: int = 355
         
@@ -517,7 +522,15 @@ class ExportWindowIII(ctk.CTkToplevel):
             self, 
             text = 'Save File',
             width = 125,
-            command = None
+            command = lambda: external_objects.export_any_format(
+                export_filetype_option.get(), 
+                game_title_option.get(),
+                code_caption_entry.get(),
+                self.primary_color,
+                self.secondary_color,
+                self.tertiary_color,
+                self.emphasis_color,
+                )
             )
 
 

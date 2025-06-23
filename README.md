@@ -37,8 +37,8 @@ If done correctly, you'll end up with this:
 
 # To-do List
 ### High Priority:
-- [ ] Add top-level windows for File Export and window closing prompt
-- [ ] Add a new Plain Text value list to deprecate .YAML support
+- [x] Add top-level windows for File Export and window closing prompt
+- [ ] Add a new plain text Value list to deprecate .YAML support
 
 ### Next:
 - [ ] Add functionality to change colors via hex color entry and .TXT/.YAML importing
