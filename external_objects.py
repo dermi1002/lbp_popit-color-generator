@@ -118,6 +118,7 @@ def export_text_list(
 # ncl and yaml won't use game
 def export_any_format(
     file_type,
+    folder_location,
     game,
     caption,  
     primary_color, 
@@ -126,7 +127,7 @@ def export_any_format(
     emphasis_color
     ):
 
-   print(f'TEST:\n{file_type}\n{game}\n{caption}\n{primary_color}\n{secondary_color}\n{tertiary_color}\n{emphasis_color}') 
+   print(f'TEST:\n{file_type}\n{folder_location}\n{game}\n{caption}\n{primary_color}\n{secondary_color}\n{tertiary_color}\n{emphasis_color}') 
 
 
 def read_text_list():
