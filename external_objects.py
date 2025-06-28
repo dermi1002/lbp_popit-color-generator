@@ -126,9 +126,14 @@ def export_any_format(
     tertiary_color, 
     emphasis_color
     ):
-
-   print(f'TEST:\n{file_type}\n{folder_location}\n{game}\n{caption}\n{primary_color}\n{secondary_color}\n{tertiary_color}\n{emphasis_color}') 
-
+    
+    if folder_location == "" or caption == "":
+        incomplete_info_error = tk.messagebox.showerror(
+            title = "Inconplete Code Information",
+            message = "The text fields for Code Name or File Path are empty.\nFill in both to export the file."
+            )
+    else:
+        print(f'TEST:\n{file_type}\n{folder_location}\n{game}\n{caption}\n{primary_color}\n{secondary_color}\n{tertiary_color}\n{emphasis_color}')
 
 def read_text_list():
     valuelist_load = tk.filedialog.askopenfilename(
