@@ -2,7 +2,37 @@ import tkinter as tk
 from tkinter import messagebox
 
 
-def export_yaml(
+def get_yaml_content(
+        caption, 
+        primary_color, 
+        secondary_color, 
+        tertiary_color, 
+        emphasis_color
+    ):
+    
+    yaml_content = str(
+        'color-code:\n' +
+        f'  caption: \"{caption}\"\n' +
+
+        f'  primcolor: \"{primary_color}\"\n' +
+        '  primopacity: \"FF\"\n' +
+
+        f'  seccolor: \"{secondary_color}\"\n' +
+        '  secopacity: \"FF\"\n' +
+
+        f'  tertcolor: \"{tertiary_color}\"\n' +
+        '  tertopacity: \"FF\"\n' +
+
+        f'  emphcolor: \"{emphasis_color}\"\n' +
+        '  emphopacity: \"FF\"\n' +
+
+        '  save: \"save\\\\\"'
+        )
+    
+    return yaml_content
+
+
+def new_export_yaml(
     caption, 
     primary_color, 
     secondary_color, 
@@ -16,33 +46,23 @@ def export_yaml(
         filetypes = (("YAML Dictionary File", "*.yaml"), ("All Files", "*.*")), 
         defaultextension = '.yaml'
         )
-                
+
     if yaml_save_location is None:
         return
 
-    yaml_content = str(
-        'color-code:\n' +
-        '  caption: \"' + caption + '\"\n' +
+    test_output = get_yaml_content(
+        caption, 
+        primary_color, 
+        secondary_color, 
+        tertiary_color, 
+        emphasis_color
+    )
 
-        '  primcolor: \"' + primary_color + '\"\n' +
-        '  primopacity: \"FF\"\n' +
-
-        '  seccolor: \"' + secondary_color + '\"\n' +
-        '  secopacity: \"FF\"\n' +
-
-        '  tertcolor: \"' + tertiary_color + '\"\n' +
-        '  tertopacity: \"FF\"\n' +
-
-        '  emphcolor: \"' + emphasis_color + '\"\n' +
-        '  emphopacity: \"FF\"\n' +
-
-        '  save: \"save\\\\\"'
-        )
-    yaml_save_location.write(yaml_content)
+    yaml_save_location.write(test_output)
     yaml_save_location.close()
 
 
-def export_ncl(
+def get_ncl_content(
     caption, 
     primary_color, 
     secondary_color, 
@@ -55,16 +75,6 @@ def export_ncl(
     player_color_pointer_value = ["00000000", "00000004", "00000008", "0000000C"]
 
     netcheat_zeroes: str = "0 00000000"
-
-    ncl_save_location = tk.filedialog.asksaveasfile(
-        title = "Export NetCheat List", 
-        initialdir = "./save", 
-        filetypes = [("NetCheat List File", "*.ncl"), ("All Files", "*.*")], 
-        defaultextension = ".ncl"
-        )
-                
-    if ncl_save_location is None:
-        return
 
     ncl_content = str(
         f'{caption}\n0\n' + 
@@ -81,11 +91,40 @@ def export_ncl(
         f'6 {player_color_pointer} {player_color_pointer_value[3]}\n' + 
         f'{netcheat_zeroes} FF{emphasis_color}\n#\n'
         )
-    ncl_save_location.write(ncl_content)
+    
+    return ncl_content
+
+def new_export_ncl(
+    caption, 
+    primary_color, 
+    secondary_color, 
+    tertiary_color, 
+    emphasis_color
+    ):
+
+    ncl_save_location = tk.filedialog.asksaveasfile(
+        title = "Export NetCheat List", 
+        initialdir = "./save", 
+        filetypes = [("NetCheat List File", "*.ncl"), ("All Files", "*.*")], 
+        defaultextension = ".ncl"
+        )
+                
+    if ncl_save_location is None:
+        return
+
+    test_output = get_ncl_content(
+        caption, 
+        primary_color, 
+        secondary_color, 
+        tertiary_color, 
+        emphasis_color
+        )
+
+    ncl_save_location.write(test_output)
     ncl_save_location.close()
 
 
-def export_text_list(
+def make_value_list(
     game, 
     primary_color, 
     secondary_color, 
@@ -111,7 +150,33 @@ def export_text_list(
             f'Emphasis: FF{emphasis_color}\n'
         )
 
-    print(test_output)
+    return test_output
+
+def export_value_list(
+    game, 
+    primary_color, 
+    secondary_color, 
+    tertiary_color, 
+    emphasis_color
+    ):
+
+    value_list_save_location = tk.filedialog.asksaveasfile(
+        title = "Export Value List", 
+        initialdir = "./save", 
+        filetypes = (("Plain Text", "*.txt"), ("All Files", "*.*")), 
+        defaultextension = '.txt'
+        )
+
+    value_list_content: str = make_value_list(
+        game, 
+        primary_color, 
+        secondary_color, 
+        tertiary_color, 
+        emphasis_color
+        )
+
+    value_list_save_location.write(value_list_content)
+    value_list_save_location.close()
 
 
 # codename won't be listed in value list

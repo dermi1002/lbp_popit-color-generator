@@ -154,14 +154,20 @@ class ExportWindow(ctk.CTkToplevel):
             self, 
             text = 'Save NCL',
             width = 85,
-            command = None
+            command = lambda: external_objects.new_export_ncl(
+                code_caption_entry.get(),
+                self.primary_color,
+                self.secondary_color,
+                self.tertiary_color,
+                self.emphyasis_color
+                )
             )
 
         new_save_text_button = ctk.CTkButton(
             self, 
             text = 'Save Value List',
             width = 105,
-            command = lambda: external_objects.export_text_list(
+            command = lambda: external_objects.export_value_list(
                 game_title_option.get(),
                 self.primary_color,
                 self.secondary_color,
@@ -174,7 +180,13 @@ class ExportWindow(ctk.CTkToplevel):
             self, 
             text = 'Save YAML (Old)',
             width = 125,
-            command = None
+            command = lambda: external_objects.new_export_yaml(
+                code_caption_entry.get(),
+                self.primary_color,
+                self.secondary_color,
+                self.tertiary_color,
+                self.emphyasis_color
+                )
             )
 
 
@@ -467,7 +479,7 @@ class ColorTabList(ctk.CTkTabview):
         save_yaml_button = ctk.CTkButton(
             export_tab, 
             text = 'Save YAML', 
-            command = lambda: external_objects.export_yaml(
+            command = lambda: external_objects.new_export_yaml(
                 code_caption.get(),
                 self.primary_colortab.color_preview.cget('background')[1:],
                 self.secondary_colortab.color_preview.cget('background')[1:],
@@ -479,7 +491,7 @@ class ColorTabList(ctk.CTkTabview):
         save_ncl_button = ctk.CTkButton(
             export_tab, 
             text = 'Save NCL', 
-            command = lambda: external_objects.export_ncl(
+            command = lambda: external_objects.new_export_ncl(
                 code_caption.get(),
                 self.primary_colortab.color_preview.cget('background')[1:],
                 self.secondary_colortab.color_preview.cget('background')[1:],
@@ -564,7 +576,7 @@ class ColorTabList(ctk.CTkTabview):
 
         self.test_toolbar.file_option.add_command(
             label = 'Save YAML', 
-            command = lambda: external_objects.export_yaml(
+            command = lambda: external_objects.new_export_yaml(
                 code_caption.get(),
                 self.primary_colortab.color_preview.cget('background')[1:],
                 self.secondary_colortab.color_preview.cget('background')[1:],
@@ -575,7 +587,7 @@ class ColorTabList(ctk.CTkTabview):
 
         self.test_toolbar.file_option.add_command(
             label = 'Save NCL', 
-            command = lambda: external_objects.export_ncl(
+            command = lambda: external_objects.new_export_ncl(
                 code_caption.get(),
                 self.primary_colortab.color_preview.cget('background')[1:],
                 self.secondary_colortab.color_preview.cget('background')[1:],
