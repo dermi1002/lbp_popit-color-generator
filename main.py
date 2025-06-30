@@ -574,6 +574,7 @@ class ColorTabList(ctk.CTkTabview):
 
         master.configure(menu = self.test_toolbar)
 
+        # i would've put this in the external objects module, but for some reason that'd only output the first value when you startup the program
         self.test_toolbar.file_option.add_command(
             label = 'Save YAML', 
             command = lambda: external_objects.new_export_yaml(

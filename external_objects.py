@@ -192,6 +192,27 @@ def export_any_format(
     emphasis_color
     ):
     
+    # game check
+    if game == 'LBP1 (BCUS98148 | 1.30)':
+        output = get_ncl_content()
+        return output
+    else:
+        ...
+        return output
+
+    # file types
+    if file_type == "NetCheat List (.NCL)":
+        ...
+        return output
+
+    if file_type == "Value List (.TXT)":
+        ...
+        return output
+    
+    if file_type == "YAML Dictionary (Old)":
+        ...
+        return output
+        
     if folder_location == "" or caption == "":
         incomplete_info_error = tk.messagebox.showerror(
             title = "Inconplete Code Information",
@@ -211,7 +232,9 @@ def read_text_list():
     if valuelist_load is None:
         return
 
-    with open(valuelist_load) as valuelist_content:
+    value_list_path = str(valuelist_load)
+
+    with open(value_list_path) as valuelist_content:
         if valuelist_content.read()[6:10] == 'LBP1':
             print(
                 'The Game selected in this file is LittleBigPlanet 1.\n' +
