@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
+from pathlib import Path
 
 
 def get_yaml_content(
@@ -30,7 +31,6 @@ def get_yaml_content(
         )
     
     return yaml_content
-
 
 def new_export_yaml(
     caption, 
@@ -179,47 +179,154 @@ def export_value_list(
     value_list_save_location.close()
 
 
-# codename won't be listed in value list
-# ncl and yaml won't use game
+def prefix_game_info(game):
+    if game == 'LBP1 (BCUS98148 | 1.30)':
+        output: str = ".LBP1 BCUS98148 1.30"
+        
+        return output
+
+    if game == "LBP2 (BCUS98245 | 1.33)":
+        output: str = ".LBP2 BCUS98245 1.33"
+
+        return output
+
+    if game == "LBP3 (BCUS98362 | 1.26)":
+        output: str = ".LBP3 BCUS98362 1.26"
+
+        return output
+
+
 def export_any_format(
     file_type,
     folder_location,
     game,
     caption,  
+    checkbox_value,
     primary_color, 
     secondary_color, 
     tertiary_color, 
     emphasis_color
     ):
     
-    # game check
-    if game == 'LBP1 (BCUS98148 | 1.30)':
-        output = get_ncl_content()
-        return output
-    else:
-        ...
-        return output
-
     # file types
-    if file_type == "NetCheat List (.NCL)":
-        ...
-        return output
+    def any_format_content(
+        file_type,
+        folder_location,
+        game,
+        caption,  
+        primary_color, 
+        secondary_color, 
+        tertiary_color, 
+        emphasis_color
+        ):
 
-    if file_type == "Value List (.TXT)":
-        ...
-        return output
+        if file_type == "NetCheat List (.NCL)":
+            output = get_ncl_content( 
+                caption,  
+                primary_color, 
+                secondary_color, 
+                tertiary_color, 
+                emphasis_color
+                )
+
+            return output
+
+        if file_type == "Value List (.TXT)":
+            output = make_value_list(
+                game,
+                primary_color, 
+                secondary_color, 
+                tertiary_color, 
+                emphasis_color
+                )
+
+            return output
     
-    if file_type == "YAML Dictionary (Old)":
-        ...
-        return output
+        if file_type == "YAML Dictionary (Old)":
+            output = get_yaml_content(
+                caption,  
+                primary_color, 
+                secondary_color, 
+                tertiary_color, 
+                emphasis_color
+                )
+
+            return output
+
+    def find_file_extension(file_type):
+        if file_type == "NetCheat List (.NCL)":
+            file_extension = ".ncl"
+
+            return file_extension
         
+        if file_type == "Value List (.TXT)":
+            file_extension = ".txt"
+
+            return file_extension
+        
+        if file_type == "YAML Dictionary (Old)":
+            file_extension = ".yaml"
+            
+            return file_extension
+
+    def determine_codename(game, caption, checkbox_value):
+        if checkbox_value == 1:
+            code_filename = f"{prefix_game_info(game)} Custom Popit Color - {caption}"
+
+            print(code_filename)
+
+            return code_filename
+        else:
+            code_filename = caption
+            
+            print(code_filename)
+
+            return code_filename
+
+    determined_export_filename = determine_codename(game, caption, checkbox_value)
+
+    file_extension_output: str = find_file_extension(file_type)
+
+    full_file_path = f"{folder_location}/{determined_export_filename}{file_extension_output}"
+        
+    any_format_output = any_format_content(
+        file_type,
+        folder_location,
+        game,
+        caption,  
+        primary_color, 
+        secondary_color, 
+        tertiary_color, 
+        emphasis_color
+        )
+
+    def check_existing_file():
+        current_export = Path(full_file_path)
+        if current_export.is_file():
+            if tk.messagebox.askyesno(
+                title = "Replace Exising Code?", 
+                message = 
+                    "A Code with the same name and format has been found.\nWould you like to replace it?"
+                ):
+                
+                final_code_export()
+        else:
+            final_code_export()
+
+    def final_code_export():
+        with open(full_file_path, "w") as final_exported_code:
+            final_exported_code.write(any_format_output)
+
+        tk.messagebox.showinfo(title = "Export Success", message = "Popit Color Code successfully exported!")
+
+
     if folder_location == "" or caption == "":
         incomplete_info_error = tk.messagebox.showerror(
             title = "Inconplete Code Information",
             message = "The text fields for Code Name or File Path are empty.\nFill in both to export the file."
             )
     else:
-        print(f'TEST:\n{file_type}\n{folder_location}\n{game}\n{caption}\n{primary_color}\n{secondary_color}\n{tertiary_color}\n{emphasis_color}')
+        check_existing_file()
 
 def read_text_list():
     valuelist_load = tk.filedialog.askopenfilename(
@@ -232,7 +339,8 @@ def read_text_list():
     if valuelist_load is None:
         return
 
-    value_list_path = str(valuelist_load)
+    value_list_path = rf"{valuelist_load}"
+    print(value_list_path)
 
     with open(value_list_path) as valuelist_content:
         if valuelist_content.read()[6:10] == 'LBP1':

@@ -286,7 +286,6 @@ class ExportWindowIII(ctk.CTkToplevel):
                 return
 
             directory_location_entry: str = f'{directory_location}'
-            print(directory_location_entry)
             
             code_filepath_entry.delete(0, ctk.END)
             code_filepath_entry.insert(0, directory_location_entry)
@@ -339,7 +338,6 @@ class ExportWindowIII(ctk.CTkToplevel):
             text = 'Prefix Game Info (Artemis)',
             checkbox_height = 18,
             checkbox_width = 18,
-            command = None
             )
         
 
@@ -376,13 +374,14 @@ class ExportWindowIII(ctk.CTkToplevel):
                 code_filepath_entry.get(),
                 game_title_option.get(),
                 code_caption_entry.get(),
+                export_filename_prefix.get(),
                 self.primary_color,
                 self.secondary_color,
                 self.tertiary_color,
                 self.emphasis_color,
                 )
             )
-
+        
 
         # Edit these values to change the Widgets' Position
         export_toplevel_x_center = int(export_toplevel_width / 2)
@@ -448,23 +447,6 @@ class ColorTabList(ctk.CTkTabview):
         self.tertiary_colortab = ColorTab(self.tab('Tertiary'))
         self.emphasis_colortab = ColorTab(self.tab('Emphasis'))
 
-        # Export Tab Functions
-        # def import_yaml():
-        #     yaml_load_location = tk.filedialog.askopenfilename(
-        #         title = "Import YAML Config", 
-        #         initialdir = "./save"
-        #         )
-        # 
-        #     if yaml_load_location is None:
-        #         return
-        # 
-        #     with open("color_path.yaml", "w") as color_path_file:
-        #         color_path_file.truncate(0)
-        #         color_path_file.write(
-        #             'color-path:\n' + 
-        #             f'  set-yaml: \"{str(yaml_load_location)}\"' # Path to recently saved Color YAML file
-        #             )
-
 
         # Export Tab UI
         export_tab = ctk.CTkFrame(self.tab('Export'))
@@ -500,18 +482,10 @@ class ColorTabList(ctk.CTkTabview):
                 )
             )
 
-        # export_ncl_button = ctk.CTkButton(
-            # export_tab, 
-            # text = "import yaml", 
-            # command = lambda: convert_yaml_to_ncl()
-            # )
-
         export_text_preview.grid(row = 0, pady = 5)
         code_caption.grid(row = 1, pady = 10)
         save_yaml_button.grid(row = 2, pady = 10)
         save_ncl_button.grid(row = 3, pady = 10)
-
-        # export_ncl_button.grid(row = 3, pady = 10)
 
         
         export_tab.grid(row = 0, column = 0)
