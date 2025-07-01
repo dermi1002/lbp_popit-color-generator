@@ -25,7 +25,6 @@ class RGBSlider(ctk.CTkSlider):
         self.set(0)
         self.place(x = slider_x_position, y = slider_y_position)
 
-
 class RGBLetter(ctk.CTkLabel):
     def __init__(self, master, rgb_letter_selection, rgb_letter_y_position, *args):
         super().__init__(master, rgb_letter_selection, rgb_letter_y_position, *args)
@@ -39,7 +38,6 @@ class RGBLetter(ctk.CTkLabel):
         self.configure(text = rgb_letter_selection)
 
         self.place(x = rgb_letter_x_position, y = rgb_letter_y_position)
-
 
 class ColorTab(ctk.CTkFrame):
     def __init__(self, master, *args, **kwargs):
@@ -120,6 +118,7 @@ class ExportWindow(ctk.CTkToplevel):
         self.title('Export Code')
         self.geometry(f'{export_toplevel_width}x{export_toplevel_height}')
         self.resizable(False, False)
+        self.grab_set()
 
 
         def disable_export_ncl_button(value):
@@ -274,6 +273,7 @@ class ExportWindowIII(ctk.CTkToplevel):
         self.title('Export Code')
         self.geometry(f'{export_toplevel_width}x{export_toplevel_height}')
         self.resizable(False, False)
+        self.grab_set()
 
 
         def change_file_directory_entry():
@@ -548,27 +548,10 @@ class ColorTabList(ctk.CTkTabview):
 
         master.configure(menu = self.test_toolbar)
 
-        # i would've put this in the external objects module, but for some reason that'd only output the first value when you startup the program
-        self.test_toolbar.file_option.add_command(
-            label = 'Save YAML', 
-            command = lambda: external_objects.new_export_yaml(
-                code_caption.get(),
-                self.primary_colortab.color_preview.cget('background')[1:],
-                self.secondary_colortab.color_preview.cget('background')[1:],
-                self.tertiary_colortab.color_preview.cget('background')[1:],
-                self.emphasis_colortab.color_preview.cget('background')[1:]
-                )
-            )
 
         self.test_toolbar.file_option.add_command(
-            label = 'Save NCL', 
-            command = lambda: external_objects.new_export_ncl(
-                code_caption.get(),
-                self.primary_colortab.color_preview.cget('background')[1:],
-                self.secondary_colortab.color_preview.cget('background')[1:],
-                self.tertiary_colortab.color_preview.cget('background')[1:],
-                self.emphasis_colortab.color_preview.cget('background')[1:]
-                )
+            label = "Save Code",
+            command = show_export_window_iii
             )
 
         self.test_toolbar.file_option.add_command(
@@ -578,6 +561,7 @@ class ColorTabList(ctk.CTkTabview):
             )
 
         self.test_toolbar.file_option.add_command(
+            state = tk.DISABLED,
             label = '[Test] Open Value List',
             command = lambda: external_objects.read_text_list()
         )

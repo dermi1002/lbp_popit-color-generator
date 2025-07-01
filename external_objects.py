@@ -201,7 +201,7 @@ def export_any_format(
     folder_location,
     game,
     caption,  
-    checkbox_value,
+    prefix_info_checked,
     primary_color, 
     secondary_color, 
     tertiary_color, 
@@ -269,21 +269,17 @@ def export_any_format(
             
             return file_extension
 
-    def determine_codename(game, caption, checkbox_value):
-        if checkbox_value == 1:
+    def determine_codename(game, caption, prefix_info_checked):
+        if prefix_info_checked == 1:
             code_filename = f"{prefix_game_info(game)} Custom Popit Color - {caption}"
-
-            print(code_filename)
 
             return code_filename
         else:
             code_filename = caption
             
-            print(code_filename)
-
             return code_filename
 
-    determined_export_filename = determine_codename(game, caption, checkbox_value)
+    determined_export_filename = determine_codename(game, caption, prefix_info_checked)
 
     file_extension_output: str = find_file_extension(file_type)
 
@@ -317,7 +313,7 @@ def export_any_format(
         with open(full_file_path, "w") as final_exported_code:
             final_exported_code.write(any_format_output)
 
-        tk.messagebox.showinfo(title = "Export Success", message = "Popit Color Code successfully exported!")
+        tk.messagebox.showinfo(title = "Export Success!", message = "Popit Color Code successfully exported!")
 
 
     if folder_location == "" or caption == "":
@@ -378,7 +374,7 @@ class Toolbar(tk.Menu):
 
 if __name__ == '__main__':
     print(
-        'This is an external module loaded by the LBP Popit Color Generator\'s Main Program, main.py.\n' +
-        'It is not meant to be loaded as a standalone script.\n' +
-        'If you want to use its functions, use the Main Program (for the time being).'
+        'This is an external module loaded by the LBP Popit Color Generator\'s Main Program, main.py.',
+        '\nIt is not meant to be loaded as a standalone script.',
+        '\nIf you want to use its functions, use the Main Program (for the time being).'
         ) # just because
