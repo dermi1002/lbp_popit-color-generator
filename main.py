@@ -102,27 +102,17 @@ class ColorTab(ctk.CTkFrame):
         self.color_hex_entry.place(x = 297, y = hex_related_y_position)
         self.color_hex_entry.insert(ctk.END, color_beginning_value)
 
+# why does exporting a file only use the first value of a color?
+class ExportTab(ctk.CTkFrame):
+    def __init__(self, master, primary_color, secondary_color, tertiary_color, emphasis_color, *args, **kwargs):
+        super().__init__(master, *args, **kwargs)
 
-class ExportWindow(ctk.CTkToplevel):
-    def __init__(self, primary_color, secondary_color, tertiary_color, emphasis_color, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        self.primary_color = primary_color
-        self.secondary_color = secondary_color
-        self.tertiary_color = tertiary_color
-        self.emphyasis_color = emphasis_color
-        
         export_toplevel_width: int = 375
-        export_toplevel_height: int = 225
-        
-        self.title('Export Code')
-        self.geometry(f'{export_toplevel_width}x{export_toplevel_height}')
-        self.resizable(False, False)
-        self.grab_set()
+        export_toplevel_height: int = 205
 
+        self.configure(width = export_toplevel_width, height = export_toplevel_height)
 
         def disable_export_ncl_button(value):
-            # use 'or' to apply this conditional to multiple supported versions
             if game_title_option.get() != 'LBP2 (BCUS98245 | 1.33)': 
                 new_export_ncl_button.configure(state = 'disabled')
             else:
@@ -158,7 +148,7 @@ class ExportWindow(ctk.CTkToplevel):
                 self.primary_color,
                 self.secondary_color,
                 self.tertiary_color,
-                self.emphyasis_color
+                self.emphasis_color
                 )
             )
 
@@ -171,7 +161,7 @@ class ExportWindow(ctk.CTkToplevel):
                 self.primary_color,
                 self.secondary_color,
                 self.tertiary_color,
-                self.emphyasis_color
+                self.emphasis_color
                 )
             )
 
@@ -184,13 +174,12 @@ class ExportWindow(ctk.CTkToplevel):
                 self.primary_color,
                 self.secondary_color,
                 self.tertiary_color,
-                self.emphyasis_color
+                self.emphasis_color
                 )
             )
 
 
         # Edit these values to change the Widgets' Position
-        export_row_1: int = 17
         export_next_row: int = 70
 
         export_text_x_position: int = 22
@@ -198,65 +187,56 @@ class ExportWindow(ctk.CTkToplevel):
         export_note_y_position: int = 30
 
         export_code_buttons_x_offset: int = 20
-        export_code_buttons_y_position: int = 45
+        export_code_buttons_y_position: int = 17
         
 
         # Do NOT look at this mess full of Variables
-        code_caption_label.place(
-            anchor = 'nw', 
-            x = export_text_x_position, 
-            y = export_row_1
-            )
+        code_caption_label.place(anchor = 'nw', x = export_text_x_position)
 
-        code_caption_entry.place(
-            anchor = 'ne', 
-            x = (export_toplevel_width - export_option_x_offset), 
-            y = export_row_1
-            )
+        code_caption_entry.place(anchor = 'ne', x = (export_toplevel_width - export_option_x_offset))
 
         code_caption_note.place(
             anchor = 'ne', 
             x = (export_toplevel_width - export_option_x_offset), 
-            y = (export_row_1 + export_note_y_position)
+            y = export_note_y_position
             )
 
 
-        game_title.place(
-            anchor = 'nw', 
-            x = export_text_x_position, 
-            y = (export_row_1 + export_next_row)
-            )
+        game_title.place(anchor = 'nw', x = export_text_x_position, y = export_next_row)
 
         game_title_option.place(
             anchor = 'ne', 
             x = (export_toplevel_width - export_option_x_offset), 
-            y = (export_row_1 + export_next_row)
+            y = export_next_row
             )
         
         game_title_note.place(
             anchor = 'ne', 
             x = (export_toplevel_width - export_option_x_offset), 
-            y = (export_row_1 + export_next_row + export_note_y_position)
+            y = (export_next_row + export_note_y_position)
             )
 
         
         new_export_ncl_button.place(
-            anchor = 'nw', 
+            anchor = 'sw', 
             x =  export_code_buttons_x_offset, 
             y = (export_toplevel_height - export_code_buttons_y_position)
             )
 
         new_save_text_button.place(
-            anchor = 'n', 
+            anchor = 's', 
             x = 167, 
             y = (export_toplevel_height - export_code_buttons_y_position)
             )
 
         new_export_yaml_button.place(
-            anchor = 'ne', 
+            anchor = 'se', 
             x = (export_toplevel_width - export_code_buttons_x_offset),
             y = (export_toplevel_height - export_code_buttons_y_position)
             )
+
+        self.place(x = 70, y = 10)
+        
 
 class ExportWindowIII(ctk.CTkToplevel):
     def __init__(self, primary_color, secondary_color, tertiary_color, emphasis_color, *args, **kwargs):
@@ -438,7 +418,7 @@ class ColorTabList(ctk.CTkTabview):
         self.add('Tertiary')
         self.add('Emphasis')
         self.add('Export')
-        self.add('Test')
+        self.add("New Export")
 
         self.set('Primary')
  
@@ -491,23 +471,16 @@ class ColorTabList(ctk.CTkTabview):
         export_tab.grid(row = 0, column = 0)
 
 
-        new_export_ui = ctk.CTkFrame(self.tab('Test'), width = 250, height = 150)
+        test_export_tab = ExportTab(
+            self.tab("New Export"),
+            self.primary_colortab.color_preview.cget('background')[1:],
+            self.secondary_colortab.color_preview.cget('background')[1:],
+            self.tertiary_colortab.color_preview.cget('background')[1:],
+            self.emphasis_colortab.color_preview.cget('background')[1:]
+        )
 
 
-        self.test_export_window = None
         self.test_export_window_iii = None
-
-        def show_export_window():
-            if self.test_export_window is None or not self.test_export_window.winfo_exists():
-                self.test_export_window = ExportWindow(
-                    self.primary_colortab.color_preview.cget('background')[1:],
-                    self.secondary_colortab.color_preview.cget('background')[1:],
-                    self.tertiary_colortab.color_preview.cget('background')[1:],
-                    self.emphasis_colortab.color_preview.cget('background')[1:]
-                    )
-                self.test_export_window.focus()
-            else:
-                self.test_export_window.focus()
 
         def show_export_window_iii():
             if self.test_export_window_iii is None or not self.test_export_window_iii.winfo_exists():
@@ -522,28 +495,7 @@ class ColorTabList(ctk.CTkTabview):
                 self.test_export_window_iii.focus()
 
 
-        show_export_window_button = ctk.CTkButton(
-            new_export_ui, 
-            text = 'Show Export Window', 
-            command = show_export_window
-            )
-        
-        show_export_window_iii_button = ctk.CTkButton(
-            new_export_ui, 
-            text = 'Show Export Window III', 
-            command = show_export_window_iii
-            )
-        
-
-        show_export_window_button.place(anchor = 'n', x = 125, y = 30)
-
-        show_export_window_iii_button.place(anchor = 's', x = 125, y = 120)
-
-
-        new_export_ui.configure(fg_color = 'red')
-        new_export_ui.place(x = 125, y = 20)
-        
-        
+        # Toolbar
         self.test_toolbar = external_objects.Toolbar(master)
 
         master.configure(menu = self.test_toolbar)
@@ -564,7 +516,7 @@ class ColorTabList(ctk.CTkTabview):
             state = tk.DISABLED,
             label = '[Test] Open Value List',
             command = lambda: external_objects.read_text_list()
-        )
+            )
 
         self.place_configure(width = 530, height = 254)
         self.place(x = 5)
