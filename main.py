@@ -107,10 +107,15 @@ class ExportTab(ctk.CTkFrame):
     def __init__(self, master, primary_color, secondary_color, tertiary_color, emphasis_color, *args, **kwargs):
         super().__init__(master, *args, **kwargs)
 
+        self.primary_color = primary_color
+        self.secondary_color = secondary_color
+        self.tertiary_color = tertiary_color
+        self.emphasis_color = emphasis_color
+        
         export_toplevel_width: int = 375
         export_toplevel_height: int = 205
 
-        self.configure(width = export_toplevel_width, height = export_toplevel_height)
+        self.configure(width = export_toplevel_width, height = export_toplevel_height, fg_color = 'red')
 
         def disable_export_ncl_button(value):
             if game_title_option.get() != 'LBP2 (BCUS98245 | 1.33)': 
@@ -191,30 +196,36 @@ class ExportTab(ctk.CTkFrame):
         
 
         # Do NOT look at this mess full of Variables
-        code_caption_label.place(anchor = 'nw', x = export_text_x_position)
+        # code_caption_label.place(anchor = 'nw', x = export_text_x_position)
+        code_caption_label.grid(sticky = 'nw', row = 0, column = 0, padx = (0, 5))
 
-        code_caption_entry.place(anchor = 'ne', x = (export_toplevel_width - export_option_x_offset))
+        # code_caption_entry.place(anchor = 'ne', x = (export_toplevel_width - export_option_x_offset))
+        code_caption_entry.grid(sticky = 'ne', row = 0, column = 1)
 
-        code_caption_note.place(
-            anchor = 'ne', 
-            x = (export_toplevel_width - export_option_x_offset), 
-            y = export_note_y_position
-            )
+        # code_caption_note.place(
+        #    anchor = 'ne', 
+        #    x = (export_toplevel_width - export_option_x_offset), 
+        #    y = export_note_y_position
+        #    )
+        code_caption_note.grid(sticky = 'ne', row = 1, column = 1, pady = (0, 15)) 
 
 
-        game_title.place(anchor = 'nw', x = export_text_x_position, y = export_next_row)
+        # game_title.place(anchor = 'nw', x = export_text_x_position, y = export_next_row)
+        game_title.grid(sticky = 'nw', row = 2, column = 0)
 
-        game_title_option.place(
-            anchor = 'ne', 
-            x = (export_toplevel_width - export_option_x_offset), 
-            y = export_next_row
-            )
+        # game_title_option.place(
+        #     anchor = 'ne', 
+        #     x = (export_toplevel_width - export_option_x_offset), 
+        #     y = export_next_row
+        #     )
+        game_title_option.grid(sticky = 'ne', row = 2, column = 1)
         
-        game_title_note.place(
-            anchor = 'ne', 
-            x = (export_toplevel_width - export_option_x_offset), 
-            y = (export_next_row + export_note_y_position)
-            )
+        # game_title_note.place(
+        #     anchor = 'ne', 
+        #     x = (export_toplevel_width - export_option_x_offset), 
+        #     y = (export_next_row + export_note_y_position)
+        #     )
+        game_title_note.grid(sticky = 'ne', row = 3, column = 1)
 
         
         new_export_ncl_button.place(
