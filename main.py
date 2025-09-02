@@ -102,152 +102,6 @@ class ColorTab(ctk.CTkFrame):
         self.color_hex_entry.place(x = 297, y = hex_related_y_position)
         self.color_hex_entry.insert(ctk.END, color_beginning_value)
 
-# why does exporting a file only use the first value of a color?
-class ExportTab(ctk.CTkFrame):
-    def __init__(self, master, primary_color, secondary_color, tertiary_color, emphasis_color, *args, **kwargs):
-        super().__init__(master, *args, **kwargs)
-
-        self.primary_color = primary_color
-        self.secondary_color = secondary_color
-        self.tertiary_color = tertiary_color
-        self.emphasis_color = emphasis_color
-        
-        export_toplevel_width: int = 375
-        export_toplevel_height: int = 205
-
-        self.configure(width = export_toplevel_width, height = export_toplevel_height, fg_color = 'red')
-
-        def disable_export_ncl_button(value):
-            if game_title_option.get() != 'LBP2 (BCUS98245 | 1.33)': 
-                new_export_ncl_button.configure(state = 'disabled')
-            else:
-                new_export_ncl_button.configure(state = 'normal')
-
-
-        export_option_width: int = 190
-        
-        code_caption_label = ctk.CTkLabel(self, text = 'NetCheat Code Name:')
-        code_caption_entry = ctk.CTkEntry(self, width = export_option_width)
-        code_caption_note = ctk.CTkLabel(self, text = 'It\'s optional, but it helps.')
-        
-
-        game_title = ctk.CTkLabel(self, text = 'Game Title:')
-
-        game_title_default_option = ctk.StringVar(value = 'LBP2 (BCUS98245 | 1.33)')
-        game_title_option = ctk.CTkOptionMenu(self)
-        game_title_option.configure(
-            width = export_option_width,
-            values = ['LBP1 (BCUS98148 | 1.30)', 'LBP2 (BCUS98245 | 1.33)', 'LBP3 (BCUS98362 | 1.26)'],
-            variable = game_title_default_option,
-            command = disable_export_ncl_button
-            )
-
-        game_title_note = ctk.CTkLabel(self, text = 'LBP1 doesn\'t use the Emphasis Color.')
-
-        new_export_ncl_button = ctk.CTkButton(
-            self, 
-            text = 'Save NCL',
-            width = 85,
-            command = lambda: external_objects.new_export_ncl(
-                code_caption_entry.get(),
-                self.primary_color,
-                self.secondary_color,
-                self.tertiary_color,
-                self.emphasis_color
-                )
-            )
-
-        new_save_text_button = ctk.CTkButton(
-            self, 
-            text = 'Save Value List',
-            width = 105,
-            command = lambda: external_objects.export_value_list(
-                game_title_option.get(),
-                self.primary_color,
-                self.secondary_color,
-                self.tertiary_color,
-                self.emphasis_color
-                )
-            )
-
-        new_export_yaml_button = ctk.CTkButton(
-            self, 
-            text = 'Save YAML (Old)',
-            width = 125,
-            command = lambda: external_objects.new_export_yaml(
-                code_caption_entry.get(),
-                self.primary_color,
-                self.secondary_color,
-                self.tertiary_color,
-                self.emphasis_color
-                )
-            )
-
-
-        # Edit these values to change the Widgets' Position
-        export_next_row: int = 70
-
-        export_text_x_position: int = 22
-        export_option_x_offset: int = 20
-        export_note_y_position: int = 30
-
-        export_code_buttons_x_offset: int = 20
-        export_code_buttons_y_position: int = 17
-        
-
-        # Do NOT look at this mess full of Variables
-        # code_caption_label.place(anchor = 'nw', x = export_text_x_position)
-        code_caption_label.grid(sticky = 'nw', row = 0, column = 0, padx = (0, 5))
-
-        # code_caption_entry.place(anchor = 'ne', x = (export_toplevel_width - export_option_x_offset))
-        code_caption_entry.grid(sticky = 'ne', row = 0, column = 1)
-
-        # code_caption_note.place(
-        #    anchor = 'ne', 
-        #    x = (export_toplevel_width - export_option_x_offset), 
-        #    y = export_note_y_position
-        #    )
-        code_caption_note.grid(sticky = 'ne', row = 1, column = 1, pady = (0, 15)) 
-
-
-        # game_title.place(anchor = 'nw', x = export_text_x_position, y = export_next_row)
-        game_title.grid(sticky = 'nw', row = 2, column = 0)
-
-        # game_title_option.place(
-        #     anchor = 'ne', 
-        #     x = (export_toplevel_width - export_option_x_offset), 
-        #     y = export_next_row
-        #     )
-        game_title_option.grid(sticky = 'ne', row = 2, column = 1)
-        
-        # game_title_note.place(
-        #     anchor = 'ne', 
-        #     x = (export_toplevel_width - export_option_x_offset), 
-        #     y = (export_next_row + export_note_y_position)
-        #     )
-        game_title_note.grid(sticky = 'ne', row = 3, column = 1)
-
-        
-        new_export_ncl_button.place(
-            anchor = 'sw', 
-            x =  export_code_buttons_x_offset, 
-            y = (export_toplevel_height - export_code_buttons_y_position)
-            )
-
-        new_save_text_button.place(
-            anchor = 's', 
-            x = 167, 
-            y = (export_toplevel_height - export_code_buttons_y_position)
-            )
-
-        new_export_yaml_button.place(
-            anchor = 'se', 
-            x = (export_toplevel_width - export_code_buttons_x_offset),
-            y = (export_toplevel_height - export_code_buttons_y_position)
-            )
-
-        self.place(x = 70, y = 10)
-        
 
 class ExportWindowIII(ctk.CTkToplevel):
     def __init__(self, primary_color, secondary_color, tertiary_color, emphasis_color, *args, **kwargs):
@@ -429,7 +283,6 @@ class ColorTabList(ctk.CTkTabview):
         self.add('Tertiary')
         self.add('Emphasis')
         self.add('Export')
-        self.add("New Export")
 
         self.set('Primary')
  
@@ -441,54 +294,90 @@ class ColorTabList(ctk.CTkTabview):
 
         # Export Tab UI
         export_tab = ctk.CTkFrame(self.tab('Export'))
-        export_text_preview = ctk.CTkLabel(
-            export_tab, 
-            text = f'If you are finished with your Popit color theme,\ngive it a Code Name and export a cheat file!', 
-            width = 525
-            )
-
-        code_caption = ctk.CTkEntry(export_tab, placeholder_text = 'Code Name')
-
-        save_yaml_button = ctk.CTkButton(
-            export_tab, 
-            text = 'Save YAML', 
-            command = lambda: external_objects.new_export_yaml(
-                code_caption.get(),
-                self.primary_colortab.color_preview.cget('background')[1:],
-                self.secondary_colortab.color_preview.cget('background')[1:],
-                self.tertiary_colortab.color_preview.cget('background')[1:],
-                self.emphasis_colortab.color_preview.cget('background')[1:]
-                )
-            )
-
-        save_ncl_button = ctk.CTkButton(
-            export_tab, 
-            text = 'Save NCL', 
-            command = lambda: external_objects.new_export_ncl(
-                code_caption.get(),
-                self.primary_colortab.color_preview.cget('background')[1:],
-                self.secondary_colortab.color_preview.cget('background')[1:],
-                self.tertiary_colortab.color_preview.cget('background')[1:],
-                self.emphasis_colortab.color_preview.cget('background')[1:]
-                )
-            )
-
-        export_text_preview.grid(row = 0, pady = 5)
-        code_caption.grid(row = 1, pady = 10)
-        save_yaml_button.grid(row = 2, pady = 10)
-        save_ncl_button.grid(row = 3, pady = 10)
-
         
-        export_tab.grid(row = 0, column = 0)
+        def disable_export_ncl_button(value):
+            if game_title_option.get() != 'LBP2 (BCUS98245 | 1.33)': 
+                new_export_ncl_button.configure(state = 'disabled')
+            else:
+                new_export_ncl_button.configure(state = 'normal')
 
 
-        test_export_tab = ExportTab(
-            self.tab("New Export"),
-            self.primary_colortab.color_preview.cget('background')[1:],
-            self.secondary_colortab.color_preview.cget('background')[1:],
-            self.tertiary_colortab.color_preview.cget('background')[1:],
-            self.emphasis_colortab.color_preview.cget('background')[1:]
-        )
+        export_option_width: int = 190
+        
+        code_caption_label = ctk.CTkLabel(export_tab, text = 'NetCheat Code Name:')
+        code_caption_entry = ctk.CTkEntry(export_tab, width = export_option_width)
+        code_caption_note = ctk.CTkLabel(export_tab, text = 'It\'s optional, but it helps.')
+        
+
+        game_title = ctk.CTkLabel(export_tab, text = 'Game Title:')
+
+        game_title_default_option = ctk.StringVar(value = 'LBP2 (BCUS98245 | 1.33)')
+        game_title_option = ctk.CTkOptionMenu(export_tab)
+        game_title_option.configure(
+            width = export_option_width,
+            values = ['LBP1 (BCUS98148 | 1.30)', 'LBP2 (BCUS98245 | 1.33)', 'LBP3 (BCUS98362 | 1.26)'],
+            variable = game_title_default_option,
+            command = disable_export_ncl_button
+            )
+
+        game_title_note = ctk.CTkLabel(export_tab, text = 'LBP1 doesn\'t use the Emphasis Color.')
+
+        export_button_frame = ctk.CTkFrame(export_tab, fg_color = '#2b2b2b')
+
+        new_export_ncl_button = ctk.CTkButton(
+            export_button_frame, 
+            text = 'Save NCL',
+            width = 85,
+            command = lambda: external_objects.new_export_ncl(
+                code_caption_entry.get(),
+                self.primary_colortab.color_preview.cget('background')[1:],
+                self.secondary_colortab.color_preview.cget('background')[1:],
+                self.tertiary_colortab.color_preview.cget('background')[1:],
+                self.emphasis_colortab.color_preview.cget('background')[1:]
+                )
+            )
+
+        new_save_text_button = ctk.CTkButton(
+            export_button_frame, 
+            text = 'Save Value List',
+            width = 105,
+            command = lambda: external_objects.export_value_list(
+                game_title_option.get(),
+                self.primary_colortab.color_preview.cget('background')[1:],
+                self.secondary_colortab.color_preview.cget('background')[1:],
+                self.tertiary_colortab.color_preview.cget('background')[1:],
+                self.emphasis_colortab.color_preview.cget('background')[1:]
+                )
+            )
+
+        new_export_yaml_button = ctk.CTkButton(
+            export_button_frame, 
+            text = 'Save YAML (Old)',
+            width = 125,
+            command = lambda: external_objects.new_export_yaml(
+                code_caption_entry.get(),
+                self.primary_colortab.color_preview.cget('background')[1:],
+                self.secondary_colortab.color_preview.cget('background')[1:],
+                self.tertiary_colortab.color_preview.cget('background')[1:],
+                self.emphasis_colortab.color_preview.cget('background')[1:]
+                )
+            )
+
+        code_caption_label.grid(sticky = 'nw', row = 0, column = 0, padx = (0, 5))
+        code_caption_entry.grid(sticky = 'ne', row = 0, column = 1)
+        code_caption_note.grid(sticky = 'ne', row = 1, column = 1, pady = (0, 15)) 
+
+        game_title.grid(sticky = 'nw', row = 2, column = 0)
+        game_title_option.grid(sticky = 'ne', row = 2, column = 1)
+        game_title_note.grid(sticky = 'ne', row = 3, column = 1)
+        
+        export_button_frame.grid(sticky = 's', row = 4, columnspan = 2, pady = (10, 0))
+
+        new_export_ncl_button.grid(sticky = 'sw', row = 4, column = 0)
+        new_save_text_button.grid(sticky = 's', row = 4, column = 1, padx = 10, ipadx = 10)
+        new_export_yaml_button.grid(sticky = 'se', row = 4, column = 2)
+
+        export_tab.place(x = 80, y = 10)
 
 
         self.test_export_window_iii = None

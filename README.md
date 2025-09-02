@@ -37,13 +37,12 @@ If done correctly, you'll end up with this:
 
 # To-do List
 ### High Priority:
-- [x] Add a new plain text Value list to deprecate .YAML support
-- [ ] Figure out what to do with the Export Tab
+- [x] Figure out what to do with the Export Tab
 
 ### Next:
 - [ ] Add functionality to change colors via hex color entry and .TXT/.YAML importing
 - [ ] Retheme the GUI to Tkinter's Ttk widget to remove CustomTkinter dependency and support Linux out-of-the-box
-- [ ] Add Terminal logs
+- [ ] Add Terminal logs and keyboard shortcuts
 
 ### Future Considerations:
 - [ ] Create mock-up gameplay previews
@@ -55,3 +54,4 @@ If done correctly, you'll end up with this:
 - [x] Separate functions to their own script
 - [x] Add a toolbar to the program
 - [x] Add top-level windows for File Export and window closing prompt
+- [x] Add a new plain text Value list to deprecate .YAML support
