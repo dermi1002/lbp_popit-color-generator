@@ -10,30 +10,30 @@ These four tabs appear in a layout like this:
 
 ![Editing the Primary Color in the LBP Popit Color Generator GUI](./resources/main_changecolor.png)
 
-The sliders can be dragged left to right to change the square's color and the hex color entry. 
+The sliders can be dragged right and left to change the square's color and the hex color entry. 
 
-As of now, editing the hex entry won't change the color and slider values unfortunately. Functionality for this is planned in the future.
+As of now, editing the hex entry won't change the color and slider values, unfortunately. Functionality for this is planned in the future.
 
-The current color value can be copied by pressing the "Copy" Button next to the entry.
+The current color value can be copied by clicking the "Copy" Button next to the entry.
 
 Once your done editing the color values, you can move onto the fifth tab, Export:
 
 ![Export Tab in the LBP Popit Color Generator GUI](./resources/main_export.png)
 
-In this tab is a label that reads:
-
-*"If you are finished with your Popit color theme, give it a Code Name and export a cheat file!"*
-
-Below is an entry that reads Code Name. As the label said, you can click on it and type anything into it as shown below:
+In this tab is an entry for the NetCheat Code Name. You can click on it and type anything into it as shown below:
 
 ![Entering a Code Name in the Export Tab of the LittleBigPlanet Color Generator GUI](./resources/main_exportcodename.png)
 
-After that, you can click on the "Save YAML Config" button to store your Popit color values in a YAML dictionary file.
+After that, below is a Game Title option, where you can set the mainline title of your target. Choices for this are:
+- LittleBigPlanet 2, which is fully supported by the program,
+- LittleBigPlanet 1, which stores color values differently and the program adapts accordingly, and isn't fully supported yet, and
+- LittleBigPlanet 3, which stores color values the same as LBP2 but isn't fully supported yet.
 
-Then, you can click on the "Concert to NCL" button to convert a YAML file to a .ncl NetCheat List file, which is a set of values to manipulate in a PS3 memory editor, such as NetCheat and Artemis.
+Then, you have three choices. You can:
+- click on the "Save NCL" button to store your Popit color values in a .ncl NetCheat List file, which is important for getting the custom Popit color in your LittleBigPlanet game;
+- click on the "Save Value List" button to store your Popit color values in a text file, which is not yet, but planned to be, openable by the program; and/or
+- click on the "Save YAML (Old)" button to store your Popit color values in a YAML dictionary file. Support for this format is deprecated and will be discontinued in later releases.
 
-First, the program will prompt you to open a YAML file. Then, it will prompt you to choose a directory to save the .ncl file. 
+As of now, the amount of available choices varies depending on the Game Title you choose; and perhaps keeping the default directories is essential for the programs functionality.
 
-As of now, keeping the default directories is essential for the programs functionality.
-
-Once you saved your .ncl file, you can import it to the PS3 memory editor of your choice and apply it in-game.
+Once you saved your .ncl file, you can import it to the PS3 memory editor of your choice and apply it once your game is loaded and your Sackperson is in their Pod or in a level.
