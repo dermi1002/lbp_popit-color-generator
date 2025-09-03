@@ -30,6 +30,8 @@ If done correctly, you'll end up with this:
 
 ![First look of the LBP Popit Color Generator GUI](./docs/resources/main_firstlook.png)
 
+Further instructions on how to use the program can be found in the Documents section below.
+
 # Documents
 - [How To Use](./docs/how_to_use.md)
 
