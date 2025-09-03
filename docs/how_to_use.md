@@ -48,7 +48,7 @@ The thing between the window title with the close button and the program itself 
 
 When you click "Save Code" in the File tab, you'll be met with this:
 
-![A Separate Code Export Window with One More Feature](./docs/resources/main_exportwindow.png)
+![A Separate Code Export Window with One More Feature](./resources/main_exportwindow.png)
 
 It serves the same purpose as the Export tab in the main program, but functions slightly differently.
 
