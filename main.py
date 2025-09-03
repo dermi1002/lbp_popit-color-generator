@@ -322,7 +322,7 @@ class ColorTabList(ctk.CTkTabview):
 
         game_title_note = ctk.CTkLabel(export_tab, text = 'LBP1 doesn\'t use the Emphasis Color.')
 
-        export_button_frame = ctk.CTkFrame(export_tab, fg_color = '#2b2b2b')
+        export_button_frame = ctk.CTkFrame(export_tab, fg_color = 'transparent')
 
         new_export_ncl_button = ctk.CTkButton(
             export_button_frame, 
