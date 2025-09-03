@@ -34,6 +34,28 @@ Then, you have three choices. You can:
 - click on the "Save Value List" button to store your Popit color values in a text file, which is not yet, but planned to be, openable by the program; and/or
 - click on the "Save YAML (Old)" button to store your Popit color values in a YAML dictionary file. Support for this format is deprecated and will be discontinued in later releases.
 
+When you click on either of these, you'll be met with a window prompting you to choose a location to save your file in.
+
 As of now, the amount of available choices varies depending on the Game Title you choose; and perhaps keeping the default directories is essential for the programs functionality.
 
 Once you saved your .ncl file, you can import it to the PS3 memory editor of your choice and apply it once your game is loaded and your Sackperson is in their Pod or in a level.
+
+## Toolbar
+
+The thing between the window title with the close button and the program itself is a toolbar with two tabs:
+- File, which gives you the ability to open another window of exporting options, but can't open files yet, and
+- Help, which does nothing, ironically.
+
+When you click "Save Code" in the File tab, you'll be met with this:
+
+![A Separate Code Export Window with One More Feature](./docs/resources/main_exportwindow.png)
+
+It serves the same purpose as the Export tab in the main program, but functions slightly differently.
+
+First, there's a file path entry, where you can either manually input an entire location to a directory, or click the "Browse" button, which will prompt you to choose a location, then input that for you.
+
+Second, there's a checkbox for prefixing game info. This feature is to add convenience for finding the cheat code in Artemis after importing it to the "codebase" directory.
+
+Third, there's a file type option which lists the three available color value formats to export in.
+
+Last, there's a "Save File" button, which won't prompt you to choose a location to save in, but rather saves the file according to everything you entered/chose in an instant.
