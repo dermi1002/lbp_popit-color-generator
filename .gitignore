@@ -1,6 +1,8 @@
 docs/
 export/
 save/
+object_scrap/
 
 *.ncl
 *.yaml
+*.txt

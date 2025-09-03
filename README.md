@@ -30,6 +30,8 @@ If done correctly, you'll end up with this:
 
 ![First look of the LBP Popit Color Generator GUI](./docs/resources/main_firstlook.png)
 
+Further instructions on how to use the program can be found in the Documents section below.
+
 # Documents
 - [How To Use](./docs/how_to_use.md)
 
@@ -37,18 +39,21 @@ If done correctly, you'll end up with this:
 
 # To-do List
 ### High Priority:
-- [x] Add a toolbar to the program
-- [ ] Add top-level windows for File Export and window closing prompt
+- [x] Figure out what to do with the Export Tab
 
 ### Next:
-- [ ] Add functionality to change colors via hex color entry and YAML importing
+- [ ] Add functionality to change colors via hex color entry and .TXT/.YAML importing
 - [ ] Retheme the GUI to Tkinter's Ttk widget to remove CustomTkinter dependency and support Linux out-of-the-box
+- [ ] Add Terminal logs and keyboard shortcuts
 
 ### Future Considerations:
 - [ ] Create mock-up gameplay previews
-- [ ] Add Terminal logs
+- [ ] Rewrite the project in C and Lua
 
 ### Completed:
 - [x] Rework the code into classes and functions for easier functionality with other games and versions (see the class-test branch)
 - [x] Edit code functions, values, etc., for extra readability among project contributors
 - [x] Separate functions to their own script
+- [x] Add a toolbar to the program
+- [x] Add top-level windows for File Export and window closing prompt
+- [x] Add a new plain text Value list to deprecate .YAML support

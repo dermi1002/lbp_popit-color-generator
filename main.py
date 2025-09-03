@@ -1,25 +1,11 @@
-import file_management
+import external_objects
 import tkinter as tk # yeah, i know, but hear me out
+from tkinter import messagebox
 import customtkinter as ctk
 import pyperclip
 import yaml
 
 
-class Toolbar(tk.Menu):
-    def __init__(self, master, *args, **kwargs):
-        super().__init__(master, *args, **kwargs)
-
-        # File
-        self.file_option = tk.Menu(self, tearoff = 0)
-
-        self.add_cascade(label = 'File', menu = self.file_option)
-
-        # Help
-        self.help_option = tk.Menu(self, tearoff = 0)
-
-        self.add_cascade(label = 'Help', menu = self.help_option)
-
-        
 class RGBSlider(ctk.CTkSlider):
     def __init__(self, master, slider_y_position, *args, **kwargs):
         super().__init__(master, slider_y_position, *args, **kwargs)
@@ -39,7 +25,6 @@ class RGBSlider(ctk.CTkSlider):
         self.set(0)
         self.place(x = slider_x_position, y = slider_y_position)
 
-
 class RGBLetter(ctk.CTkLabel):
     def __init__(self, master, rgb_letter_selection, rgb_letter_y_position, *args):
         super().__init__(master, rgb_letter_selection, rgb_letter_y_position, *args)
@@ -53,7 +38,6 @@ class RGBLetter(ctk.CTkLabel):
         self.configure(text = rgb_letter_selection)
 
         self.place(x = rgb_letter_x_position, y = rgb_letter_y_position)
-
 
 class ColorTab(ctk.CTkFrame):
     def __init__(self, master, *args, **kwargs):
@@ -119,49 +103,180 @@ class ColorTab(ctk.CTkFrame):
         self.color_hex_entry.insert(ctk.END, color_beginning_value)
 
 
+class ExportWindowIII(ctk.CTkToplevel):
+    def __init__(self, primary_color, secondary_color, tertiary_color, emphasis_color, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.primary_color = primary_color
+        self.secondary_color = secondary_color
+        self.tertiary_color = tertiary_color
+        self.emphasis_color = emphasis_color
+
+        export_toplevel_width: int = 385
+        export_toplevel_height: int = 355
+        
+        self.title('Export Code')
+        self.geometry(f'{export_toplevel_width}x{export_toplevel_height}')
+        self.resizable(False, False)
+        self.grab_set()
+
+
+        def change_file_directory_entry():
+            directory_location = tk.filedialog.askdirectory(
+                title = 'Browse Directory',
+                initialdir = './save'
+                )
+
+            if directory_location is None:
+                return
+
+            directory_location_entry: str = f'{directory_location}'
+            
+            code_filepath_entry.delete(0, ctk.END)
+            code_filepath_entry.insert(0, directory_location_entry)
+
+        def disable_filetype_ncl(value):
+            if game_title_option.get() != 'LBP2 (BCUS98245 | 1.33)': 
+                export_filetype_option.configure(values = ['Value List (.TXT)', 'YAML Dictionary (Old)'])
+            else:
+                export_filetype_option.configure(
+                    values = ['NetCheat List (.NCL)', 'Value List (.TXT)', 'YAML Dictionary (Old)']
+                    )
+
+            if export_filetype_option.get() == 'NetCheat List (.NCL)' and game_title_option.get() != 'LBP2 (BCUS98245 | 1.33)':
+                export_filetype_option.set('Value List (.TXT)')
+
+        test_grid = ctk.CTkFrame(self, fg_color = 'transparent')
+
+        export_option_width: int = 190
+        
+        code_caption_label = ctk.CTkLabel(test_grid, text = 'Code Name:')
+        code_caption_entry = ctk.CTkEntry(test_grid, width = export_option_width)
+        code_caption_note = ctk.CTkLabel(test_grid, text = 'This is included in the exported NCL')
+
+        code_filepath_label = ctk.CTkLabel(test_grid, text = 'File Path:')
+        code_filepath_entry = ctk.CTkEntry(test_grid, width = export_option_width)
+        code_filepath_browse = ctk.CTkButton(
+            test_grid, 
+            width = 70,
+            text = 'Browse',
+            command = change_file_directory_entry
+            )
+
+
+        game_title = ctk.CTkLabel(test_grid, text = 'Game Title:')
+
+        game_title_default_option = ctk.StringVar(value = 'LBP2 (BCUS98245 | 1.33)')
+        game_title_option = ctk.CTkOptionMenu(test_grid)
+        game_title_option.configure(
+            width = export_option_width,
+            values = ['LBP1 (BCUS98148 | 1.30)', 'LBP2 (BCUS98245 | 1.33)', 'LBP3 (BCUS98362 | 1.26)'],
+            variable = game_title_default_option,
+            command = disable_filetype_ncl
+            )
+
+        game_title_note = ctk.CTkLabel(test_grid, text = 'LBP1 doesn\'t use the Emphasis Color.')
+
+
+        export_filename_prefix = ctk.CTkCheckBox(
+            test_grid,
+            text = 'Prefix Game Info (Artemis)',
+            checkbox_height = 18,
+            checkbox_width = 18,
+            )
+        
+
+        export_filetype = ctk.CTkLabel(test_grid, text = 'File Type:')
+
+        export_filetype_default_option = ctk.StringVar(value = 'Value List (.TXT)')
+        export_filetype_option = ctk.CTkOptionMenu(test_grid)
+        export_filetype_option.configure(
+            width = export_option_width,
+            values = [
+                    'NetCheat List (.NCL)',
+                    'Value List (.TXT)',
+                    'YAML Dictionary (Old)'
+                ],
+            variable = export_filetype_default_option,
+            command = None
+            )
+
+        export_filetype_note = ctk.CTkLabel(self, text = 'YAML Dictionary Support is\ndeprecated and will be\ndiscontinued in 1.0.0.')
+
+        export_bottomrow_note = ctk.CTkLabel(
+            self,
+            justify = 'left',
+            text = 'NOTE: This program doesn\'t\nsupport all LBP Titles yet.'
+            )
+
+
+        new_export_button = ctk.CTkButton(
+            self, 
+            text = 'Save File',
+            width = 125,
+            command = lambda: external_objects.export_any_format(
+                export_filetype_option.get(), 
+                code_filepath_entry.get(),
+                game_title_option.get(),
+                code_caption_entry.get(),
+                export_filename_prefix.get(),
+                self.primary_color,
+                self.secondary_color,
+                self.tertiary_color,
+                self.emphasis_color,
+                )
+            )
+        
+
+        # Edit these values to change the Widgets' Position
+        export_toplevel_x_center = int(export_toplevel_width / 2)
+        export_object_center = int((export_toplevel_width / 2) - 18)
+        
+        export_y_offset: int = 17
+        export_next_row: int = 70
+
+        export_object_x_offset: int = 20
+        export_note_y_position: int = 30
+
+        export_object_right = int(export_toplevel_width - export_object_x_offset)
+
+        export_code_buttons_bottom = int(export_toplevel_height - export_y_offset)
+        
+
+        # Do NOT look at this mess full of Variables
+        code_caption_label.grid(sticky = 'sw', column = 0, row = 0, pady = export_y_offset)
+        code_caption_entry.grid(sticky = 'sw', column = 1, row = 0, padx = 10, pady = export_y_offset)
+
+        code_caption_note.place(anchor = 'n', x = export_object_center, y = 45)
+
+
+        code_filepath_label.grid(sticky = 'nw', column = 0, row = 2, pady = export_y_offset)
+        code_filepath_entry.grid(sticky = 'nw', column = 1, row = 2, padx = 10, pady = export_y_offset)
+        code_filepath_browse.grid(sticky = 'nw', column = 2, row = 2, pady = export_y_offset)
+
+
+        game_title.grid(sticky = 'nw', column = 0, row = 3)
+        game_title_option.grid(sticky = 'nw', column = 1, row = 3, padx = 10)
+        game_title_note.place(anchor = 'n', x = export_object_center, y = 153)
+
+
+        export_filename_prefix.place(anchor = 'n', x = export_object_center, y = 184)
+        
+        
+        export_filetype.grid(sticky = 'nw', column = 0, row = 6, pady = 65)
+        export_filetype_option.grid(sticky = 'nw', column = 1, row = 6, padx = 10, pady = 65)
+        export_filetype_note.place(anchor = 'n', x = export_toplevel_x_center, y = 248)
+
+        
+        export_bottomrow_note.place(anchor = 'sw', x = 22, y = export_code_buttons_bottom)
+        new_export_button.place(anchor = 'se', x = export_object_right, y = export_code_buttons_bottom)
+
+        test_grid.grid(padx = 22)
+
+
 class ColorTabList(ctk.CTkTabview):
     def __init__(self, master, *args, **kwargs):
         super().__init__(master, *args, **kwargs)
-
-        self.test_toolbar = Toolbar(master)
-
-        master.configure(menu = self.test_toolbar)
-
-        self.test_toolbar.file_option.add_command(
-            label = 'Save YAML', 
-            command = lambda: file_management.export_yaml(
-                code_caption.get(),
-                self.primary_colortab.color_preview.cget('background')[1:],
-                self.secondary_colortab.color_preview.cget('background')[1:],
-                self.tertiary_colortab.color_preview.cget('background')[1:],
-                self.emphasis_colortab.color_preview.cget('background')[1:]
-                )
-            )
-
-        self.test_toolbar.file_option.add_command(
-            label = 'Save NCL', 
-            command = lambda: file_management.export_ncl(
-                code_caption.get(),
-                self.primary_colortab.color_preview.cget('background')[1:],
-                self.secondary_colortab.color_preview.cget('background')[1:],
-                self.tertiary_colortab.color_preview.cget('background')[1:],
-                self.emphasis_colortab.color_preview.cget('background')[1:]
-                )
-            )
-
-        self.test_toolbar.file_option.add_command(
-            state = tk.DISABLED,
-            label = f'can\'t open files for now',
-            command = None
-            )
-
-
-        # Help Commands
-        self.test_toolbar.help_option.add_command(
-            label = 'About',
-            command = None
-            )
-
 
         self.add('Primary')
         self.add('Secondary')
@@ -176,39 +291,45 @@ class ColorTabList(ctk.CTkTabview):
         self.tertiary_colortab = ColorTab(self.tab('Tertiary'))
         self.emphasis_colortab = ColorTab(self.tab('Emphasis'))
 
-        # Export Tab Functions
-        # def import_yaml():
-        #     yaml_load_location = tk.filedialog.askopenfilename(
-        #         title = "Import YAML Config", 
-        #         initialdir = "./save"
-        #         )
-        # 
-        #     if yaml_load_location is None:
-        #         return
-        # 
-        #     with open("color_path.yaml", "w") as color_path_file:
-        #         color_path_file.truncate(0)
-        #         color_path_file.write(
-        #             'color-path:\n' + 
-        #             f'  set-yaml: \"{str(yaml_load_location)}\"' # Path to recently saved Color YAML file
-        #             )
-
 
         # Export Tab UI
         export_tab = ctk.CTkFrame(self.tab('Export'))
-        export_text_preview = ctk.CTkLabel(
-            export_tab, 
-            text = f'If you are finished with your Popit color theme,\ngive it a Code Name and export a cheat file!', 
-            width = 525
+        
+        def disable_export_ncl_button(value):
+            if game_title_option.get() != 'LBP2 (BCUS98245 | 1.33)': 
+                new_export_ncl_button.configure(state = 'disabled')
+            else:
+                new_export_ncl_button.configure(state = 'normal')
+
+
+        export_option_width: int = 190
+        
+        code_caption_label = ctk.CTkLabel(export_tab, text = 'NetCheat Code Name:')
+        code_caption_entry = ctk.CTkEntry(export_tab, width = export_option_width)
+        code_caption_note = ctk.CTkLabel(export_tab, text = 'It\'s optional, but it helps.')
+        
+
+        game_title = ctk.CTkLabel(export_tab, text = 'Game Title:')
+
+        game_title_default_option = ctk.StringVar(value = 'LBP2 (BCUS98245 | 1.33)')
+        game_title_option = ctk.CTkOptionMenu(export_tab)
+        game_title_option.configure(
+            width = export_option_width,
+            values = ['LBP1 (BCUS98148 | 1.30)', 'LBP2 (BCUS98245 | 1.33)', 'LBP3 (BCUS98362 | 1.26)'],
+            variable = game_title_default_option,
+            command = disable_export_ncl_button
             )
 
-        code_caption = ctk.CTkEntry(export_tab, placeholder_text = 'Code Name')
+        game_title_note = ctk.CTkLabel(export_tab, text = 'LBP1 doesn\'t use the Emphasis Color.')
 
-        save_yaml_button = ctk.CTkButton(
-            export_tab, 
-            text = 'Save YAML', 
-            command = lambda: file_management.export_yaml(
-                code_caption.get(),
+        export_button_frame = ctk.CTkFrame(export_tab, fg_color = 'transparent')
+
+        new_export_ncl_button = ctk.CTkButton(
+            export_button_frame, 
+            text = 'Save NCL',
+            width = 85,
+            command = lambda: external_objects.new_export_ncl(
+                code_caption_entry.get(),
                 self.primary_colortab.color_preview.cget('background')[1:],
                 self.secondary_colortab.color_preview.cget('background')[1:],
                 self.tertiary_colortab.color_preview.cget('background')[1:],
@@ -216,11 +337,12 @@ class ColorTabList(ctk.CTkTabview):
                 )
             )
 
-        save_ncl_button = ctk.CTkButton(
-            export_tab, 
-            text = 'Save NCL', 
-            command = lambda: file_management.export_ncl(
-                code_caption.get(),
+        new_save_text_button = ctk.CTkButton(
+            export_button_frame, 
+            text = 'Save Value List',
+            width = 105,
+            command = lambda: external_objects.export_value_list(
+                game_title_option.get(),
                 self.primary_colortab.color_preview.cget('background')[1:],
                 self.secondary_colortab.color_preview.cget('background')[1:],
                 self.tertiary_colortab.color_preview.cget('background')[1:],
@@ -228,23 +350,74 @@ class ColorTabList(ctk.CTkTabview):
                 )
             )
 
-        # export_ncl_button = ctk.CTkButton(
-            # export_tab, 
-            # text = "import yaml", 
-            # command = lambda: convert_yaml_to_ncl()
-            # )
+        new_export_yaml_button = ctk.CTkButton(
+            export_button_frame, 
+            text = 'Save YAML (Old)',
+            width = 125,
+            command = lambda: external_objects.new_export_yaml(
+                code_caption_entry.get(),
+                self.primary_colortab.color_preview.cget('background')[1:],
+                self.secondary_colortab.color_preview.cget('background')[1:],
+                self.tertiary_colortab.color_preview.cget('background')[1:],
+                self.emphasis_colortab.color_preview.cget('background')[1:]
+                )
+            )
 
-        export_text_preview.grid(row = 0, pady = 5)
-        code_caption.grid(row = 1, pady = 10)
-        save_yaml_button.grid(row = 2, pady = 10)
-        save_ncl_button.grid(row = 3, pady = 10)
+        code_caption_label.grid(sticky = 'nw', row = 0, column = 0, padx = (0, 5))
+        code_caption_entry.grid(sticky = 'ne', row = 0, column = 1)
+        code_caption_note.grid(sticky = 'ne', row = 1, column = 1, pady = (0, 15)) 
 
-        # export_ncl_button.grid(row = 3, pady = 10)
+        game_title.grid(sticky = 'nw', row = 2, column = 0)
+        game_title_option.grid(sticky = 'ne', row = 2, column = 1)
+        game_title_note.grid(sticky = 'ne', row = 3, column = 1)
+        
+        export_button_frame.grid(sticky = 's', row = 4, columnspan = 2, pady = (10, 0))
 
-        
-        export_tab.grid(row = 0, column = 0)
-        
-        
+        new_export_ncl_button.grid(sticky = 'sw', row = 4, column = 0)
+        new_save_text_button.grid(sticky = 's', row = 4, column = 1, padx = 10, ipadx = 10)
+        new_export_yaml_button.grid(sticky = 'se', row = 4, column = 2)
+
+        export_tab.place(x = 80, y = 10)
+
+
+        self.test_export_window_iii = None
+
+        def show_export_window_iii():
+            if self.test_export_window_iii is None or not self.test_export_window_iii.winfo_exists():
+                self.test_export_window_iii = ExportWindowIII(
+                    self.primary_colortab.color_preview.cget('background')[1:],
+                    self.secondary_colortab.color_preview.cget('background')[1:],
+                    self.tertiary_colortab.color_preview.cget('background')[1:],
+                    self.emphasis_colortab.color_preview.cget('background')[1:]
+                    )
+                self.test_export_window_iii.focus()
+            else:
+                self.test_export_window_iii.focus()
+
+
+        # Toolbar
+        self.test_toolbar = external_objects.Toolbar(master)
+
+        master.configure(menu = self.test_toolbar)
+
+
+        self.test_toolbar.file_option.add_command(
+            label = "Save Code",
+            command = show_export_window_iii
+            )
+
+        self.test_toolbar.file_option.add_command(
+            state = tk.DISABLED,
+            label = f'can\'t open files for now',
+            command = None
+            )
+
+        self.test_toolbar.file_option.add_command(
+            state = tk.DISABLED,
+            label = '[Test] Open Value List',
+            command = lambda: external_objects.read_text_list()
+            )
+
         self.place_configure(width = 530, height = 254)
         self.place(x = 5)
 
@@ -261,8 +434,7 @@ class MainProgram(ctk.CTk):
         # Program
         ColorTabList(self)
 
-        self._set_appearance_mode('light')
-        self.configure(fg_color = '#242424')
+        self.protocol('WM_DELETE_WINDOW', lambda: external_objects.closing_prompt(self))
         self.mainloop()
 
 
