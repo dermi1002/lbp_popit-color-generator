@@ -39,12 +39,11 @@ Further instructions on how to use the program can be found in the Documents sec
 
 # To-do List
 ### High Priority:
-- [x] Figure out what to do with the Export Tab
+- [ ] Add functionality to change colors via hex color entry and .TXT/.YAML importing
 
 ### Next:
-- [ ] Add functionality to change colors via hex color entry and .TXT/.YAML importing
-- [ ] Retheme the GUI to Tkinter's Ttk widget to remove CustomTkinter dependency and support Linux out-of-the-box
 - [ ] Add Terminal logs and keyboard shortcuts
+- [ ] Retheme the GUI to Tkinter's Ttk widget to remove CustomTkinter dependency and support Linux out-of-the-box
 
 ### Future Considerations:
 - [ ] Create mock-up gameplay previews
@@ -57,3 +56,4 @@ Further instructions on how to use the program can be found in the Documents sec
 - [x] Add a toolbar to the program
 - [x] Add top-level windows for File Export and window closing prompt
 - [x] Add a new plain text Value list to deprecate .YAML support
+- [x] Figure out what to do with the Export Tab
