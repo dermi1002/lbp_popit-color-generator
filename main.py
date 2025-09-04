@@ -43,17 +43,33 @@ class ColorTab(ctk.CTkFrame):
     def __init__(self, master, *args, **kwargs):
         super().__init__(master, *args, **kwargs)
 
-        def change_color(value):
+        def change_color_sliders(value):
             self.Red = int(self.red_slider.get())
             self.Green = int(self.green_slider.get())
             self.Blue = int(self.blue_slider.get())
 
             self.color_print_hex = '%02X%02X%02X' % (self.Red, self.Green, self.Blue)
 
-            self.color_preview.configure(background = f'#{self.color_print_hex}')
-
             self.color_hex_entry.delete(0, ctk.END)
             self.color_hex_entry.insert(0, self.color_print_hex)
+
+            self.color_preview.configure(background = f'#{self.color_hex_entry.get()}')
+
+        def change_color_hex(value):
+            self.hex_Red = self.color_hex_entry.get()[:2]
+            self.hex_Green = self.color_hex_entry.get()[2:4]
+            self.hex_Blue = self.color_hex_entry.get()[4:]
+
+            self.hex_Red_int = int(self.hex_Red, 16)
+            self.hex_Green_int = int(self.hex_Green, 16)
+            self.hex_Blue_int = int(self.hex_Blue, 16)
+
+            self.red_slider.set(self.hex_Red_int)
+            self.green_slider.set(self.hex_Green_int)
+            self.blue_slider.set(self.hex_Blue_int)
+
+            self.color_preview.configure(background = f'#{self.color_hex_entry.get()}')
+
 
         def copy_color_hex_entry():
             pyperclip.copy(self.color_hex_entry.get())
@@ -70,13 +86,13 @@ class ColorTab(ctk.CTkFrame):
 
         
         self.letter_r = RGBLetter(master, 0, 17)
-        self.red_slider = RGBSlider(master, 16, command = change_color)
+        self.red_slider = RGBSlider(master, 16, command = change_color_sliders)
                 
         self.letter_g = RGBLetter(master, 1, 50)
-        self.green_slider = RGBSlider(master, 66, command = change_color)
+        self.green_slider = RGBSlider(master, 66, command = change_color_sliders)
 
         self.letter_b = RGBLetter(master, 2, 82)
-        self.blue_slider = RGBSlider(master, 116, command = change_color)
+        self.blue_slider = RGBSlider(master, 116, command = change_color_sliders)
 
 
         hex_related_x_position: int = 225
@@ -84,8 +100,35 @@ class ColorTab(ctk.CTkFrame):
 
         self.color_hex_label = ctk.CTkLabel(master, text = 'HEX Color:')
         
+        # Maybe I should turn this whole Hex entry thing into a class...
+        def uppercaseletters(*args):
+            self.hex_entry_text.set(self.hex_entry_text.get().upper())
+
+        def hex_certain_characters(event):
+            if event.char in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'a', 'b', 'c', 'd', 'e', 'f'):
+                return True
+            elif event.keysym not in ('Alt_r', 'Alt_L', 'F4', 'BackSpace', 'Return', 'Left', 'Right'):
+                return 'break'
+            else:
+                return False
+
+        def testlimit(P):
+            try:
+                self.hex_entry_text.trace_add('write', uppercaseletters)
+            except AttributeError:
+                # if you somehow got to open this gui program in python 3.6.0 or lower
+                self.hex_entry_text.trace_add('w', uppercaseletters)
+
+            if len(P) <= 6:
+                return True
+            else:
+                self.bell()
+                return False
         
-        self.color_hex_entry = ctk.CTkEntry(master)
+        vcmd = (self.register(testlimit), '%P')
+
+        self.hex_entry_text = tk.StringVar(master)
+        self.color_hex_entry = ctk.CTkEntry(master, textvariable = self.hex_entry_text, validate = 'key', validatecommand = vcmd)
         
         self.color_hex_copy_button = ctk.CTkButton(
             master, 
@@ -101,6 +144,8 @@ class ColorTab(ctk.CTkFrame):
 
         self.color_hex_entry.place(x = 297, y = hex_related_y_position)
         self.color_hex_entry.insert(ctk.END, color_beginning_value)
+        self.color_hex_entry.bind('<Return>', change_color_hex)
+        self.color_hex_entry.bind('<KeyPress>', hex_certain_characters)
 
 
 class ExportWindowIII(ctk.CTkToplevel):
