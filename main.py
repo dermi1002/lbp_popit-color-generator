@@ -480,14 +480,18 @@ class ColorTabList(ctk.CTkTabview):
 
             with open(value_list_path, 'r+') as old_valuelist_content:
                 if 'LBP1' in old_valuelist_content.readline():
-                    print(
-                        'The Game selected in this file is LittleBigPlanet 1.\n' +
-                        'Therefore, the program will read the first six hexadecimals of a Value as the Color,\n' +
-                        'and potentially the last two as its Transparency.\n\n' +
-                        f'Primary Color = {old_valuelist_content.readline()[9:15]}'
-                        f'Secondary Color = {old_valuelist_content.readline()[11:17]}'
-                        f'Tertiary Color = {old_valuelist_content.readline()[10:16]}'
-                    )
+                    self.primary_colortab.color_preview.configure(background = f'#{old_valuelist_content.readline()[9:15]}')
+                    self.primary_colortab.color_hex_entry.delete(0, ctk.END)
+                    self.primary_colortab.color_hex_entry.insert(0, str(self.primary_colortab.color_preview.cget('background')[1:]))
+                    # self.primary_colortab.change_color_hex(value)
+
+                    self.secondary_colortab.color_preview.configure(background = f'#{old_valuelist_content.readline()[11:17]}')
+                    self.secondary_colortab.color_hex_entry.delete(0, ctk.END)
+                    self.secondary_colortab.color_hex_entry.insert(0, str(self.secondary_colortab.color_preview.cget('background')[1:]))
+                    
+                    self.tertiary_colortab.color_preview.configure(background = f'#{old_valuelist_content.readline()[10:16]}')
+                    self.tertiary_colortab.color_hex_entry.delete(0, ctk.END)
+                    self.tertiary_colortab.color_hex_entry.insert(0, str(self.tertiary_colortab.color_preview.cget('background')[1:]))
 
 
         self.place_configure(width = 530, height = 254)
