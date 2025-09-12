@@ -107,7 +107,7 @@ class ColorTab(ctk.CTkFrame):
         def hex_certain_characters(event):
             if event.char in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'a', 'b', 'c', 'd', 'e', 'f'):
                 return True
-            elif event.keysym not in ('Alt_r', 'Alt_L', 'F4', 'BackSpace', 'Return', 'Left', 'Right', 'Control_L' 'V'):
+            elif event.keysym not in ('Alt_L', 'F4', 'BackSpace', 'Return', 'Left', 'Right', 'Control_L' 'V'):
                 return 'break'
             else:
                 return False
@@ -458,10 +458,37 @@ class ColorTabList(ctk.CTkTabview):
             )
 
         self.test_toolbar.file_option.add_command(
-            state = tk.DISABLED,
+            # state = tk.DISABLED,
             label = '[Test] Open Value List',
-            command = lambda: external_objects.read_text_list()
+            command = lambda: read_text_list()
             )
+
+
+        def read_text_list():
+            valuelist_load = tk.filedialog.askopenfilename(
+                title = 'Test - Load Value List',
+                initialdir = './save',
+                filetypes = [('Value List', '*.txt'), ('All Files', '*.*')],
+                defaultextension = '.txt'
+                )
+
+            if valuelist_load is None:
+                return
+
+            value_list_path = rf"{valuelist_load}"
+            print(value_list_path)
+
+            with open(value_list_path, 'r+') as old_valuelist_content:
+                if 'LBP1' in old_valuelist_content.readline():
+                    print(
+                        'The Game selected in this file is LittleBigPlanet 1.\n' +
+                        'Therefore, the program will read the first six hexadecimals of a Value as the Color,\n' +
+                        'and potentially the last two as its Transparency.\n\n' +
+                        f'Primary Color = {old_valuelist_content.readline()[9:15]}'
+                        f'Secondary Color = {old_valuelist_content.readline()[11:17]}'
+                        f'Tertiary Color = {old_valuelist_content.readline()[10:16]}'
+                    )
+
 
         self.place_configure(width = 530, height = 254)
         self.place(x = 5)
