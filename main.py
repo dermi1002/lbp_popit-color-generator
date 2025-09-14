@@ -476,14 +476,14 @@ class ColorTabList(ctk.CTkTabview):
                 return
 
             value_list_path = rf"{valuelist_load}"
-            print(value_list_path)
+            # print(value_list_path)
 
             with open(value_list_path, 'r+') as old_valuelist_content:
+                # write sub-optimal code, and once you find an optimization, optimize it
                 if 'LBP1' in old_valuelist_content.readline():
                     self.primary_colortab.color_preview.configure(background = f'#{old_valuelist_content.readline()[9:15]}')
                     self.primary_colortab.color_hex_entry.delete(0, ctk.END)
                     self.primary_colortab.color_hex_entry.insert(0, str(self.primary_colortab.color_preview.cget('background')[1:]))
-                    # self.primary_colortab.change_color_hex(value)
 
                     self.secondary_colortab.color_preview.configure(background = f'#{old_valuelist_content.readline()[11:17]}')
                     self.secondary_colortab.color_hex_entry.delete(0, ctk.END)
@@ -492,6 +492,23 @@ class ColorTabList(ctk.CTkTabview):
                     self.tertiary_colortab.color_preview.configure(background = f'#{old_valuelist_content.readline()[10:16]}')
                     self.tertiary_colortab.color_hex_entry.delete(0, ctk.END)
                     self.tertiary_colortab.color_hex_entry.insert(0, str(self.tertiary_colortab.color_preview.cget('background')[1:]))
+
+
+                    self.primary_colortab.red_slider.set(int(self.primary_colortab.color_hex_entry.get()[:2], 16))
+                    self.primary_colortab.green_slider.set(int(self.primary_colortab.color_hex_entry.get()[2:4], 16))
+                    self.primary_colortab.blue_slider.set(int(self.primary_colortab.color_hex_entry.get()[4:], 16))
+
+                    self.secondary_colortab.red_slider.set(int(self.secondary_colortab.color_hex_entry.get()[:2], 16))
+                    self.secondary_colortab.green_slider.set(int(self.secondary_colortab.color_hex_entry.get()[2:4], 16))
+                    self.secondary_colortab.blue_slider.set(int(self.secondary_colortab.color_hex_entry.get()[4:], 16))
+
+                    self.tertiary_colortab.red_slider.set(int(self.tertiary_colortab.color_hex_entry.get()[:2], 16))
+                    self.tertiary_colortab.green_slider.set(int(self.tertiary_colortab.color_hex_entry.get()[2:4], 16))
+                    self.tertiary_colortab.blue_slider.set(int(self.tertiary_colortab.color_hex_entry.get()[4:], 16))
+
+                # i need to fine a better alternative to 'read' or 'readline' that doesn't consume everything from the file... unless i can somehow transfer the contents into variables...
+                if 'LBP2' in old_valuelist_content.readline() or 'LBP3' in old_valuelist_content.readline():
+                    print(old_valuelist_content.read())
 
 
         self.place_configure(width = 530, height = 254)
