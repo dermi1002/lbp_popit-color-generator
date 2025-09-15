@@ -480,16 +480,23 @@ class ColorTabList(ctk.CTkTabview):
 
             with open(value_list_path, 'r+') as old_valuelist_content:
                 # write sub-optimal code, and once you find an optimization, optimize it
-                if 'LBP1' in old_valuelist_content.readline():
-                    self.primary_colortab.color_preview.configure(background = f'#{old_valuelist_content.readline()[9:15]}')
+                game_line: str = old_valuelist_content.readline()
+                primary_color_line: str = old_valuelist_content.readline()
+                secondary_color_line: str = old_valuelist_content.readline()
+                tertiary_color_line: str = old_valuelist_content.readline()
+
+                print(f'{game_line}\n{primary_color_line}\n{secondary_color_line}\n{tertiary_color_line}')
+
+                if 'LBP1' in game_line:
+                    self.primary_colortab.color_preview.configure(background = f'#{primary_color_line[9:15]}')
                     self.primary_colortab.color_hex_entry.delete(0, ctk.END)
                     self.primary_colortab.color_hex_entry.insert(0, str(self.primary_colortab.color_preview.cget('background')[1:]))
 
-                    self.secondary_colortab.color_preview.configure(background = f'#{old_valuelist_content.readline()[11:17]}')
+                    self.secondary_colortab.color_preview.configure(background = f'#{secondary_color_line[11:17]}')
                     self.secondary_colortab.color_hex_entry.delete(0, ctk.END)
                     self.secondary_colortab.color_hex_entry.insert(0, str(self.secondary_colortab.color_preview.cget('background')[1:]))
                     
-                    self.tertiary_colortab.color_preview.configure(background = f'#{old_valuelist_content.readline()[10:16]}')
+                    self.tertiary_colortab.color_preview.configure(background = f'#{tertiary_color_line[10:16]}')
                     self.tertiary_colortab.color_hex_entry.delete(0, ctk.END)
                     self.tertiary_colortab.color_hex_entry.insert(0, str(self.tertiary_colortab.color_preview.cget('background')[1:]))
 
@@ -506,9 +513,9 @@ class ColorTabList(ctk.CTkTabview):
                     self.tertiary_colortab.green_slider.set(int(self.tertiary_colortab.color_hex_entry.get()[2:4], 16))
                     self.tertiary_colortab.blue_slider.set(int(self.tertiary_colortab.color_hex_entry.get()[4:], 16))
 
-                # i need to fine a better alternative to 'read' or 'readline' that doesn't consume everything from the file... unless i can somehow transfer the contents into variables...
-                if 'LBP2' in old_valuelist_content.readline() or 'LBP3' in old_valuelist_content.readline():
-                    print(old_valuelist_content.read())
+                # turns out storing them in variables did the trick
+                if 'LBP2' in game_line or 'LBP3' in game_line:
+                    print('variables save the day ig')
 
 
         self.place_configure(width = 530, height = 254)
