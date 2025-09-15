@@ -56,22 +56,17 @@ class ColorTab(ctk.CTkFrame):
             self.color_hex_entry.delete(0, ctk.END)
             self.color_hex_entry.insert(0, self.color_print_hex)
 
-            self.color_preview.configure(background = f'#{self.color_hex_entry.get()}')
+            self.color_preview.configure(background = f'#{self.hex_entry_text.get()}')
 
         def change_color_hex(value):
-            self.hex_Red = self.color_hex_entry.get()[:2]
-            self.hex_Green = self.color_hex_entry.get()[2:4]
-            self.hex_Blue = self.color_hex_entry.get()[4:]
+            external_objects.change_slider_values(
+                self.hex_entry_text.get(),
+                self.red_slider.value_variable,
+                self.green_slider.value_variable,
+                self.blue_slider.value_variable
+                )
 
-            self.hex_Red_int = int(self.hex_Red, 16)
-            self.hex_Green_int = int(self.hex_Green, 16)
-            self.hex_Blue_int = int(self.hex_Blue, 16)
-
-            self.red_slider.value_variable.set(self.hex_Red_int)
-            self.green_slider.value_variable.set(self.hex_Green_int)
-            self.blue_slider.value_variable.set(self.hex_Blue_int)
-
-            self.color_preview.configure(background = f'#{self.color_hex_entry.get()}')
+            self.color_preview.configure(background = f'#{self.hex_entry_text.get()}')
 
 
         def copy_color_hex_entry():
@@ -108,9 +103,15 @@ class ColorTab(ctk.CTkFrame):
             self.hex_entry_text.set(self.hex_entry_text.get().upper())
 
         def hex_certain_characters(event):
-            if event.char in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'a', 'b', 'c', 'd', 'e', 'f'):
+            if event.char in (
+                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                'A', 'B', 'C', 'D', 'E', 'F',
+                'a', 'b', 'c', 'd', 'e', 'f'):
                 return True
-            elif event.keysym not in ('Alt_L', 'F4', 'BackSpace', 'Return', 'Left', 'Right', 'Control_L' 'V'):
+            elif event.keysym not in (
+                'Alt_L', 'F4',
+                'BackSpace', 'Return', 'Left', 'Right',
+                'Control_L' 'V'):
                 return 'break'
             else:
                 return False
@@ -131,7 +132,13 @@ class ColorTab(ctk.CTkFrame):
         vcmd = (self.register(testlimit), '%P')
 
         self.hex_entry_text = tk.StringVar(master)
-        self.color_hex_entry = ctk.CTkEntry(master, textvariable = self.hex_entry_text, validate = 'key', validatecommand = vcmd)
+        
+        self.color_hex_entry = ctk.CTkEntry(
+            master,
+            textvariable = self.hex_entry_text,
+            validate = 'key',
+            validatecommand = vcmd
+            )
         
         self.color_hex_copy_button = ctk.CTkButton(
             master, 
@@ -147,16 +154,7 @@ class ColorTab(ctk.CTkFrame):
 
         self.color_hex_entry.place(x = 297, y = hex_related_y_position)
         self.color_hex_entry.insert(ctk.END, color_beginning_value)
-        self.color_hex_entry.bind(
-            '<Return>',
-            change_color_hex
-            # lambda: external_objects.change_color_hex(
-            #     self.color_hex_entry.get(),
-            #     self.red_slider.value_variable,
-            #     self.green_slider.value_variable,
-            #     self.blue_slider.value_variable
-            #     )
-            )
+        self.color_hex_entry.bind('<Return>', change_color_hex)
         self.color_hex_entry.bind('<KeyPress>', hex_certain_characters)
 
 
@@ -513,22 +511,22 @@ class ColorTabList(ctk.CTkTabview):
                     self.tertiary_colortab.color_hex_entry.insert(0, str(self.tertiary_colortab.color_preview.cget('background')[1:]))
 
 
-                    external_objects.change_color_hex(
-                        self.primary_colortab.color_hex_entry.get(),
+                    external_objects.change_slider_values(
+                        self.primary_colortab.hex_entry_text.get(),
                         self.primary_colortab.red_slider.value_variable,
                         self.primary_colortab.green_slider.value_variable,
                         self.primary_colortab.blue_slider.value_variable
                         )
 
-                    external_objects.change_color_hex(
-                        self.secondary_colortab.color_hex_entry.get(),
+                    external_objects.change_slider_values(
+                        self.secondary_colortab.hex_entry_text.get(),
                         self.secondary_colortab.red_slider.value_variable,
                         self.secondary_colortab.green_slider.value_variable,
                         self.secondary_colortab.blue_slider.value_variable
                         )
 
-                    external_objects.change_color_hex(
-                        self.tertiary_colortab.color_hex_entry.get(),
+                    external_objects.change_slider_values(
+                        self.tertiary_colortab.hex_entry_text.get(),
                         self.tertiary_colortab.red_slider.value_variable,
                         self.tertiary_colortab.green_slider.value_variable,
                         self.tertiary_colortab.blue_slider.value_variable
