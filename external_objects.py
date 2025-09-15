@@ -347,6 +347,18 @@ def read_text_list():
                 f'Primary Color = {valuelist_content.read()}'
                 )
     
+def change_color_hex(hex_value, red_value, green_value, blue_value):
+    print(hex_value)
+    
+    red_change = int(hex_value[:2], 16)
+    green_change = int(hex_value[2:4], 16)
+    blue_change = int(hex_value[4:], 16)
+
+    red_value.set(red_change)
+    green_value.set(green_change)
+    blue_value.set(blue_change)
+
+
 def closing_prompt(master):
     if messagebox.askyesno('Close the Program?', 'Are you sure you want to close the program?'):
         master.destroy()

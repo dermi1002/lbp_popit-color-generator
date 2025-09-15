@@ -16,13 +16,16 @@ class RGBSlider(ctk.CTkSlider):
         slider_x_position: int = 260
         slider_y_position: int = slider_y_position
 
+        self.value_variable = tk.IntVar(master)
+
         self.configure(
             from_ = 0, to = slider_max_value, 
             width = slider_value_range, 
-            number_of_steps = slider_value_range
+            number_of_steps = slider_value_range,
+            variable = self.value_variable
             )
 
-        self.set(0)
+        self.value_variable.set(0)
         self.place(x = slider_x_position, y = slider_y_position)
 
 class RGBLetter(ctk.CTkLabel):
@@ -44,9 +47,9 @@ class ColorTab(ctk.CTkFrame):
         super().__init__(master, *args, **kwargs)
 
         def change_color_sliders(value):
-            self.Red = int(self.red_slider.get())
-            self.Green = int(self.green_slider.get())
-            self.Blue = int(self.blue_slider.get())
+            self.Red = int(self.red_slider.value_variable.get())
+            self.Green = int(self.green_slider.value_variable.get())
+            self.Blue = int(self.blue_slider.value_variable.get())
 
             self.color_print_hex = '%02X%02X%02X' % (self.Red, self.Green, self.Blue)
 
@@ -64,9 +67,9 @@ class ColorTab(ctk.CTkFrame):
             self.hex_Green_int = int(self.hex_Green, 16)
             self.hex_Blue_int = int(self.hex_Blue, 16)
 
-            self.red_slider.set(self.hex_Red_int)
-            self.green_slider.set(self.hex_Green_int)
-            self.blue_slider.set(self.hex_Blue_int)
+            self.red_slider.value_variable.set(self.hex_Red_int)
+            self.green_slider.value_variable.set(self.hex_Green_int)
+            self.blue_slider.value_variable.set(self.hex_Blue_int)
 
             self.color_preview.configure(background = f'#{self.color_hex_entry.get()}')
 
@@ -144,7 +147,16 @@ class ColorTab(ctk.CTkFrame):
 
         self.color_hex_entry.place(x = 297, y = hex_related_y_position)
         self.color_hex_entry.insert(ctk.END, color_beginning_value)
-        self.color_hex_entry.bind('<Return>', change_color_hex)
+        self.color_hex_entry.bind(
+            '<Return>',
+            change_color_hex
+            # lambda: external_objects.change_color_hex(
+            #     self.color_hex_entry.get(),
+            #     self.red_slider.value_variable,
+            #     self.green_slider.value_variable,
+            #     self.blue_slider.value_variable
+            #     )
+            )
         self.color_hex_entry.bind('<KeyPress>', hex_certain_characters)
 
 
@@ -485,7 +497,7 @@ class ColorTabList(ctk.CTkTabview):
                 secondary_color_line: str = old_valuelist_content.readline()
                 tertiary_color_line: str = old_valuelist_content.readline()
 
-                print(f'{game_line}\n{primary_color_line}\n{secondary_color_line}\n{tertiary_color_line}')
+                # print(f'{game_line}\n{primary_color_line}\n{secondary_color_line}\n{tertiary_color_line}')
 
                 if 'LBP1' in game_line:
                     self.primary_colortab.color_preview.configure(background = f'#{primary_color_line[9:15]}')
@@ -501,21 +513,31 @@ class ColorTabList(ctk.CTkTabview):
                     self.tertiary_colortab.color_hex_entry.insert(0, str(self.tertiary_colortab.color_preview.cget('background')[1:]))
 
 
-                    self.primary_colortab.red_slider.set(int(self.primary_colortab.color_hex_entry.get()[:2], 16))
-                    self.primary_colortab.green_slider.set(int(self.primary_colortab.color_hex_entry.get()[2:4], 16))
-                    self.primary_colortab.blue_slider.set(int(self.primary_colortab.color_hex_entry.get()[4:], 16))
+                    external_objects.change_color_hex(
+                        self.primary_colortab.color_hex_entry.get(),
+                        self.primary_colortab.red_slider.value_variable,
+                        self.primary_colortab.green_slider.value_variable,
+                        self.primary_colortab.blue_slider.value_variable
+                        )
 
-                    self.secondary_colortab.red_slider.set(int(self.secondary_colortab.color_hex_entry.get()[:2], 16))
-                    self.secondary_colortab.green_slider.set(int(self.secondary_colortab.color_hex_entry.get()[2:4], 16))
-                    self.secondary_colortab.blue_slider.set(int(self.secondary_colortab.color_hex_entry.get()[4:], 16))
+                    external_objects.change_color_hex(
+                        self.secondary_colortab.color_hex_entry.get(),
+                        self.secondary_colortab.red_slider.value_variable,
+                        self.secondary_colortab.green_slider.value_variable,
+                        self.secondary_colortab.blue_slider.value_variable
+                        )
 
-                    self.tertiary_colortab.red_slider.set(int(self.tertiary_colortab.color_hex_entry.get()[:2], 16))
-                    self.tertiary_colortab.green_slider.set(int(self.tertiary_colortab.color_hex_entry.get()[2:4], 16))
-                    self.tertiary_colortab.blue_slider.set(int(self.tertiary_colortab.color_hex_entry.get()[4:], 16))
+                    external_objects.change_color_hex(
+                        self.tertiary_colortab.color_hex_entry.get(),
+                        self.tertiary_colortab.red_slider.value_variable,
+                        self.tertiary_colortab.green_slider.value_variable,
+                        self.tertiary_colortab.blue_slider.value_variable
+                        )
 
                 # turns out storing them in variables did the trick
                 if 'LBP2' in game_line or 'LBP3' in game_line:
-                    print('variables save the day ig')
+                    emphasis_color_line: str = old_valuelist_content.readline()
+                    print(emphasis_color_line)
 
 
         self.place_configure(width = 530, height = 254)
