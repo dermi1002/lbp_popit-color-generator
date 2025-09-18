@@ -498,44 +498,82 @@ class ColorTabList(ctk.CTkTabview):
                 # print(f'{game_line}\n{primary_color_line}\n{secondary_color_line}\n{tertiary_color_line}')
 
                 if 'LBP1' in game_line:
-                    self.primary_colortab.color_preview.configure(background = f'#{primary_color_line[9:15]}')
-                    self.primary_colortab.color_hex_entry.delete(0, ctk.END)
-                    self.primary_colortab.color_hex_entry.insert(0, str(self.primary_colortab.color_preview.cget('background')[1:]))
-
-                    self.secondary_colortab.color_preview.configure(background = f'#{secondary_color_line[11:17]}')
-                    self.secondary_colortab.color_hex_entry.delete(0, ctk.END)
-                    self.secondary_colortab.color_hex_entry.insert(0, str(self.secondary_colortab.color_preview.cget('background')[1:]))
-                    
-                    self.tertiary_colortab.color_preview.configure(background = f'#{tertiary_color_line[10:16]}')
-                    self.tertiary_colortab.color_hex_entry.delete(0, ctk.END)
-                    self.tertiary_colortab.color_hex_entry.insert(0, str(self.tertiary_colortab.color_preview.cget('background')[1:]))
-
-
-                    external_objects.change_slider_values(
-                        self.primary_colortab.hex_entry_text.get(),
+                    external_objects.change_color_preview(
+                        f'{primary_color_line[9:15]}',
+                        self.primary_colortab.color_preview,
+                        self.primary_colortab.color_hex_entry,
                         self.primary_colortab.red_slider.value_variable,
                         self.primary_colortab.green_slider.value_variable,
-                        self.primary_colortab.blue_slider.value_variable
+                        self.primary_colortab.blue_slider.value_variable,
+                        ctk.END
                         )
 
-                    external_objects.change_slider_values(
-                        self.secondary_colortab.hex_entry_text.get(),
+                    external_objects.change_color_preview(
+                        f'{secondary_color_line[11:17]}',
+                        self.secondary_colortab.color_preview,
+                        self.secondary_colortab.color_hex_entry,
                         self.secondary_colortab.red_slider.value_variable,
                         self.secondary_colortab.green_slider.value_variable,
-                        self.secondary_colortab.blue_slider.value_variable
+                        self.secondary_colortab.blue_slider.value_variable,
+                        ctk.END
                         )
 
-                    external_objects.change_slider_values(
-                        self.tertiary_colortab.hex_entry_text.get(),
+                    external_objects.change_color_preview(
+                        f'{tertiary_color_line[10:16]}',
+                        self.tertiary_colortab.color_preview,
+                        self.tertiary_colortab.color_hex_entry,
                         self.tertiary_colortab.red_slider.value_variable,
                         self.tertiary_colortab.green_slider.value_variable,
-                        self.tertiary_colortab.blue_slider.value_variable
+                        self.tertiary_colortab.blue_slider.value_variable,
+                        ctk.END
                         )
+
 
                 # turns out storing them in variables did the trick
                 if 'LBP2' in game_line or 'LBP3' in game_line:
                     emphasis_color_line: str = old_valuelist_content.readline()
-                    print(emphasis_color_line)
+                    # print(emphasis_color_line)
+
+                    external_objects.change_color_preview(
+                        f'{primary_color_line[11:17]}',
+                        self.primary_colortab.color_preview,
+                        self.primary_colortab.color_hex_entry,
+                        self.primary_colortab.red_slider.value_variable,
+                        self.primary_colortab.green_slider.value_variable,
+                        self.primary_colortab.blue_slider.value_variable,
+                        ctk.END
+                        )
+
+                    external_objects.change_color_preview(
+                        f'{secondary_color_line[13:19]}',
+                        self.secondary_colortab.color_preview,
+                        self.secondary_colortab.color_hex_entry,
+                        self.secondary_colortab.red_slider.value_variable,
+                        self.secondary_colortab.green_slider.value_variable,
+                        self.secondary_colortab.blue_slider.value_variable,
+                        ctk.END
+                        )
+
+                    external_objects.change_color_preview(
+                        f'{tertiary_color_line[12:18]}',
+                        self.tertiary_colortab.color_preview,
+                        self.tertiary_colortab.color_hex_entry,
+                        self.tertiary_colortab.red_slider.value_variable,
+                        self.tertiary_colortab.green_slider.value_variable,
+                        self.tertiary_colortab.blue_slider.value_variable,
+                        ctk.END
+                        )
+
+                    external_objects.change_color_preview(
+                        f'{emphasis_color_line[12:18]}',
+                        self.emphasis_colortab.color_preview,
+                        self.emphasis_colortab.color_hex_entry,
+                        self.emphasis_colortab.red_slider.value_variable,
+                        self.emphasis_colortab.green_slider.value_variable,
+                        self.emphasis_colortab.blue_slider.value_variable,
+                        ctk.END
+                        )
+
 
 
         self.place_configure(width = 530, height = 254)
