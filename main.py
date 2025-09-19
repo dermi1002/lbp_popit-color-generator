@@ -1,5 +1,5 @@
 import external_objects
-import tkinter as tk # yeah, i know, but hear me out
+import tkinter as tk
 from tkinter import messagebox
 import customtkinter as ctk
 import pyperclip
@@ -346,10 +346,9 @@ class ColorTabList(ctk.CTkTabview):
         self.tertiary_colortab = ColorTab(self.tab('Tertiary'))
         self.emphasis_colortab = ColorTab(self.tab('Emphasis'))
 
-
         # Export Tab UI
         export_tab = ctk.CTkFrame(self.tab('Export'))
-        
+
         def disable_export_ncl_button(value):
             if game_title_option.get() != 'LBP2 (BCUS98245 | 1.33)': 
                 new_export_ncl_button.configure(state = 'disabled')
@@ -358,11 +357,11 @@ class ColorTabList(ctk.CTkTabview):
 
 
         export_option_width: int = 190
-        
+
         code_caption_label = ctk.CTkLabel(export_tab, text = 'NetCheat Code Name:')
         code_caption_entry = ctk.CTkEntry(export_tab, width = export_option_width)
         code_caption_note = ctk.CTkLabel(export_tab, text = 'It\'s optional, but it helps.')
-        
+
 
         game_title = ctk.CTkLabel(export_tab, text = 'Game Title:')
 
@@ -425,7 +424,7 @@ class ColorTabList(ctk.CTkTabview):
         game_title.grid(sticky = 'nw', row = 2, column = 0)
         game_title_option.grid(sticky = 'ne', row = 2, column = 1)
         game_title_note.grid(sticky = 'ne', row = 3, column = 1)
-        
+
         export_button_frame.grid(sticky = 's', row = 4, columnspan = 2, pady = (10, 0))
 
         new_export_ncl_button.grid(sticky = 'sw', row = 4, column = 0)
@@ -470,11 +469,18 @@ class ColorTabList(ctk.CTkTabview):
         self.test_toolbar.file_option.add_command(
             # state = tk.DISABLED,
             label = '[Test] Open Value List',
-            command = lambda: read_text_list()
+            command = lambda: open_text_list()
             )
 
+        self.test_toolbar.file_option.add_command(
+            # state = tk.DISABLED,
+            label = '[Test] Open YAML Dict.',
+            command = None
+            )
+ 
 
-        def read_text_list():
+
+        def open_text_list():
             valuelist_load = tk.filedialog.askopenfilename(
                 title = 'Test - Load Value List',
                 initialdir = './save',
@@ -498,82 +504,66 @@ class ColorTabList(ctk.CTkTabview):
                 # print(f'{game_line}\n{primary_color_line}\n{secondary_color_line}\n{tertiary_color_line}')
 
                 if 'LBP1' in game_line:
-                    external_objects.change_color_preview(
+                    batch_change_color_elements(
                         f'{primary_color_line[9:15]}',
-                        self.primary_colortab.color_preview,
-                        self.primary_colortab.color_hex_entry,
-                        self.primary_colortab.red_slider.value_variable,
-                        self.primary_colortab.green_slider.value_variable,
-                        self.primary_colortab.blue_slider.value_variable,
-                        ctk.END
-                        )
-
-                    external_objects.change_color_preview(
-                        f'{secondary_color_line[11:17]}',
-                        self.secondary_colortab.color_preview,
-                        self.secondary_colortab.color_hex_entry,
-                        self.secondary_colortab.red_slider.value_variable,
-                        self.secondary_colortab.green_slider.value_variable,
-                        self.secondary_colortab.blue_slider.value_variable,
-                        ctk.END
-                        )
-
-                    external_objects.change_color_preview(
+                        f'{secondary_color_line[11:17]}', 
                         f'{tertiary_color_line[10:16]}',
-                        self.tertiary_colortab.color_preview,
-                        self.tertiary_colortab.color_hex_entry,
-                        self.tertiary_colortab.red_slider.value_variable,
-                        self.tertiary_colortab.green_slider.value_variable,
-                        self.tertiary_colortab.blue_slider.value_variable,
-                        ctk.END
-                        )
-
+                        '000000' # complete black, the beginning color value; 
+                        ) # i can't use variables from other classes and i don't wanna bring it to global scale.
 
                 # turns out storing them in variables did the trick
                 if 'LBP2' in game_line or 'LBP3' in game_line:
                     emphasis_color_line: str = old_valuelist_content.readline()
                     # print(emphasis_color_line)
 
-                    external_objects.change_color_preview(
+                    batch_change_color_elements(
                         f'{primary_color_line[11:17]}',
-                        self.primary_colortab.color_preview,
-                        self.primary_colortab.color_hex_entry,
-                        self.primary_colortab.red_slider.value_variable,
-                        self.primary_colortab.green_slider.value_variable,
-                        self.primary_colortab.blue_slider.value_variable,
-                        ctk.END
-                        )
-
-                    external_objects.change_color_preview(
-                        f'{secondary_color_line[13:19]}',
-                        self.secondary_colortab.color_preview,
-                        self.secondary_colortab.color_hex_entry,
-                        self.secondary_colortab.red_slider.value_variable,
-                        self.secondary_colortab.green_slider.value_variable,
-                        self.secondary_colortab.blue_slider.value_variable,
-                        ctk.END
-                        )
-
-                    external_objects.change_color_preview(
+                        f'{secondary_color_line[13:19]}', 
                         f'{tertiary_color_line[12:18]}',
-                        self.tertiary_colortab.color_preview,
-                        self.tertiary_colortab.color_hex_entry,
-                        self.tertiary_colortab.red_slider.value_variable,
-                        self.tertiary_colortab.green_slider.value_variable,
-                        self.tertiary_colortab.blue_slider.value_variable,
-                        ctk.END
+                        f'{emphasis_color_line[12:18]}'
                         )
 
-                    external_objects.change_color_preview(
-                        f'{emphasis_color_line[12:18]}',
-                        self.emphasis_colortab.color_preview,
-                        self.emphasis_colortab.color_hex_entry,
-                        self.emphasis_colortab.red_slider.value_variable,
-                        self.emphasis_colortab.green_slider.value_variable,
-                        self.emphasis_colortab.blue_slider.value_variable,
-                        ctk.END
-                        )
 
+        def batch_change_color_elements(primary_color, secondary_color, tertiary_color, emphasis_color):
+            external_objects.open_color_file(
+                primary_color,
+                self.primary_colortab.color_preview,
+                self.primary_colortab.color_hex_entry,
+                self.primary_colortab.red_slider.value_variable,
+                self.primary_colortab.green_slider.value_variable,
+                self.primary_colortab.blue_slider.value_variable,
+                ctk.END
+                )
+
+            external_objects.open_color_file(
+                secondary_color,
+                self.secondary_colortab.color_preview,
+                self.secondary_colortab.color_hex_entry,
+                self.secondary_colortab.red_slider.value_variable,
+                self.secondary_colortab.green_slider.value_variable,
+                self.secondary_colortab.blue_slider.value_variable,
+                ctk.END
+                )
+
+            external_objects.open_color_file(
+                tertiary_color,
+                self.tertiary_colortab.color_preview,
+                self.tertiary_colortab.color_hex_entry,
+                self.tertiary_colortab.red_slider.value_variable,
+                self.tertiary_colortab.green_slider.value_variable,
+                self.tertiary_colortab.blue_slider.value_variable,
+                ctk.END
+                )
+
+            external_objects.open_color_file(
+                emphasis_color,
+                self.emphasis_colortab.color_preview,
+                self.emphasis_colortab.color_hex_entry,
+                self.emphasis_colortab.red_slider.value_variable,
+                self.emphasis_colortab.green_slider.value_variable,
+                self.emphasis_colortab.blue_slider.value_variable,
+                ctk.END
+                )
 
 
         self.place_configure(width = 530, height = 254)
@@ -597,4 +587,4 @@ class MainProgram(ctk.CTk):
 
 
 if __name__ == '__main__':
-    MainProgram() # it was about time i did this
+    MainProgram() 

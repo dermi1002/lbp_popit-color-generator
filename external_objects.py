@@ -335,7 +335,7 @@ def change_slider_values(hex_value, red_value, green_value, blue_value):
     blue_value.set(blue_change)
 
 
-def change_color_preview(color_value, preview_object, hex_entry, red_value_open, green_value_open, blue_value_open, end_version):
+def open_color_file(color_value, preview_object, hex_entry, red_value_open, green_value_open, blue_value_open, end_version):
     preview_object.configure(background = f'#{color_value}')
     hex_entry.delete(0, end_version)
     hex_entry.insert(0, str(preview_object.cget('background')[1:]))
