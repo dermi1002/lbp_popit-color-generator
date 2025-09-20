@@ -35,7 +35,7 @@ class RGBLetter(ctk.CTkLabel):
         rgb_letter_x_position: int = 225
         rgb_letter_y_position: int = rgb_letter_y_position
 
-        rgb_letter_text = ['R', 'G', 'B', 'H', 'S', 'V']
+        rgb_letter_text = ['R', 'G', 'B', 'H', 'S', 'V', 'A']
         rgb_letter_selection: int = rgb_letter_text[rgb_letter_selection]
 
         self.configure(text = rgb_letter_selection)
@@ -475,7 +475,7 @@ class ColorTabList(ctk.CTkTabview):
         self.test_toolbar.file_option.add_command(
             # state = tk.DISABLED,
             label = '[Test] Open YAML Dict.',
-            command = None
+            command = lambda: open_yaml_dictionary()
             )
  
 
@@ -522,6 +522,38 @@ class ColorTabList(ctk.CTkTabview):
                         f'{tertiary_color_line[12:18]}',
                         f'{emphasis_color_line[12:18]}'
                         )
+
+
+        def open_yaml_dictionary():
+            yaml_dictionary_load = tk.filedialog.askopenfilename(
+                title = 'Test - Load YAML Dictionary',
+                initialdir = './save',
+                filetypes = [('YAML Dictionary', '*.yaml'), ('All Files', '*.*')],
+                defaultextension = '.yaml'
+                )
+
+            if yaml_dictionary_load is None:
+                return
+
+            yaml_dictionary_path = rf"{yaml_dictionary_load}"
+            # print(yaml_dictionary_path)
+
+            with open(yaml_dictionary_path, 'r+') as yaml_dictionary_content:
+                opened_yaml_dictionary = yaml.safe_load(yaml_dictionary_content)
+
+                opened_yaml_values = opened_yaml_dictionary['color-code']
+
+                yaml_primary_color = opened_yaml_values['primcolor'] # yikes! shortened "variables"! could've been worse...
+                yaml_secondary_color = opened_yaml_values['seccolor']
+                yaml_tertiary_color = opened_yaml_values['tertcolor']
+                yaml_emphasis_color = opened_yaml_values['emphcolor']
+
+                batch_change_color_elements(
+                    f'{yaml_primary_color}',
+                    f'{yaml_secondary_color}',
+                    f'{yaml_tertiary_color}',
+                    f'{yaml_emphasis_color}'
+                    )
 
 
         def batch_change_color_elements(primary_color, secondary_color, tertiary_color, emphasis_color):
