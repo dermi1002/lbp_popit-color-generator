@@ -347,11 +347,6 @@ def open_color_file(color_value, preview_object, hex_entry, red_value_open, gree
         blue_value_open
         )
 
-    
-def closing_prompt(master):
-    if messagebox.askyesno('Close the Program?', 'Are you sure you want to close the program?'):
-        master.destroy()
-
 
 class Toolbar(tk.Menu):
     def __init__(self, master, *args, **kwargs):

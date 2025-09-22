@@ -456,29 +456,57 @@ class ColorTabList(ctk.CTkTabview):
 
 
         self.test_toolbar.file_option.add_command(
-            label = "Save Code",
-            command = show_export_window_iii
+            label = "New",
+            command = lambda: discard_changes_new_file()
             )
 
-        self.test_toolbar.file_option.add_command(
-            state = tk.DISABLED,
-            label = f'can\'t open files for now',
-            command = None
-            )
+        self.test_toolbar.file_option.add_separator()
 
         self.test_toolbar.file_option.add_command(
             # state = tk.DISABLED,
             label = '[Test] Open Value List',
-            command = lambda: open_text_list()
+            command = lambda: discard_changes_valuelist()
             )
 
         self.test_toolbar.file_option.add_command(
             # state = tk.DISABLED,
             label = '[Test] Open YAML Dict.',
-            command = lambda: open_yaml_dictionary()
+            command = lambda: discard_changes_yaml_dictionary()
             )
- 
 
+
+        def discard_changes_new_file():
+            if messagebox.askyesno(
+                    "Discard Changes?",
+                    f"You are about to start a new file.\nDiscard changes to current session?"
+                    ):
+                batch_change_color_elements(
+                    '000000',
+                    '000000',
+                    '000000',
+                    '000000'
+                    )
+
+        def discard_changes_valuelist():
+            if messagebox.askyesno(
+                    "Discard Changes?",
+                    f"You are about to open a Value List.\nDiscard changes to current session?"
+                    ):
+                open_text_list()
+
+        def discard_changes_yaml_dictionary():
+            if messagebox.askyesno(
+                    "Discard Changes?",
+                    f"You are about to open a YAML Dictionary.\nDiscard changes to current session?"
+                    ):
+                open_yaml_dictionary()
+
+        self.test_toolbar.file_option.add_separator()
+
+        self.test_toolbar.file_option.add_command(
+            label = "Save Code",
+            command = show_export_window_iii
+            )
 
         def open_text_list():
             valuelist_load = tk.filedialog.askopenfilename(
@@ -607,14 +635,22 @@ class MainProgram(ctk.CTk):
         super().__init__()
 
         # Window Setup
-        self.title("LBP2 Color Generator")
-        self.geometry('540x260')
+        self.title("LBP Popit Color Generator") # i mean it was able to export files for more than lbp2 
+        self.geometry('540x260')          # for a while so i might as well...
         self.resizable(False, False)
 
         # Program
         ColorTabList(self)
 
-        self.protocol('WM_DELETE_WINDOW', lambda: external_objects.closing_prompt(self))
+        # Program Closing Function
+        def program_close():
+            if messagebox.askyesno(
+                    "Discard Changes?",
+                    f"You are about to quit the program.\nDiscard changes to current session?"
+                    ):
+                self.destroy()
+
+        self.protocol('WM_DELETE_WINDOW', lambda: program_close())
         self.mainloop()
 
 
