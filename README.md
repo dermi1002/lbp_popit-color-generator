@@ -39,9 +39,10 @@ Further instructions on how to use the program can be found in the Documents sec
 
 # To-do List
 ### High Priority:
-- [ ] Add functionality to change colors via hex color entry and .TXT/.YAML importing
+- [x] Add functionality to change colors via hex color entry and .TXT/.YAML importing
 
 ### Next:
+- [ ] Refactor and organize code again
 - [ ] Add Terminal logs and keyboard shortcuts
 - [ ] Retheme the GUI to Tkinter's Ttk widget to remove CustomTkinter dependency and support Linux out-of-the-box
 

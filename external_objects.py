@@ -181,17 +181,17 @@ def export_value_list(
 
 def prefix_game_info(game):
     if game == 'LBP1 (BCUS98148 | 1.30)':
-        output: str = ".LBP1 BCUS98148 1.30"
+        output: str = "- LBP1 BCUS98148 1.30" # files starting with '.' count as hidden in most linux file explorers
         
         return output
 
     if game == "LBP2 (BCUS98245 | 1.33)":
-        output: str = ".LBP2 BCUS98245 1.33"
+        output: str = "- LBP2 BCUS98245 1.33"
 
         return output
 
     if game == "LBP3 (BCUS98362 | 1.26)":
-        output: str = ".LBP3 BCUS98362 1.26"
+        output: str = "- LBP3 BCUS98362 1.26"
 
         return output
 

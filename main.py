@@ -464,13 +464,13 @@ class ColorTabList(ctk.CTkTabview):
 
         self.test_toolbar.file_option.add_command(
             # state = tk.DISABLED,
-            label = '[Test] Open Value List',
+            label = 'Open Value List',
             command = lambda: discard_changes_valuelist()
             )
 
         self.test_toolbar.file_option.add_command(
             # state = tk.DISABLED,
-            label = '[Test] Open YAML Dict.',
+            label = 'Open YAML Dict.',
             command = lambda: discard_changes_yaml_dictionary()
             )
 
