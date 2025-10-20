@@ -1,5 +1,5 @@
 import external_objects
-import tkinter as tk # yeah, i know, but hear me out
+import tkinter as tk
 from tkinter import messagebox
 import customtkinter as ctk
 import pyperclip
@@ -16,13 +16,16 @@ class RGBSlider(ctk.CTkSlider):
         slider_x_position: int = 260
         slider_y_position: int = slider_y_position
 
+        self.value_variable = tk.IntVar(master)
+
         self.configure(
             from_ = 0, to = slider_max_value, 
             width = slider_value_range, 
-            number_of_steps = slider_value_range
+            number_of_steps = slider_value_range,
+            variable = self.value_variable
             )
 
-        self.set(0)
+        self.value_variable.set(0)
         self.place(x = slider_x_position, y = slider_y_position)
 
 class RGBLetter(ctk.CTkLabel):
@@ -32,7 +35,7 @@ class RGBLetter(ctk.CTkLabel):
         rgb_letter_x_position: int = 225
         rgb_letter_y_position: int = rgb_letter_y_position
 
-        rgb_letter_text = ['R', 'G', 'B', 'H', 'S', 'V']
+        rgb_letter_text = ['R', 'G', 'B', 'H', 'S', 'V', 'A']
         rgb_letter_selection: int = rgb_letter_text[rgb_letter_selection]
 
         self.configure(text = rgb_letter_selection)
@@ -43,17 +46,28 @@ class ColorTab(ctk.CTkFrame):
     def __init__(self, master, *args, **kwargs):
         super().__init__(master, *args, **kwargs)
 
-        def change_color(value):
-            self.Red = int(self.red_slider.get())
-            self.Green = int(self.green_slider.get())
-            self.Blue = int(self.blue_slider.get())
+        def change_color_sliders(value):
+            self.Red = int(self.red_slider.value_variable.get())
+            self.Green = int(self.green_slider.value_variable.get())
+            self.Blue = int(self.blue_slider.value_variable.get())
 
             self.color_print_hex = '%02X%02X%02X' % (self.Red, self.Green, self.Blue)
 
-            self.color_preview.configure(background = f'#{self.color_print_hex}')
-
             self.color_hex_entry.delete(0, ctk.END)
             self.color_hex_entry.insert(0, self.color_print_hex)
+
+            self.color_preview.configure(background = f'#{self.hex_entry_text.get()}')
+
+        def change_color_hex(value):
+            external_objects.change_slider_values(
+                self.hex_entry_text.get(),
+                self.red_slider.value_variable,
+                self.green_slider.value_variable,
+                self.blue_slider.value_variable
+                )
+
+            self.color_preview.configure(background = f'#{self.hex_entry_text.get()}')
+
 
         def copy_color_hex_entry():
             pyperclip.copy(self.color_hex_entry.get())
@@ -70,13 +84,13 @@ class ColorTab(ctk.CTkFrame):
 
         
         self.letter_r = RGBLetter(master, 0, 17)
-        self.red_slider = RGBSlider(master, 16, command = change_color)
+        self.red_slider = RGBSlider(master, 16, command = change_color_sliders)
                 
         self.letter_g = RGBLetter(master, 1, 50)
-        self.green_slider = RGBSlider(master, 66, command = change_color)
+        self.green_slider = RGBSlider(master, 66, command = change_color_sliders)
 
         self.letter_b = RGBLetter(master, 2, 82)
-        self.blue_slider = RGBSlider(master, 116, command = change_color)
+        self.blue_slider = RGBSlider(master, 116, command = change_color_sliders)
 
 
         hex_related_x_position: int = 225
@@ -84,8 +98,47 @@ class ColorTab(ctk.CTkFrame):
 
         self.color_hex_label = ctk.CTkLabel(master, text = 'HEX Color:')
         
+        # Maybe I should turn this whole Hex entry thing into a class...
+        def uppercaseletters(*args):
+            self.hex_entry_text.set(self.hex_entry_text.get().upper())
+
+        def hex_certain_characters(event):
+            if event.char in (
+                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                'A', 'B', 'C', 'D', 'E', 'F',
+                'a', 'b', 'c', 'd', 'e', 'f'):
+                return True
+            elif event.keysym not in (
+                'Alt_L', 'F4',
+                'BackSpace', 'Return', 'Left', 'Right',
+                'Control_L' 'V'):
+                return 'break'
+            else:
+                return False
+
+        def testlimit(P):
+            try:
+                self.hex_entry_text.trace_add('write', uppercaseletters)
+            except AttributeError:
+                # if you somehow got to open this gui program in python 3.6.0 or lower
+                self.hex_entry_text.trace_add('w', uppercaseletters)
+
+            if len(P) <= 6:
+                return True
+            else:
+                self.bell()
+                return False
         
-        self.color_hex_entry = ctk.CTkEntry(master)
+        vcmd = (self.register(testlimit), '%P')
+
+        self.hex_entry_text = tk.StringVar(master)
+        
+        self.color_hex_entry = ctk.CTkEntry(
+            master,
+            textvariable = self.hex_entry_text,
+            validate = 'key',
+            validatecommand = vcmd
+            )
         
         self.color_hex_copy_button = ctk.CTkButton(
             master, 
@@ -101,6 +154,8 @@ class ColorTab(ctk.CTkFrame):
 
         self.color_hex_entry.place(x = 297, y = hex_related_y_position)
         self.color_hex_entry.insert(ctk.END, color_beginning_value)
+        self.color_hex_entry.bind('<Return>', change_color_hex)
+        self.color_hex_entry.bind('<KeyPress>', hex_certain_characters)
 
 
 class ExportWindowIII(ctk.CTkToplevel):
@@ -291,10 +346,9 @@ class ColorTabList(ctk.CTkTabview):
         self.tertiary_colortab = ColorTab(self.tab('Tertiary'))
         self.emphasis_colortab = ColorTab(self.tab('Emphasis'))
 
-
         # Export Tab UI
         export_tab = ctk.CTkFrame(self.tab('Export'))
-        
+
         def disable_export_ncl_button(value):
             if game_title_option.get() != 'LBP2 (BCUS98245 | 1.33)': 
                 new_export_ncl_button.configure(state = 'disabled')
@@ -303,11 +357,11 @@ class ColorTabList(ctk.CTkTabview):
 
 
         export_option_width: int = 190
-        
+
         code_caption_label = ctk.CTkLabel(export_tab, text = 'NetCheat Code Name:')
         code_caption_entry = ctk.CTkEntry(export_tab, width = export_option_width)
         code_caption_note = ctk.CTkLabel(export_tab, text = 'It\'s optional, but it helps.')
-        
+
 
         game_title = ctk.CTkLabel(export_tab, text = 'Game Title:')
 
@@ -370,7 +424,7 @@ class ColorTabList(ctk.CTkTabview):
         game_title.grid(sticky = 'nw', row = 2, column = 0)
         game_title_option.grid(sticky = 'ne', row = 2, column = 1)
         game_title_note.grid(sticky = 'ne', row = 3, column = 1)
-        
+
         export_button_frame.grid(sticky = 's', row = 4, columnspan = 2, pady = (10, 0))
 
         new_export_ncl_button.grid(sticky = 'sw', row = 4, column = 0)
@@ -402,21 +456,175 @@ class ColorTabList(ctk.CTkTabview):
 
 
         self.test_toolbar.file_option.add_command(
+            label = "New",
+            command = lambda: discard_changes_new_file()
+            )
+
+        self.test_toolbar.file_option.add_separator()
+
+        self.test_toolbar.file_option.add_command(
+            # state = tk.DISABLED,
+            label = 'Open Value List',
+            command = lambda: discard_changes_valuelist()
+            )
+
+        self.test_toolbar.file_option.add_command(
+            # state = tk.DISABLED,
+            label = 'Open YAML Dict.',
+            command = lambda: discard_changes_yaml_dictionary()
+            )
+
+
+        def discard_changes_new_file():
+            if messagebox.askyesno(
+                    "Discard Changes?",
+                    f"You are about to start a new file.\nDiscard changes to current session?"
+                    ):
+                batch_change_color_elements(
+                    '000000',
+                    '000000',
+                    '000000',
+                    '000000'
+                    )
+
+        def discard_changes_valuelist():
+            if messagebox.askyesno(
+                    "Discard Changes?",
+                    f"You are about to open a Value List.\nDiscard changes to current session?"
+                    ):
+                open_text_list()
+
+        def discard_changes_yaml_dictionary():
+            if messagebox.askyesno(
+                    "Discard Changes?",
+                    f"You are about to open a YAML Dictionary.\nDiscard changes to current session?"
+                    ):
+                open_yaml_dictionary()
+
+        self.test_toolbar.file_option.add_separator()
+
+        self.test_toolbar.file_option.add_command(
             label = "Save Code",
             command = show_export_window_iii
             )
 
-        self.test_toolbar.file_option.add_command(
-            state = tk.DISABLED,
-            label = f'can\'t open files for now',
-            command = None
-            )
+        def open_text_list():
+            valuelist_load = tk.filedialog.askopenfilename(
+                title = 'Test - Load Value List',
+                initialdir = './save',
+                filetypes = [('Value List', '*.txt'), ('All Files', '*.*')],
+                defaultextension = '.txt'
+                )
 
-        self.test_toolbar.file_option.add_command(
-            state = tk.DISABLED,
-            label = '[Test] Open Value List',
-            command = lambda: external_objects.read_text_list()
-            )
+            if valuelist_load is None:
+                return
+
+            value_list_path = rf"{valuelist_load}"
+            # print(value_list_path)
+
+            with open(value_list_path, 'r+') as old_valuelist_content:
+                # write sub-optimal code, and once you find an optimization, optimize it
+                game_line: str = old_valuelist_content.readline()
+                primary_color_line: str = old_valuelist_content.readline()
+                secondary_color_line: str = old_valuelist_content.readline()
+                tertiary_color_line: str = old_valuelist_content.readline()
+
+                # print(f'{game_line}\n{primary_color_line}\n{secondary_color_line}\n{tertiary_color_line}')
+
+                if 'LBP1' in game_line:
+                    batch_change_color_elements(
+                        f'{primary_color_line[9:15]}',
+                        f'{secondary_color_line[11:17]}', 
+                        f'{tertiary_color_line[10:16]}',
+                        '000000' # complete black, the beginning color value; 
+                        ) # i can't use variables from other classes and i don't wanna bring it to global scale.
+
+                # turns out storing them in variables did the trick
+                if 'LBP2' in game_line or 'LBP3' in game_line:
+                    emphasis_color_line: str = old_valuelist_content.readline()
+                    # print(emphasis_color_line)
+
+                    batch_change_color_elements(
+                        f'{primary_color_line[11:17]}',
+                        f'{secondary_color_line[13:19]}', 
+                        f'{tertiary_color_line[12:18]}',
+                        f'{emphasis_color_line[12:18]}'
+                        )
+
+
+        def open_yaml_dictionary():
+            yaml_dictionary_load = tk.filedialog.askopenfilename(
+                title = 'Test - Load YAML Dictionary',
+                initialdir = './save',
+                filetypes = [('YAML Dictionary', '*.yaml'), ('All Files', '*.*')],
+                defaultextension = '.yaml'
+                )
+
+            if yaml_dictionary_load is None:
+                return
+
+            yaml_dictionary_path = rf"{yaml_dictionary_load}"
+            # print(yaml_dictionary_path)
+
+            with open(yaml_dictionary_path, 'r+') as yaml_dictionary_content:
+                opened_yaml_dictionary = yaml.safe_load(yaml_dictionary_content)
+
+                opened_yaml_values = opened_yaml_dictionary['color-code']
+
+                yaml_primary_color = opened_yaml_values['primcolor'] # yikes! shortened "variables"! could've been worse...
+                yaml_secondary_color = opened_yaml_values['seccolor']
+                yaml_tertiary_color = opened_yaml_values['tertcolor']
+                yaml_emphasis_color = opened_yaml_values['emphcolor']
+
+                batch_change_color_elements(
+                    f'{yaml_primary_color}',
+                    f'{yaml_secondary_color}',
+                    f'{yaml_tertiary_color}',
+                    f'{yaml_emphasis_color}'
+                    )
+
+
+        def batch_change_color_elements(primary_color, secondary_color, tertiary_color, emphasis_color):
+            external_objects.open_color_file(
+                primary_color,
+                self.primary_colortab.color_preview,
+                self.primary_colortab.color_hex_entry,
+                self.primary_colortab.red_slider.value_variable,
+                self.primary_colortab.green_slider.value_variable,
+                self.primary_colortab.blue_slider.value_variable,
+                ctk.END
+                )
+
+            external_objects.open_color_file(
+                secondary_color,
+                self.secondary_colortab.color_preview,
+                self.secondary_colortab.color_hex_entry,
+                self.secondary_colortab.red_slider.value_variable,
+                self.secondary_colortab.green_slider.value_variable,
+                self.secondary_colortab.blue_slider.value_variable,
+                ctk.END
+                )
+
+            external_objects.open_color_file(
+                tertiary_color,
+                self.tertiary_colortab.color_preview,
+                self.tertiary_colortab.color_hex_entry,
+                self.tertiary_colortab.red_slider.value_variable,
+                self.tertiary_colortab.green_slider.value_variable,
+                self.tertiary_colortab.blue_slider.value_variable,
+                ctk.END
+                )
+
+            external_objects.open_color_file(
+                emphasis_color,
+                self.emphasis_colortab.color_preview,
+                self.emphasis_colortab.color_hex_entry,
+                self.emphasis_colortab.red_slider.value_variable,
+                self.emphasis_colortab.green_slider.value_variable,
+                self.emphasis_colortab.blue_slider.value_variable,
+                ctk.END
+                )
+
 
         self.place_configure(width = 530, height = 254)
         self.place(x = 5)
@@ -427,16 +635,24 @@ class MainProgram(ctk.CTk):
         super().__init__()
 
         # Window Setup
-        self.title("LBP2 Color Generator")
-        self.geometry('540x260')
+        self.title("LBP Popit Color Generator") # i mean it was able to export files for more than lbp2 
+        self.geometry('540x260')          # for a while so i might as well...
         self.resizable(False, False)
 
         # Program
         ColorTabList(self)
 
-        self.protocol('WM_DELETE_WINDOW', lambda: external_objects.closing_prompt(self))
+        # Program Closing Function
+        def program_close():
+            if messagebox.askyesno(
+                    "Discard Changes?",
+                    f"You are about to quit the program.\nDiscard changes to current session?"
+                    ):
+                self.destroy()
+
+        self.protocol('WM_DELETE_WINDOW', lambda: program_close())
         self.mainloop()
 
 
 if __name__ == '__main__':
-    MainProgram() # it was about time i did this
+    MainProgram() 

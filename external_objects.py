@@ -181,17 +181,17 @@ def export_value_list(
 
 def prefix_game_info(game):
     if game == 'LBP1 (BCUS98148 | 1.30)':
-        output: str = ".LBP1 BCUS98148 1.30"
+        output: str = "- LBP1 BCUS98148 1.30" # files starting with '.' count as hidden in most linux file explorers
         
         return output
 
     if game == "LBP2 (BCUS98245 | 1.33)":
-        output: str = ".LBP2 BCUS98245 1.33"
+        output: str = "- LBP2 BCUS98245 1.33"
 
         return output
 
     if game == "LBP3 (BCUS98362 | 1.26)":
-        output: str = ".LBP3 BCUS98362 1.26"
+        output: str = "- LBP3 BCUS98362 1.26"
 
         return output
 
@@ -324,32 +324,28 @@ def export_any_format(
     else:
         check_existing_file()
 
-def read_text_list():
-    valuelist_load = tk.filedialog.askopenfilename(
-        title = 'Test - Load Value List',
-        initialdir = './save',
-        filetypes = [('Value List', '*.txt'), ('All Files', '*.*')],
-        defaultextension = '.txt'
+def change_slider_values(hex_value, red_value, green_value, blue_value):
+    # print(hex_value)
+    red_change = int(hex_value[:2], 16)
+    green_change = int(hex_value[2:4], 16)
+    blue_change = int(hex_value[4:], 16)
+
+    red_value.set(red_change)
+    green_value.set(green_change)
+    blue_value.set(blue_change)
+
+
+def open_color_file(color_value, preview_object, hex_entry, red_value_open, green_value_open, blue_value_open, end_version):
+    preview_object.configure(background = f'#{color_value}')
+    hex_entry.delete(0, end_version)
+    hex_entry.insert(0, str(preview_object.cget('background')[1:]))
+
+    change_slider_values(
+        hex_entry.get(),
+        red_value_open,
+        green_value_open,
+        blue_value_open
         )
-
-    if valuelist_load is None:
-        return
-
-    value_list_path = rf"{valuelist_load}"
-    print(value_list_path)
-
-    with open(value_list_path) as valuelist_content:
-        if valuelist_content.read()[6:10] == 'LBP1':
-            print(
-                'The Game selected in this file is LittleBigPlanet 1.\n' +
-                'Therefore, the program will read the first six hexadecimals of a Value as the Color,\n' +
-                'and potentially the last two as its Transparency.\n\n' +
-                f'Primary Color = {valuelist_content.read()}'
-                )
-    
-def closing_prompt(master):
-    if messagebox.askyesno('Close the Program?', 'Are you sure you want to close the program?'):
-        master.destroy()
 
 
 class Toolbar(tk.Menu):
