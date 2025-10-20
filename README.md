@@ -42,6 +42,7 @@ Further instructions on how to use the program can be found in the Documents sec
 - [x] Add functionality to change colors via hex color entry and .TXT/.YAML importing
 
 ### Next:
+- [ ] Create Batch and Shell Scripts for automated setup
 - [ ] Refactor and organize code again
 - [ ] Add Terminal logs and keyboard shortcuts
 - [ ] Retheme the GUI to Tkinter's Ttk widget to remove CustomTkinter dependency and support Linux out-of-the-box
