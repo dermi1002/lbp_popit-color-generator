@@ -38,12 +38,11 @@ Further instructions on how to use the program can be found in the Documents sec
 - [How NetCheat Codes Work](./docs/netcheat_pointer_codes.md)
 
 # To-do List
-### High Priority:
-- [x] Add functionality to change colors via hex color entry and .TXT/.YAML importing
-
-### Next:
+### Current Tasks:
 - [ ] Create Batch and Shell Scripts for automated setup
 - [ ] Refactor and organize code again
+
+### Next:
 - [ ] Add Terminal logs and keyboard shortcuts
 - [ ] Retheme the GUI to Tkinter's Ttk widget to remove CustomTkinter dependency and support Linux out-of-the-box
 
@@ -59,3 +58,4 @@ Further instructions on how to use the program can be found in the Documents sec
 - [x] Add top-level windows for File Export and window closing prompt
 - [x] Add a new plain text Value list to deprecate .YAML support
 - [x] Figure out what to do with the Export Tab
+- [x] Add functionality to change colors via hex color entry and .TXT/.YAML importing
