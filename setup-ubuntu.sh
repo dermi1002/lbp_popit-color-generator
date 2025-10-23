@@ -10,7 +10,7 @@ lbp_pcg_prefix="${text_bold}${text_cyan}LBP Popit Color Generator${text_reset}:"
 lbp_pcg_script="${text_bold}${text_yellow}lbp_pcg.sh${text_reset}"
 
 # Script's Code
-read -p "$lbp_pcg_prefix This script requires connection to the internet. Continue? (Y/n): " confirm && \
+read -p "$lbp_pcg_prefix This script requires connection to the Internet. Continue? (Y/n): " confirm && \
 [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]] || exit 1
 
 trap 'echo "$lbp_pcg_prefix Has an error occurred?"' ERR
