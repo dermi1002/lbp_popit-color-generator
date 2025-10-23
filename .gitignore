@@ -1,1 +1,4 @@
+.venv_ubuntu/
+.venv_windows/
+
 lbp_pcg.sh

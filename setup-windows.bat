@@ -1,0 +1,13 @@
+@echo off
+
+Rem THIS IS AN UNTESTED APPROXIMATION. USE AT YOUR OWN RISK.
+Rem Confirmation of Internet Connection
+
+ECHO Creating Virtual Environment...
+python -m venv .venv_windows
+ECHO Activating Virtual Environment...
+.venv_windows\Scripts\Activate
+ECHO Updating Pip, Setuptools, Wheel...
+python -m pip install --upgrade pip --upgrade setuptools --upgrade wheel
+ECHO Installing Requirements...
+pip install -r src\requirements.txt
