@@ -21,7 +21,7 @@ source .venv/bin/activate && \
 printf "$lbp_pcg_prefix Upgrading Pip, Setuptools, Wheel...\n" &&\
 python3 -m pip install --upgrade pip --upgrade setuptools --upgrade wheel && \
 printf "$lbp_pcg_prefix Installing Requirements...\n" && \
-pip install -r requirements.txt && \
+pip install -r src/requirements.txt && \
 
 SCRIPTFILE=lbp_pcg.sh
 
@@ -51,7 +51,7 @@ run_main_program() {
 	printf "\$lbp_pcg_prefix Activating Virtual Environment...\n" && \\
 	source .venv/bin/activate && \\
 	printf "\$lbp_pcg_prefix Starting Main Script...\n" && \\
-	python3 main.py && \\
+	python3 src/main.py && \\
 	printf "\$lbp_pcg_prefix Deactivating Virtual Environment...\n" && \\
 	deactivate && \\
 	printf "\$lbp_pcg_prefix Quitting...\n"
@@ -68,11 +68,10 @@ printf "$lbp_pcg_prefix Granting execution permissions to $lbp_pcg_script...\n"
 chmod +x lbp_pcg.sh
 
 read -p "$lbp_pcg_prefix Setup completed successfully! Would you like to run the main script? (y/n): " confirm && \
-[[ $confirm == [yY] || $confirm == [yY][eE][sS] ]] || \
-printf "$lbp_pcg_prefix Deactivating Virtual Environment...\n" && deactivate && printf "$lbp_pcg_prefix Quitting...\n" && exit 1
+[[ $confirm == [yY] || $confirm == [yY][eE][sS] ]] || exit 1
 
 printf "$lbp_pcg_prefix Starting Main Script...\n" && \
-python3 main.py && \
+python3 src/main.py && \
 printf "$lbp_pcg_prefix Deactivating Virtual Environment...\n" && \
 deactivate && \
-printf "$lbp_pcg_prefix Quitting...\n" # this doesn't work yet but i'll fix it later
+printf "$lbp_pcg_prefix Quitting...\n"

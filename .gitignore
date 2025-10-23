@@ -1,8 +1,1 @@
-docs/
-export/
-save/
-object_scrap/
-
-*.ncl
-*.yaml
-*.txt
+lbp_pcg.sh

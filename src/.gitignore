@@ -1,0 +1,7 @@
+docs/
+export/
+object_scrap/
+__pycache__/
+
+*.ncl
+*.txt
