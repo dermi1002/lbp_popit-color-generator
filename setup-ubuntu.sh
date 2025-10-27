@@ -57,7 +57,7 @@ run_main_program() {
 	printf "\$lbp_pcg_prefix Quitting...\n"
 }
 
-if [ ! -d .venv ]; then
+if [ ! -d .venv_ubuntu ]; then
 	printf "\$lbp_pcg_prefix The Virtual Environment directory doesn't exist. Execute the Setup script or make the Virtual Environment yourself."
 else
 	run_main_program

@@ -1,4 +1,0 @@
-@echo on
-
-:: THIS IS AN UNTESTED APPROXIMATION. USE AT YOUR OWN RISK.
-type NUL > lbp_pcg.bat
