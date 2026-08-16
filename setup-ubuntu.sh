@@ -16,12 +16,10 @@ read -p "$lbp_pcg_prefix This script requires connection to the Internet. Contin
 trap 'echo "$lbp_pcg_prefix Has an error occurred?"' ERR
 printf "$lbp_pcg_prefix Creating Virtual Environment...\n" && \
 python3 -m venv .venv_ubuntu && \
-printf "$lbp_pcg_prefix Activating Virtual Environment...\n" && \
-source .venv_ubuntu/bin/activate && \
-printf "$lbp_pcg_prefix Upgrading Pip, Setuptools, Wheel...\n" &&\
-python3 -m pip install --upgrade pip --upgrade setuptools --upgrade wheel && \
+printf "$lbp_pcg_prefix Updating Pip...\n" &&\
+.venv_ubuntu/bin/python -m pip install --upgrade pip && \
 printf "$lbp_pcg_prefix Installing Requirements...\n" && \
-pip install -r src/requirements.txt && \
+.venv_ubuntu/bin/python -m pip install -r src/requirements.txt && \
 
 SCRIPTFILE=lbp_pcg.sh
 
@@ -48,12 +46,8 @@ lbp_pcg_prefix="\${text_bold}\${text_cyan}LBP Popit Color Generator\${text_reset
 # Script's Code
 run_main_program() {
 	trap 'printf "\$lbp_pcg_prefix Has an error occurred?\n"' ERR
-	printf "\$lbp_pcg_prefix Activating Virtual Environment...\n" && \\
-	source .venv_ubuntu/bin/activate && \\
 	printf "\$lbp_pcg_prefix Starting Main Script...\n" && \\
-	python3 src/main.py && \\
-	printf "\$lbp_pcg_prefix Deactivating Virtual Environment...\n" && \\
-	deactivate && \\
+	.venv_ubuntu/bin/python src/main.py && \\
 	printf "\$lbp_pcg_prefix Quitting...\n"
 }
 
@@ -71,7 +65,5 @@ read -p "$lbp_pcg_prefix Setup completed successfully! Would you like to run the
 [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]] || exit 1
 
 printf "$lbp_pcg_prefix Starting Main Script...\n" && \
-python3 src/main.py && \
-printf "$lbp_pcg_prefix Deactivating Virtual Environment...\n" && \
-deactivate && \
+.venv_ubuntu/bin/python src/main.py && \
 printf "$lbp_pcg_prefix Quitting...\n"
