@@ -12,7 +12,7 @@ These four tabs appear in a layout like this:
 
 The sliders can be dragged right and left to change the square's color and the hex color entry. 
 
-As of now, editing the hex entry won't change the color and slider values, unfortunately. Functionality for this is planned in the future.
+~~As of now, editing the hex entry won't change the color and slider values, unfortunately. Functionality for this is planned in the future.~~ Functionality for editing hex entries is now implemented.
 
 The current color value can be copied by clicking the "Copy" Button next to the entry.
 
@@ -31,8 +31,8 @@ After that, below is a Game Title option, where you can set the mainline title o
 
 Then, you have three choices. You can:
 - click on the "Save NCL" button to store your Popit color values in a .ncl NetCheat List file, which is important for getting the custom Popit color in your LittleBigPlanet game;
-- click on the "Save Value List" button to store your Popit color values in a text file, which is not yet, but planned to be, openable by the program; and/or
-- click on the "Save YAML (Old)" button to store your Popit color values in a YAML dictionary file. Support for this format is deprecated and will be discontinued in later releases.
+- click on the "Save Value List" button to store your Popit color values in a text file, which is ~~not yet, but planned to be, openable by the program~~ a good last resort when it comes to getting custom Popit Colors in other LBP games; and/or
+- click on the "Save YAML (Old)" button to store your Popit color values in a YAML dictionary file. Support for this format is deprecated and will be replaced with JSON in later releases.
 
 When you click on either of these, you'll be met with a window prompting you to choose a location to save your file in.
 
