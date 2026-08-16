@@ -4,7 +4,7 @@
 SETLOCAL EnableDelayedExpansion
 CHOICE /M "This script requires connection to the Internet. Continue?" 
 if ERRORLEVEL 1 goto autoSetup
-if ERRORLEVEL 2 goto eof
+if ERRORLEVEL 2 goto endOfFile
 
 :autoSetup
 echo Creating Virtual Environment...
@@ -24,45 +24,46 @@ if exist %PCGSCRIPT% (
 ) else goto:writeScript
 
 :writeScript
-echo @echo off > %PCGSCRIPT%
+echo @echo off> %PCGSCRIPT%
 
 echo.>> %PCGSCRIPT%
-echo set virtualEnvironment=.venv_windows\ >> %PCGSCRIPT%
+echo set virtualEnvironment=.venv_windows\>> %PCGSCRIPT%
 
 echo.>> %PCGSCRIPT%
-echo if not exist %%virtualEnvironment%% goto errorMessage >> %PCGSCRIPT%
+echo if not exist %%virtualEnvironment%% goto errorMessage>> %PCGSCRIPT%
 
 echo.>> %PCGSCRIPT%
-echo goto :startMainScript >> %PCGSCRIPT%
+echo goto :startMainScript>> %PCGSCRIPT%
 
 echo.>> %PCGSCRIPT%
-echo :errorMessage >> %PCGSCRIPT%
-echo set msgboxTitle=Virtual Environment Missing >> %PCGSCRIPT%
-echo set msgboxBody=The Virtual Environment folder '.venv_windows' doesn't exist. Run the Setup script or make the Virtual Environment yourself. >> %PCGSCRIPT%
+echo :errorMessage>> %PCGSCRIPT%
+echo set msgboxTitle=Virtual Environment Missing>> %PCGSCRIPT%
+echo set msgboxBody=The Virtual Environment folder '.venv_windows' doesn't exist. Run the Setup script or make the Virtual Environment yourself.>> %PCGSCRIPT%
 
 echo.>> %PCGSCRIPT%
-echo set temporaryMsgbox=%%temp%%\~lbp-pcg_venv-error.vbs >> %PCGSCRIPT%
-echo echo msgbox "%%msgboxBody%%",0,"%%msgboxTitle%%"^>"%%temporaryMsgbox%%" >> %PCGSCRIPT%
-echo WSCRIPT "%%temporaryMsgbox%%" >> %PCGSCRIPT%
-echo if exist %%temporaryMsgbox%% del /F /Q "%%temporaryMsgbox%%" >> %PCGSCRIPT%
+echo set temporaryMsgbox=%%temp%%\~lbp-pcg_venv-error.vbs>> %PCGSCRIPT%
+echo echo msgbox "%%msgboxBody%%",0,"%%msgboxTitle%%"^>"%%temporaryMsgbox%%">> %PCGSCRIPT%
+echo WSCRIPT "%%temporaryMsgbox%%">> %PCGSCRIPT%
+echo if exist %%temporaryMsgbox%% del /F /Q "%%temporaryMsgbox%%">> %PCGSCRIPT%
 
 echo.>> %PCGSCRIPT%
-echo exit >> %PCGSCRIPT%
+echo exit>> %PCGSCRIPT%
 
 echo.>> %PCGSCRIPT%
-echo :startMainScript >> %PCGSCRIPT%
-echo start .venv_windows\Scripts\pythonw.exe src\main.py >> %PCGSCRIPT%
+echo :startMainScript>> %PCGSCRIPT%
+echo start .venv_windows\Scripts\pythonw.exe src\main.py>> %PCGSCRIPT%
 
 :: It's ugly, I know...
+
 :setupComplete
 CHOICE /M "Setup successfully completed! Would you like to run the Main Script?"
-if ERRORLEVEL 2 goto eof
+if ERRORLEVEL 2 goto endOfFile
 if ERRORLEVEL 1 goto startMain
 
 :startMain
 .venv_windows\Scripts\python.exe src\main.py
 
-:eof
+:endOfFile
 pause
 
 ENDLOCAL
