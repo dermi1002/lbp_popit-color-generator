@@ -2,9 +2,9 @@
 setlocal EnableDelayedExpansion
 
 rem Confirmation of Internet Connection
-choice /m "This script requires connection to the Internet. Continue?" 
-if ERRORLEVEL 1 goto:autoSetup
+choice /m "This script requires connection to the Internet. Continue?"
 if ERRORLEVEL 2 goto:setupAborted
+if ERRORLEVEL 1 goto:autoSetup
 
 :autoSetup
 echo Creating Virtual Environment...
@@ -18,8 +18,8 @@ set PCGSCRIPT=lbp_pcg.bat
 
 if exist %PCGSCRIPT% (
 	choice /m "A script named 'lbp_pcg.bat' already exists. Overwrite all data within it?"
-	if ERRORLEVEL 1 goto:writeScript
 	if ERRORLEVEL 2 goto:setupComplete
+	if ERRORLEVEL 1 goto:writeScript
 ) else goto:writeScript
 
 :writeScript
