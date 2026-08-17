@@ -52,11 +52,11 @@ Further instructions on how to use the program can be found in the Documents sec
 - [x] Create Batch and Shell Scripts for automated setup
 - [x] Optimize Shell Script and check for errors
 - [x] Change the README.md document accordingly
-- [ ] Add checks for Virtual Environments in both scripts
+- [x] Add checks for Virtual Environments in both scripts
 - [ ] Wrap Instruction Sequences into Functions in Ubuntu Script
 
 ### Next:
-- [ ] Refactor and organize code again
+- [ ] Refactor and organize code again (This is a **BIG** one!)
 - [ ] Add Support for LBP Vita's VitaCheat Format
 - [ ] Replace YAML Support with JSON and eliminate functionality for importing Value Lists
 - [ ] Add Terminal logs and keyboard shortcuts
