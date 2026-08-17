@@ -4,7 +4,21 @@ setlocal EnableDelayedExpansion
 rem Confirmation of Internet Connection
 choice /m "This script requires connection to the Internet. Continue?"
 if ERRORLEVEL 2 goto:setupAborted
-if ERRORLEVEL 1 goto:autoSetup
+if ERRORLEVEL 1 goto:checkVirtualEnv
+
+:checkVirtualEnv
+set VIRTUALENV=.\.venv_windows\
+
+if exist %VIRTUALENV% (
+	choice /m "A folder named '.venv_windows' already exists. Overwrite all data within it?"
+	if ERRORLEVEL 2 goto:setupAborted
+	if ERRORLEVEL 1 goto:deleteVirtualEnv
+) else goto:autoSetup
+
+:deleteVirtualEnv
+echo Removing Virtual Environment...
+rd /s /q %VIRTUALENV%
+goto:autoSetup
 
 :autoSetup
 echo Creating Virtual Environment...
@@ -63,7 +77,7 @@ if ERRORLEVEL 1 goto:startMain
 .venv_windows\Scripts\python.exe src\main.py
 
 :setupAborted
-echo Setup Aborted
+echo Setup Aborted.
 goto:endOfFile
 
 :endOfFile
