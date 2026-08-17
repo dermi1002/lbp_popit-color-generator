@@ -53,6 +53,7 @@ Further instructions on how to use the program can be found in the Documents sec
 - [x] Optimize Shell Script and check for errors
 - [x] Change the README.md document accordingly
 - [ ] Add checks for Virtual Environments in both scripts
+- [ ] Wrap Instruction Sequences into Functions in Ubuntu Script
 
 ### Next:
 - [ ] Refactor and organize code again

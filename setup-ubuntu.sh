@@ -24,7 +24,7 @@ if [ -d "$VIRTUALENV" ]; then
 	[[ $confirm == [yY] || $confirm == [yY][eE][sS] ]] || exit 1
 
 	printf "$lbp_pcg_prefix Removing Virtual Environment...\n"
-	rm -rf $VIRTUALENV
+	rm -rf "$VIRTUALENV"
 fi
 
 printf "$lbp_pcg_prefix Creating Virtual Environment...\n" && \
@@ -40,16 +40,13 @@ SCRIPTFILE=lbp_pcg.sh
 if [ -e $SCRIPTFILE ]; then
 	read -p "$lbp_pcg_prefix A script named 'lbp_pcg.sh' already exists. Overwrite all data within it? (Y/n): " confirm && \
 	[[ $confirm == [yY] || $confirm == [yY][eE][sS] ]] || exit 1
-
-	printf "$lbp_pcg_prefix Removing contents from $lbp_pcg_script...\n"
-	truncate -s 0 $SCRIPTFILE
 else
 	printf "$lbp_pcg_prefix Creating $lbp_pcg_script...\n"
 	touch lbp_pcg.sh
 fi
 
 printf "$lbp_pcg_prefix Giving contents to $lbp_pcg_script...\n"
-cat > $SCRIPTFILE << EndOfScript
+cat > "$SCRIPTFILE" << EndOfScript
 #!/bin/bash
 
 # Text styling for LBP PCG Name
