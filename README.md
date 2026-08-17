@@ -18,7 +18,7 @@ Do note that an Internet connection is required for part of the process to succe
 If all else fails, you can refer to the below section.
 
 ## Setting Up From Source
-The LittleBigPlanet Popit Color Generator was tested on Windows 10 Python 3.12.0 with CustomTkinter, PyYAML, and Pyperclip.
+The LittleBigPlanet Popit Color Generator was tested on Python 3.12(Windows 10/11) and Python 3.13 (Lubuntu 24.04) with CustomTkinter, PyYAML, and Pyperclip.
 
 Although CustomTkinter is only meant to work in Windows or MacOS, a Ttk version will be made to support Linux out-of-the-box.
 
@@ -61,6 +61,7 @@ Further instructions on how to use the program can be found in the Documents sec
 - [ ] Retheme the GUI to Tkinter's Ttk widget to remove CustomTkinter dependency and support Linux out-of-the-box
 
 ### Future Considerations:
+- [ ] Replace the Setup Scripts with a Python one
 - [ ] Create mock-up gameplay previews
 - [ ] ~~Rewrite the project in C and Lua~~
 
