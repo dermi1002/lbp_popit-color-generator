@@ -7,7 +7,7 @@ if ERRORLEVEL 2 goto:setupAborted
 if ERRORLEVEL 1 goto:checkVirtualEnv
 
 :checkVirtualEnv
-set VIRTUALENV=.\.venv_windows\
+set VIRTUALENV=.venv_windows\
 
 if exist %VIRTUALENV% (
 	choice /m "A folder named '.venv_windows' already exists. Overwrite all data within it?"
