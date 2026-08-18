@@ -53,7 +53,8 @@ Further instructions on how to use the program can be found in the Documents sec
 - [x] Optimize Shell Script and check for errors
 - [x] Change the README.md document accordingly
 - [x] Add checks for Virtual Environments in both scripts
-- [ ] Wrap Instruction Sequences into Functions in Ubuntu Script
+- [x] Wrap Instruction Sequences into Functions in Ubuntu Script
+- [ ] Add checks for the Main Python file in both scripts
 
 ### Next:
 - [ ] Refactor and organize code again (This is a **BIG** one!)

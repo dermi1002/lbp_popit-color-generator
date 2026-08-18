@@ -11,23 +11,25 @@ set VIRTUALENV=.venv_windows\
 
 if exist %VIRTUALENV% (
 	choice /m "A folder named '.venv_windows' already exists. Overwrite all data within it?"
-	if ERRORLEVEL 2 goto:setupAborted
+	if ERRORLEVEL 2 goto:createMainScript
 	if ERRORLEVEL 1 goto:deleteVirtualEnv
-) else goto:autoSetup
+) else goto:createVirtualEnv
 
 :deleteVirtualEnv
 echo Removing Virtual Environment...
 rd /s /q %VIRTUALENV%
-goto:autoSetup
+goto:createVirtualEnv
 
-:autoSetup
+:createVirtualEnv
 echo Creating Virtual Environment...
 python -m venv .venv_windows
 echo Updating Pip...
 .venv_windows\Scripts\python.exe -m pip install --upgrade pip
 echo Installing Requirements...
 .venv_windows\Scripts\python.exe -m pip install -r src\requirements.txt
+goto:createMainScript
 
+:createMainScript
 set PCGSCRIPT=lbp_pcg.bat
 
 if exist %PCGSCRIPT% (
@@ -75,6 +77,7 @@ if ERRORLEVEL 1 goto:startMain
 
 :startMain
 .venv_windows\Scripts\python.exe src\main.py
+goto:endOfFile
 
 :setupAborted
 echo Setup Aborted.
