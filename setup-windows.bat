@@ -3,7 +3,7 @@ setlocal EnableDelayedExpansion
 
 rem Confirmation of Internet Connection
 choice /m "This script requires connection to the Internet. Continue?"
-if ERRORLEVEL 2 goto:setupAborted
+if ERRORLEVEL 2 goto:quitAborted
 if ERRORLEVEL 1 goto:checkVirtualEnv
 
 :checkVirtualEnv
@@ -72,18 +72,23 @@ rem It's ugly, I know...
 
 :setupComplete
 choice /m "Setup successfully completed^! Would you like to run the Main Script?"
-if ERRORLEVEL 2 goto:endOfFile
+if ERRORLEVEL 2 goto:quitSuccess
 if ERRORLEVEL 1 goto:startMain
 
 :startMain
 .venv_windows\Scripts\python.exe src\main.py
 goto:endOfFile
 
-:setupAborted
+:quitSuccess
+echo Quitting...
+goto:endOfFile
+
+:quitAborted
 echo Setup Aborted.
+pause
 goto:endOfFile
 
 :endOfFile
-pause
+exit
 
 ENDLOCAL

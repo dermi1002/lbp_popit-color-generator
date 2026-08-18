@@ -18,7 +18,7 @@ SCRIPTFILE=lbp_pcg.sh
 
 # Functions
 
-function confirmTestPrompt() {
+function yesNoPrompt() {
 	local promptText
 	local yesCommand
 	local noCommand
@@ -35,31 +35,39 @@ function confirmTestPrompt() {
 }
 
 function removeVirtualEnv() {
-	printf "$lbp_pcg_prefix Removing Virtual Environment...\n"
+	printf "$lbp_pcg_prefix Removing Virtual Environment...\n" && \
 	rm -rf "$VIRTUALENV"
 }
 
-function quitAborted() {
-	printf "$lbp_pcg_prefix Setup Aborted.\n"
+function incompleteMessage() {
+	local quitMessage
+
+	quitMessage="$1"
+
+	read -p "$lbp_pcg_prefix $quitMessage Press any key to continue..." -n1 -s && \
 	exit 1
 }
 
+function quitAborted() {
+	"incompleteMessage" "Setup Aborted."
+}
+
 function quitSuccess() {
-	printf "$lbp_pcg_prefix Quitting...\n"
+	printf "$lbp_pcg_prefix Quitting...\n" && \
 	exit 0
 }
 
 # Sequence
 
 function internetPackageConfirm() {
-	trap 'echo "$lbp_pcg_prefix Has an error occurred?"' ERR
-	"confirmTestPrompt" "This script requires connection to the Internet and Packages for Python's Virtual Environment System and GUI Library Tkinter. Continue?" "virtualEnvironment" "quitAborted"
+	trap 'echo "$lbp_pcg_prefix Has an error occurred?"' ERR && \
+	"yesNoPrompt" "This script requires connection to the Internet and Packages for Python's Virtual Environment System and GUI Library Tkinter. Continue?" "virtualEnvironment" "quitAborted"
 }
 
 function virtualEnvironment() {
 	# if there's a directory with the same name as '.venv_ubuntu'...
 	if [ -d "$VIRTUALENV" ]; then
-		"confirmTestPrompt" "A directory named '.venv_ubuntu/' already exists. Overwrite all data within it?" "removeVirtualEnv" "mainScript"
+		"yesNoPrompt" "A directory named '.venv_ubuntu/' already exists. Overwrite all data within it?" "removeVirtualEnv" "mainScript"
 	fi
 
 	printf "$lbp_pcg_prefix Creating Virtual Environment...\n" && \
@@ -75,7 +83,7 @@ function virtualEnvironment() {
 function mainScript() {
 	# if there's a shell script with the same name as 'lbp_pcg.sh'...
 	if [ -e "$SCRIPTFILE" ]; then
-		"confirmTestPrompt" "A script named 'lbp_pcg.sh' already exists. Overwrite all data within it?" "mainScriptContent" "setupComplete"
+		"yesNoPrompt" "A script named 'lbp_pcg.sh' already exists. Overwrite all data within it?" "mainScriptContent" "setupComplete"
 	else
 		printf "$lbp_pcg_prefix Creating $lbp_pcg_script...\n"
 		touch lbp_pcg.sh
@@ -84,7 +92,7 @@ function mainScript() {
 }
 
 function mainScriptContent() {
-	printf "$lbp_pcg_prefix Giving contents to $lbp_pcg_script...\n"
+	printf "$lbp_pcg_prefix Giving contents to $lbp_pcg_script...\n" && \
 
 	# oh THANK GOODNESS! also using white spaces as tabs for the sake of this process
 	cat > "$SCRIPTFILE" <<- EndOfScript
@@ -98,7 +106,19 @@ function mainScriptContent() {
 	lbp_pcg_prefix="\${text_bold}\${text_cyan}LBP Popit Color Generator\${text_reset}:"
 
 	# Script's Code
-	run_main_program() {
+
+	# Functions
+
+	function errorMessage() {
+	    local messageText
+
+	    messageText="\$1"
+
+	    read -p "\$lbp_pcg_prefix \$messageText Press any key to continue..." -n1 -s && \\
+	    exit 1
+	}
+	
+	function run_main_program() {
 	    trap 'printf "\$lbp_pcg_prefix Has an error occurred?\n"' ERR
 	    printf "\$lbp_pcg_prefix Starting Main Script...\n" && \\
 	    .venv_ubuntu/bin/python src/main.py && \\
@@ -106,28 +126,40 @@ function mainScriptContent() {
 	}
 
 	if [ ! -d .venv_ubuntu ]; then
-	    printf "\$lbp_pcg_prefix The Virtual Environment directory doesn't exist. Execute the Setup script or make the Virtual Environment yourself.\n"
+	    "errorMessage" "The Virtual Environment directory doesn't exist. Execute the Setup script or make the Virtual Environment yourself."
+	elif [ ! -e src/main.py ]; then
+	    "errorMessage" "Cannot find the Main Program in 'src/main.py'. Make sure you have left everything as it was when the project was downloaded."
 	else
-	    run_main_program
+	    "run_main_program"
 	fi
 	EndOfScript
 
-	printf "$lbp_pcg_prefix Granting execution permissions to $lbp_pcg_script...\n"
+	# TODO: wrap ending condition into a function and imply execution
+
+	printf "$lbp_pcg_prefix Granting execution permissions to $lbp_pcg_script...\n" && \
 	chmod +x lbp_pcg.sh
 
 	"setupComplete"
 }
 
 function setupComplete() {
-	"confirmTestPrompt" "Setup successfully completed! Would you like to run the main script?" "runMainScript" "quitSuccess"
+	"yesNoPrompt" "Setup successfully completed! Would you like to run the main script?" "runMainScript" "quitSuccess"
 }
 
 function runMainScript() {
-	printf "$lbp_pcg_prefix Starting Main Script...\n" && \
-	.venv_ubuntu/bin/python src/main.py && \
-	"quitSuccess"
+	if [ ! -e src/main.py ]; then
+		"incompleteMessage" "Cannot find the Main Program in 'src/main.py'. Make sure you have left everything as it was when the project was downloaded."
+	else
+		printf "$lbp_pcg_prefix Starting Main Script...\n" && \
+		.venv_ubuntu/bin/python src/main.py && \
+		"quitSuccess"
+	fi
 }
 
 # Execution
 
-"internetPackageConfirm"
+function main() {
+	"internetPackageConfirm"
+}
+
+"main"
