@@ -86,7 +86,7 @@ echo start .venv_windows\Scripts\pythonw.exe src\main.py>> %PCGSCRIPT%
 
 echo.>> %PCGSCRIPT%
 echo :endOfScript>> %PCGSCRIPT%
-echo ENDLOCAL
+echo ENDLOCAL>> %PCGSCRIPT%
 
 rem It's ugly, I know...
 
