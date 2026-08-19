@@ -82,7 +82,7 @@ echo goto:endOfScript>> %PCGSCRIPT%
 
 echo.>> %PCGSCRIPT%
 echo :startMainScript>> %PCGSCRIPT%
-echo start .venv_windows\Scripts\pythonw.exe src\main.py>> %PCGSCRIPT%
+echo .venv_windows\Scripts\python.exe src\main.py>> %PCGSCRIPT%
 
 echo.>> %PCGSCRIPT%
 echo :endOfScript>> %PCGSCRIPT%
