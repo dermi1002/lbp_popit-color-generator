@@ -1,4 +1,4 @@
-@echo on
+@echo off
 setlocal EnableDelayedExpansion
 
 rem Confirmation of Internet Connection
