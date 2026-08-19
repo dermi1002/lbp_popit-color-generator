@@ -64,7 +64,7 @@ echo WSCRIPT "%%tempVenvMsgbox%%">> %PCGSCRIPT%
 echo if exist %%tempVenvMsgbox%% del /F /Q "%%tempVenvMsgbox%%">> %PCGSCRIPT%
 
 echo.>> %PCGSCRIPT%
-echo exit>> %PCGSCRIPT%
+echo goto:endOfScript>> %PCGSCRIPT%
 
 echo.>> %PCGSCRIPT%
 echo :mainPyErr>> %PCGSCRIPT%
@@ -78,11 +78,15 @@ echo WSCRIPT "%%tempMainMsgbox%%">> %PCGSCRIPT%
 echo if exist %%tempMainMsgbox%% del /F /Q "%%tempMainMsgbox%%">> %PCGSCRIPT%
 
 echo.>> %PCGSCRIPT%
-echo exit>> %PCGSCRIPT%
+echo goto:endOfScript>> %PCGSCRIPT%
 
 echo.>> %PCGSCRIPT%
 echo :startMainScript>> %PCGSCRIPT%
 echo start .venv_windows\Scripts\pythonw.exe src\main.py>> %PCGSCRIPT%
+
+echo.>> %PCGSCRIPT%
+echo :endOfScript>> %PCGSCRIPT%
+echo ENDLOCAL
 
 rem It's ugly, I know...
 
@@ -105,6 +109,4 @@ pause
 goto:endOfFile
 
 :endOfFile
-exit
-
 ENDLOCAL
