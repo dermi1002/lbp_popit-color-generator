@@ -43,23 +43,39 @@ echo @echo off> %PCGSCRIPT%
 
 echo.>> %PCGSCRIPT%
 echo set virtualEnvironment=.venv_windows\>> %PCGSCRIPT%
+echo set mainPython=src\main.py>> %PCGSCRIPT%
 
 echo.>> %PCGSCRIPT%
-echo if not exist %%virtualEnvironment%% goto:errorMessage>> %PCGSCRIPT%
+echo if not exist %%virtualEnvironment%% goto:virtualEnvErr>> %PCGSCRIPT%
+echo if not exist %%mainPython%% goto:mainPyErr>> %PCGSCRIPT%
 
 echo.>> %PCGSCRIPT%
 echo goto:startMainScript>> %PCGSCRIPT%
 
 echo.>> %PCGSCRIPT%
-echo :errorMessage>> %PCGSCRIPT%
+echo :virtualEnvErr>> %PCGSCRIPT%
 echo set msgboxTitle=Virtual Environment Missing>> %PCGSCRIPT%
 echo set msgboxBody=The Virtual Environment folder '.venv_windows' doesn't exist. Run the Setup script or make the Virtual Environment yourself.>> %PCGSCRIPT%
 
 echo.>> %PCGSCRIPT%
-echo set temporaryMsgbox=%%temp%%\~lbp-pcg_venv-error.vbs>> %PCGSCRIPT%
-echo echo msgbox "%%msgboxBody%%",0,"%%msgboxTitle%%"^>"%%temporaryMsgbox%%">> %PCGSCRIPT%
-echo WSCRIPT "%%temporaryMsgbox%%">> %PCGSCRIPT%
-echo if exist %%temporaryMsgbox%% del /F /Q "%%temporaryMsgbox%%">> %PCGSCRIPT%
+echo set tempVenvMsgbox=%%temp%%\~lbp-pcg_venv-error.vbs>> %PCGSCRIPT%
+echo msgbox "%%msgboxBody%%",0,"%%msgboxTitle%%"^>"%%tempVenvMsgbox%%">> %PCGSCRIPT%
+echo WSCRIPT "%%tempVenvMsgbox%%">> %PCGSCRIPT%
+echo if exist %%tempVenvMsgbox%% del /F /Q "%%tempVenvMsgbox%%">> %PCGSCRIPT%
+
+echo.>> %PCGSCRIPT%
+echo exit>> %PCGSCRIPT%
+
+echo.>> %PCGSCRIPT%
+echo :mainPyErr>> %PCGSCRIPT%
+echo set msgboxTitle='main.py' Not Found>> %PCGSCRIPT%
+echo set msgboxBody=Cannot find the Main Program in 'src\main.py'. Make sure you have left everything as it was when the project was downloaded.>> %PCGSCRIPT%
+
+echo.>> %PCGSCRIPT%
+echo set tempMainMsgbox=%%temp%%\~lbp-pcg_main-py-error.vbs>> %PCGSCRIPT%
+echo msgbox "%%msgboxBody%%",0,"%%msgboxTitle%%"^>"%%tempMainMsgbox%%">> %PCGSCRIPT%
+echo WSCRIPT "%%tempMainMsgbox%%">> %PCGSCRIPT%
+echo if exist %%tempMainMsgbox%% del /F /Q "%%tempMainMsgbox%%">> %PCGSCRIPT%
 
 echo.>> %PCGSCRIPT%
 echo exit>> %PCGSCRIPT%

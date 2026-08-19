@@ -60,7 +60,6 @@ function quitSuccess() {
 # Sequence
 
 function internetPackageConfirm() {
-	trap 'echo "$lbp_pcg_prefix Has an error occurred?"' ERR && \
 	"yesNoPrompt" "This script requires connection to the Internet and Packages for Python's Virtual Environment System and GUI Library Tkinter. Continue?" "virtualEnvironment" "quitAborted"
 }
 
@@ -119,22 +118,28 @@ function mainScriptContent() {
 	}
 	
 	function run_main_program() {
-	    trap 'printf "\$lbp_pcg_prefix Has an error occurred?\n"' ERR
 	    printf "\$lbp_pcg_prefix Starting Main Script...\n" && \\
 	    .venv_ubuntu/bin/python src/main.py && \\
 	    printf "\$lbp_pcg_prefix Quitting...\n"
 	}
 
-	if [ ! -d .venv_ubuntu ]; then
-	    "errorMessage" "The Virtual Environment directory doesn't exist. Execute the Setup script or make the Virtual Environment yourself."
-	elif [ ! -e src/main.py ]; then
-	    "errorMessage" "Cannot find the Main Program in 'src/main.py'. Make sure you have left everything as it was when the project was downloaded."
-	else
-	    "run_main_program"
-	fi
-	EndOfScript
+	function checkFiles() {
+	    if [ ! -d .venv_ubuntu ]; then
+	        "errorMessage" "The Virtual Environment directory doesn't exist. Execute the Setup script or make the Virtual Environment yourself."
+	    elif [ ! -e src/main.py ]; then
+	        "errorMessage" "Cannot find the Main Program in 'src/main.py'. Make sure you have left everything as it was when the project was downloaded."
+	    else
+	        "run_main_program"
+	    fi
+	}
 
-	# TODO: wrap ending condition into a function and imply execution
+	function main() {
+	    trap 'printf "\$lbp_pcg_prefix Has an error occurred?\n"' ERR
+	    "checkFiles"
+	}
+
+	"main"
+	EndOfScript
 
 	printf "$lbp_pcg_prefix Granting execution permissions to $lbp_pcg_script...\n" && \
 	chmod +x lbp_pcg.sh
@@ -159,6 +164,7 @@ function runMainScript() {
 # Execution
 
 function main() {
+	trap 'echo "$lbp_pcg_prefix Has an error occurred?"' ERR
 	"internetPackageConfirm"
 }
 
