@@ -59,7 +59,7 @@ echo set msgboxBody=The Virtual Environment folder '.venv_windows' doesn't exist
 
 echo.>> %PCGSCRIPT%
 echo set tempVenvMsgbox=%%temp%%\~lbp-pcg_venv-error.vbs>> %PCGSCRIPT%
-echo msgbox "%%msgboxBody%%",0,"%%msgboxTitle%%"^>"%%tempVenvMsgbox%%">> %PCGSCRIPT%
+echo echo msgbox "%%msgboxBody%%",0,"%%msgboxTitle%%"^>"%%tempVenvMsgbox%%">> %PCGSCRIPT%
 echo WSCRIPT "%%tempVenvMsgbox%%">> %PCGSCRIPT%
 echo if exist %%tempVenvMsgbox%% del /F /Q "%%tempVenvMsgbox%%">> %PCGSCRIPT%
 
@@ -73,7 +73,7 @@ echo set msgboxBody=Cannot find the Main Program in 'src\main.py'. Make sure you
 
 echo.>> %PCGSCRIPT%
 echo set tempMainMsgbox=%%temp%%\~lbp-pcg_main-py-error.vbs>> %PCGSCRIPT%
-echo msgbox "%%msgboxBody%%",0,"%%msgboxTitle%%"^>"%%tempMainMsgbox%%">> %PCGSCRIPT%
+echo echo msgbox "%%msgboxBody%%",0,"%%msgboxTitle%%"^>"%%tempMainMsgbox%%">> %PCGSCRIPT%
 echo WSCRIPT "%%tempMainMsgbox%%">> %PCGSCRIPT%
 echo if exist %%tempMainMsgbox%% del /F /Q "%%tempMainMsgbox%%">> %PCGSCRIPT%
 
