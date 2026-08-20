@@ -27,16 +27,15 @@ function yes_no_prompt() {
 	yesCommand="$2"
 	noCommand="$3"
 
-	read -p "$lbpPcgPrefix $promptText (Y/n): " confirm && \
-	[[ $confirm == [yY] || $confirm == [yY][eE][sS] ]] || "$noCommand"
-	# I'll change this into a more readable format
-
-	"$yesCommand"
-}
-
-function remove_virtual_env() {
-	printf "$lbpPcgPrefix Removing Virtual Environment...\n" && \
-	rm -rf "$VIRTUALENV"
+	# this process repeats if the user doesn't answer yes/no
+	while true; do
+		read -p "$lbpPcgPrefix $promptText (Y/n): " promptAnswer && \
+		if [[ $promptAnswer == [yY] || $promptAnswer == [yY][eE][sS] ]]; then
+			"$yesCommand"
+		elif [[ $promptAnswer == [nN] || $promptAnswer == [nN][oO] ]]; then
+			"$noCommand"
+		fi
+	done
 }
 
 function incomplete_message() {
@@ -45,6 +44,8 @@ function incomplete_message() {
 	quitMessage="$1"
 
 	read -p "$lbpPcgPrefix $quitMessage Press any key to continue..." -n1 -s && \
+	# line break so terminal text doesn't clutter up
+	printf "\n" && \ 
 	exit 1
 }
 
@@ -60,15 +61,25 @@ function quit_success() {
 # Sequence
 
 function internet_package_confirm() {
-	"yes_no_prompt" "This script requires connection to the Internet and Packages for Python's Virtual Environment System and GUI Library Tkinter. Continue?" "virtual_environment_setup" "quit_aborted"
+	"yes_no_prompt" "This script requires connection to the Internet and Packages for Python's Virtual Environment System and GUI Library Tkinter. Continue?" "virtual_environment_check" "quit_aborted"
 }
 
-function virtual_environment_setup() {
+function virtual_environment_check() {
 	# if there's a directory with the same name as '.venv_ubuntu'...
 	if [ -d "$VIRTUALENV" ]; then
 		"yes_no_prompt" "A directory named '.venv_ubuntu/' already exists. Overwrite all data within it?" "remove_virtual_env" "main_script_setup"
+	else
+		"virtual_environment_setup"
 	fi
+}
 
+function remove_virtual_env() {
+	printf "$lbpPcgPrefix Removing Virtual Environment...\n" && \
+	rm -rf "$VIRTUALENV" && \
+	"virtual_environment_setup"
+}
+
+function virtual_environment_setup() {
 	printf "$lbpPcgPrefix Creating Virtual Environment...\n" && \
 	python3 -m venv .venv_ubuntu && \
 	printf "$lbpPcgPrefix Updating Pip...\n" && \
