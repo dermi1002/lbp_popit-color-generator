@@ -18,6 +18,14 @@ SCRIPTFILE=lbp_pcg.sh
 
 # Functions
 
+function custom_print() {
+	local printText
+
+	printText="$1"
+
+	printf "$lbpPcgPrefix $printText\n"
+}
+
 function yes_no_prompt() {
 	local promptText
 	local yesCommand
@@ -54,7 +62,7 @@ function quit_aborted() {
 }
 
 function quit_success() {
-	printf "$lbpPcgPrefix Quitting...\n" && \
+	"custom_print" "Quitting..." && \
 	exit 0
 }
 
@@ -74,17 +82,19 @@ function virtual_environment_check() {
 }
 
 function remove_virtual_env() {
-	printf "$lbpPcgPrefix Removing Virtual Environment...\n" && \
+	"custom_print" "Removing Virtual Environment..." && \
 	rm -rf "$VIRTUALENV" && \
 	"virtual_environment_setup"
 }
 
 function virtual_environment_setup() {
-	printf "$lbpPcgPrefix Creating Virtual Environment...\n" && \
+	"custom_print" "Creating Virtual Environment..." && \
 	python3 -m venv .venv_ubuntu && \
-	printf "$lbpPcgPrefix Updating Pip...\n" && \
+
+	"custom_print" "Updating Pip..." && \
 	.venv_ubuntu/bin/python -m pip install --upgrade pip && \
-	printf "$lbpPcgPrefix Installing Requirements...\n" && \
+
+	"custom_print" "Installing Requirements..." && \
 	.venv_ubuntu/bin/python -m pip install -r src/requirements.txt && \
 
 	"main_script_setup"
@@ -95,14 +105,14 @@ function main_script_setup() {
 	if [ -e "$SCRIPTFILE" ]; then
 		"yes_no_prompt" "A script named 'lbp_pcg.sh' already exists. Overwrite all data within it?" "main_script_content" "setup_complete"
 	else
-		printf "$lbpPcgPrefix Creating $lbpPcgScript...\n"
+		"custom_print" "Creating $lbpPcgScript..." && \
 		touch lbp_pcg.sh
 		"main_script_content"
 	fi
 }
 
 function main_script_content() {
-	printf "$lbpPcgPrefix Giving contents to $lbpPcgScript...\n" && \
+	"custom_print" "Giving contents to $lbpPcgScript..." && \
 
 	# oh THANK GOODNESS! also using white spaces as tabs for the sake of this process
 	cat > "$SCRIPTFILE" <<- EndOfScript
@@ -152,7 +162,7 @@ function main_script_content() {
 	"main"
 	EndOfScript
 
-	printf "$lbpPcgPrefix Granting execution permissions to $lbpPcgScript...\n" && \
+	"custom_print" "Granting execution permissions to $lbpPcgScript..." && \
 	chmod +x lbp_pcg.sh
 
 	"setup_complete"
@@ -166,7 +176,7 @@ function run_main_python() {
 	if [ ! -e src/main.py ]; then
 		"incomplete_message" "Cannot find the Main Program in 'src/main.py'. Make sure you have left everything as it was when the project was downloaded."
 	else
-		printf "$lbpPcgPrefix Starting Main Script...\n" && \
+		"custom_print" "Starting Main Script..." && \
 		.venv_ubuntu/bin/python src/main.py && \
 		"quit_success"
 	fi
