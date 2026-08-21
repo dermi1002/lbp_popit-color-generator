@@ -39,6 +39,8 @@ if exist %PCGSCRIPT% (
 ) else goto:writeScript
 
 :writeScript
+echo Writing Main Script's contents...
+
 echo @echo off> %PCGSCRIPT%
 
 echo.>> %PCGSCRIPT%
