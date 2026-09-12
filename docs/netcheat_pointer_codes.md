@@ -6,3 +6,5 @@ This pointer is found via the following:
 - Searching for a Popit Color value in-game through a memory editor 4-byte scan and finding a temporary address that links to it
 - Searching for that temporary address as a value through a memory editor pointer scan and finding a pointer that links to it
 - If done correctly, the pointer would include the Popit Color value within it.
+
+Note: Some pointers are "children of parent pointers," and may require repeats of the same process until the "parent" is found.

@@ -5,14 +5,12 @@ The Popit uses the first three of the values; Primary, Secondary, and Tertiary; 
 
 These four tabs appear in a layout like this:
 - On the right are three sliders; those of which "represent" values for red, green, and blue;
-- Below them is a hex color entry with a button to copy and paste outside the program; and
+- Below them is a text field displaying the hex code for the color with a button to copy and paste outside the program; and
 - On the left is a square that previews the color changed by the three sliders.
 
 ![Editing the Primary Color in the LBP Popit Color Generator GUI](./resources/main_changecolor.png)
 
-The sliders can be dragged right and left to change the square's color and the hex color entry. 
-
-As of now, editing the hex entry won't change the color and slider values, unfortunately. Functionality for this is planned in the future.
+The sliders can be dragged right and left, along with editing the hex code field, to change the square's color. 
 
 The current color value can be copied by clicking the "Copy" Button next to the entry.
 
@@ -31,8 +29,8 @@ After that, below is a Game Title option, where you can set the mainline title o
 
 Then, you have three choices. You can:
 - click on the "Save NCL" button to store your Popit color values in a .ncl NetCheat List file, which is important for getting the custom Popit color in your LittleBigPlanet game;
-- click on the "Save Value List" button to store your Popit color values in a text file, which is not yet, but planned to be, openable by the program; and/or
-- click on the "Save YAML (Old)" button to store your Popit color values in a YAML dictionary file. Support for this format is deprecated and will be discontinued in later releases.
+- click on the "Save Value List" button to store your Popit color values in a text file, which would be your last resort if saving cheat code isn't supported for your game of choice; and/or
+- click on the "Save YAML (Old)" button to store your Popit color values in a YAML dictionary file for the program to open in future sessions. Support for this format is deprecated and will be replaced with JSON in later releases.
 
 When you click on either of these, you'll be met with a window prompting you to choose a location to save your file in.
 
@@ -48,7 +46,7 @@ The thing between the window title with the close button and the program itself 
 
 When you click "Save Code" in the File tab, you'll be met with this:
 
-![A Separate Code Export Window with One More Feature](./resources/main_exportwindow.png)
+![A Separate Code Export Window with an Extra Feature](./resources/main_exportwindow.png)
 
 It serves the same purpose as the Export tab in the main program, but functions slightly differently.
 

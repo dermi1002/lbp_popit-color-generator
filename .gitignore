@@ -1,8 +1,4 @@
-docs/
-export/
-save/
-object_scrap/
+.venv_ubuntu/
+.venv_windows/
 
-*.ncl
-*.yaml
-*.txt
+lbp_pcg.sh
