@@ -72,15 +72,10 @@ Further instructions on how to use the program can be found in the Documents sec
 
 # To-do List
 ### Current Tasks:
-- [x] Create Batch and Shell Scripts for automated setup
-- [x] Optimize Shell Script and check for errors
-- [x] Change the README.md document accordingly
-- [x] Add checks for Virtual Environments in both scripts
-- [x] Wrap Instruction Sequences into Functions in Ubuntu Script
-- [x] Add checks for the Main Python file in both scripts
+- [ ] Refactor and organize code again (This is a **BIG** one!)
+- [ ] Create a Changelog Document
 
 ### Next:
-- [ ] Refactor and organize code again (This is a **BIG** one!)
 - [ ] Add Support for LBP Vita's VitaCheat Format
 - [ ] Replace YAML Support with JSON and eliminate functionality for importing Value Lists
 - [ ] Add Terminal logs and keyboard shortcuts
@@ -100,3 +95,9 @@ Further instructions on how to use the program can be found in the Documents sec
 - [x] Add a new plain text Value list to deprecate .YAML support
 - [x] Figure out what to do with the Export Tab
 - [x] Add functionality to change colors via hex color entry and .TXT/.YAML importing
+- [x] Create Batch and Shell Scripts for automated setup
+- [x] Optimize Shell Script and check for errors
+- [x] Change the README.md document accordingly
+- [x] Add checks for Virtual Environments in both scripts
+- [x] Wrap Instruction Sequences into Functions in Ubuntu Script
+- [x] Add checks for the Main Python file in both scripts
