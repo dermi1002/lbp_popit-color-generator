@@ -1,5 +1,6 @@
 import external_objects
 import gui_objects
+import export_window
 import tkinter as tk
 from tkinter import messagebox
 import customtkinter as ctk
@@ -103,14 +104,14 @@ class ColorTab(ctk.CTkFrame):
             textvariable = self.hex_entry_text,
             validate = 'key',
             validatecommand = vcmd
-            )
+        )
         
         self.color_hex_copy_button = ctk.CTkButton(
             master, 
             text = 'Copy', 
             width = 50, 
             command = copy_color_hex_entry
-            )
+        )
         
             
         self.color_hex_label.place(x = hex_related_x_position, y = hex_related_y_position)
@@ -144,8 +145,8 @@ class ExportWindowIII(ctk.CTkToplevel):
         def change_file_directory_entry():
             directory_location = tk.filedialog.askdirectory(
                 title = 'Browse Directory',
-                initialdir = './save'
-                )
+                initialdir = '../save'
+            )
 
             if directory_location is None:
                 return
@@ -161,7 +162,7 @@ class ExportWindowIII(ctk.CTkToplevel):
             else:
                 export_filetype_option.configure(
                     values = ['NetCheat List (.NCL)', 'Value List (.TXT)', 'YAML Dictionary (Old)']
-                    )
+                )
 
             if export_filetype_option.get() == 'NetCheat List (.NCL)' and game_title_option.get() != 'LBP2 (BCUS98245 | 1.33)':
                 export_filetype_option.set('Value List (.TXT)')
@@ -181,7 +182,7 @@ class ExportWindowIII(ctk.CTkToplevel):
             width = 70,
             text = 'Browse',
             command = change_file_directory_entry
-            )
+        )
 
 
         game_title = ctk.CTkLabel(test_grid, text = 'Game Title:')
@@ -193,7 +194,7 @@ class ExportWindowIII(ctk.CTkToplevel):
             values = ['LBP1 (BCUS98148 | 1.30)', 'LBP2 (BCUS98245 | 1.33)', 'LBP3 (BCUS98362 | 1.26)'],
             variable = game_title_default_option,
             command = disable_filetype_ncl
-            )
+        )
 
         game_title_note = ctk.CTkLabel(test_grid, text = 'LBP1 doesn\'t use the Emphasis Color.')
 
@@ -203,7 +204,7 @@ class ExportWindowIII(ctk.CTkToplevel):
             text = 'Prefix Game Info (Artemis)',
             checkbox_height = 18,
             checkbox_width = 18,
-            )
+        )
         
 
         export_filetype = ctk.CTkLabel(test_grid, text = 'File Type:')
@@ -213,13 +214,13 @@ class ExportWindowIII(ctk.CTkToplevel):
         export_filetype_option.configure(
             width = export_option_width,
             values = [
-                    'NetCheat List (.NCL)',
-                    'Value List (.TXT)',
-                    'YAML Dictionary (Old)'
-                ],
+                'NetCheat List (.NCL)',
+                'Value List (.TXT)',
+                'YAML Dictionary (Old)'
+            ],
             variable = export_filetype_default_option,
             command = None
-            )
+        )
 
         export_filetype_note = ctk.CTkLabel(self, text = 'YAML Dictionary Support is\ndeprecated and will be\ndiscontinued in 1.0.0.')
 
@@ -227,7 +228,7 @@ class ExportWindowIII(ctk.CTkToplevel):
             self,
             justify = 'left',
             text = 'NOTE: This program doesn\'t\nsupport all LBP Titles yet.'
-            )
+        )
 
 
         new_export_button = ctk.CTkButton(
@@ -244,8 +245,8 @@ class ExportWindowIII(ctk.CTkToplevel):
                 self.secondary_color,
                 self.tertiary_color,
                 self.emphasis_color,
-                )
             )
+        )
         
 
         # Edit these values to change the Widgets' Position
@@ -403,7 +404,7 @@ class ColorTabList(ctk.CTkTabview):
 
         def show_export_window_iii():
             if self.test_export_window_iii is None or not self.test_export_window_iii.winfo_exists():
-                self.test_export_window_iii = ExportWindowIII(
+                self.test_export_window_iii = export_window.ExportWindowIII(
                     self.primary_colortab.color_preview.cget('background')[1:],
                     self.secondary_colortab.color_preview.cget('background')[1:],
                     self.tertiary_colortab.color_preview.cget('background')[1:],
@@ -415,7 +416,7 @@ class ColorTabList(ctk.CTkTabview):
 
 
         # Toolbar
-        self.test_toolbar = external_objects.Toolbar(master)
+        self.test_toolbar = gui_objects.Toolbar(master)
 
         master.configure(menu = self.test_toolbar)
 
@@ -444,26 +445,26 @@ class ColorTabList(ctk.CTkTabview):
             if messagebox.askyesno(
                     "Discard Changes?",
                     f"You are about to start a new file.\nDiscard changes to current session?"
-                    ):
+            ):
                 batch_change_color_elements(
                     '000000',
                     '000000',
                     '000000',
                     '000000'
-                    )
+                )
 
         def discard_changes_valuelist():
             if messagebox.askyesno(
                     "Discard Changes?",
                     f"You are about to open a Value List.\nDiscard changes to current session?"
-                    ):
+            ):
                 open_text_list()
 
         def discard_changes_yaml_dictionary():
             if messagebox.askyesno(
                     "Discard Changes?",
                     f"You are about to open a YAML Dictionary.\nDiscard changes to current session?"
-                    ):
+            ):
                 open_yaml_dictionary()
 
         self.test_toolbar.file_option.add_separator()
@@ -476,12 +477,12 @@ class ColorTabList(ctk.CTkTabview):
         def open_text_list():
             valuelist_load = tk.filedialog.askopenfilename(
                 title = 'Test - Load Value List',
-                initialdir = './save',
+                initialdir = '../save',
                 filetypes = [('Value List', '*.txt'), ('All Files', '*.*')],
                 defaultextension = '.txt'
-                )
+            )
 
-            if valuelist_load is None:
+            if valuelist_load is None or valuelist_load == ():
                 return
 
             value_list_path = rf"{valuelist_load}"
@@ -520,32 +521,31 @@ class ColorTabList(ctk.CTkTabview):
         def open_yaml_dictionary():
             yaml_dictionary_load = tk.filedialog.askopenfilename(
                 title = 'Test - Load YAML Dictionary',
-                initialdir = './save',
+                initialdir = '../save',
                 filetypes = [('YAML Dictionary', '*.yaml'), ('All Files', '*.*')],
                 defaultextension = '.yaml'
-                )
+            )
 
-            if yaml_dictionary_load is None:
+            # finally got to fix this error
+            if yaml_dictionary_load is None or yaml_dictionary_load == ():
                 return
+            else:
+                yaml_dictionary_path = rf"{yaml_dictionary_load}"
+                with open(yaml_dictionary_path, 'r+') as yaml_dictionary_content:
+                    opened_yaml_dictionary = yaml.safe_load(yaml_dictionary_content)
 
-            yaml_dictionary_path = rf"{yaml_dictionary_load}"
-            # print(yaml_dictionary_path)
+                    opened_yaml_values = opened_yaml_dictionary['color-code']
 
-            with open(yaml_dictionary_path, 'r+') as yaml_dictionary_content:
-                opened_yaml_dictionary = yaml.safe_load(yaml_dictionary_content)
+                    yaml_primary_color = opened_yaml_values['primcolor'] # yikes! shortened "variables"! could've been worse...
+                    yaml_secondary_color = opened_yaml_values['seccolor']
+                    yaml_tertiary_color = opened_yaml_values['tertcolor']
+                    yaml_emphasis_color = opened_yaml_values['emphcolor']
 
-                opened_yaml_values = opened_yaml_dictionary['color-code']
-
-                yaml_primary_color = opened_yaml_values['primcolor'] # yikes! shortened "variables"! could've been worse...
-                yaml_secondary_color = opened_yaml_values['seccolor']
-                yaml_tertiary_color = opened_yaml_values['tertcolor']
-                yaml_emphasis_color = opened_yaml_values['emphcolor']
-
-                batch_change_color_elements(
-                    f'{yaml_primary_color}',
-                    f'{yaml_secondary_color}',
-                    f'{yaml_tertiary_color}',
-                    f'{yaml_emphasis_color}'
+                    batch_change_color_elements(
+                        f'{yaml_primary_color}',
+                        f'{yaml_secondary_color}',
+                        f'{yaml_tertiary_color}',
+                        f'{yaml_emphasis_color}'
                     )
 
 
@@ -558,7 +558,7 @@ class ColorTabList(ctk.CTkTabview):
                 self.primary_colortab.green_slider.value_variable,
                 self.primary_colortab.blue_slider.value_variable,
                 ctk.END
-                )
+            )
 
             external_objects.open_color_file(
                 secondary_color,
@@ -568,7 +568,7 @@ class ColorTabList(ctk.CTkTabview):
                 self.secondary_colortab.green_slider.value_variable,
                 self.secondary_colortab.blue_slider.value_variable,
                 ctk.END
-                )
+            )
 
             external_objects.open_color_file(
                 tertiary_color,
@@ -578,7 +578,7 @@ class ColorTabList(ctk.CTkTabview):
                 self.tertiary_colortab.green_slider.value_variable,
                 self.tertiary_colortab.blue_slider.value_variable,
                 ctk.END
-                )
+            )
 
             external_objects.open_color_file(
                 emphasis_color,
@@ -588,7 +588,7 @@ class ColorTabList(ctk.CTkTabview):
                 self.emphasis_colortab.green_slider.value_variable,
                 self.emphasis_colortab.blue_slider.value_variable,
                 ctk.END
-                )
+            )
 
 
         self.place_configure(width = 530, height = 254)
@@ -619,5 +619,8 @@ class MainProgram(ctk.CTk):
         self.mainloop()
 
 
+def main():
+    MainProgram()
+
 if __name__ == '__main__':
-    MainProgram() 
+    main() 

@@ -28,7 +28,7 @@ def get_yaml_content(
         '  emphopacity: \"FF\"\n' +
 
         '  save: \"save\\\\\"'
-        )
+    )
     
     return yaml_content
 
@@ -45,7 +45,7 @@ def new_export_yaml(
         initialdir = "./save", 
         filetypes = (("YAML Dictionary File", "*.yaml"), ("All Files", "*.*")), 
         defaultextension = '.yaml'
-        )
+    )
 
     if yaml_save_location is None:
         return
@@ -90,7 +90,7 @@ def get_ncl_content(
                 
         f'6 {player_color_pointer} {player_color_pointer_value[3]}\n' + 
         f'{netcheat_zeroes} FF{emphasis_color}\n#\n'
-        )
+    )
     
     return ncl_content
 
@@ -107,7 +107,7 @@ def new_export_ncl(
         initialdir = "./save", 
         filetypes = [("NetCheat List File", "*.ncl"), ("All Files", "*.*")], 
         defaultextension = ".ncl"
-        )
+    )
                 
     if ncl_save_location is None:
         return
@@ -118,7 +118,7 @@ def new_export_ncl(
         secondary_color, 
         tertiary_color, 
         emphasis_color
-        )
+    )
 
     ncl_save_location.write(test_output)
     ncl_save_location.close()
@@ -165,7 +165,7 @@ def export_value_list(
         initialdir = "./save", 
         filetypes = (("Plain Text", "*.txt"), ("All Files", "*.*")), 
         defaultextension = '.txt'
-        )
+    )
 
     value_list_content: str = make_value_list(
         game, 
@@ -173,7 +173,7 @@ def export_value_list(
         secondary_color, 
         tertiary_color, 
         emphasis_color
-        )
+    )
 
     value_list_save_location.write(value_list_content)
     value_list_save_location.close()
@@ -227,7 +227,7 @@ def export_any_format(
                 secondary_color, 
                 tertiary_color, 
                 emphasis_color
-                )
+            )
 
             return output
 
@@ -238,7 +238,7 @@ def export_any_format(
                 secondary_color, 
                 tertiary_color, 
                 emphasis_color
-                )
+            )
 
             return output
     
@@ -249,7 +249,7 @@ def export_any_format(
                 secondary_color, 
                 tertiary_color, 
                 emphasis_color
-                )
+            )
 
             return output
 
@@ -303,8 +303,7 @@ def export_any_format(
                 title = "Replace Exising Code?", 
                 message = 
                     "A Code with the same name and format has been found.\nWould you like to replace it?"
-                ):
-                
+            ):
                 final_code_export()
         else:
             final_code_export()
@@ -320,7 +319,7 @@ def export_any_format(
         incomplete_info_error = tk.messagebox.showerror(
             title = "Inconplete Code Information",
             message = "The text fields for Code Name or File Path are empty.\nFill in both to export the file."
-            )
+        )
     else:
         check_existing_file()
 
@@ -345,32 +344,19 @@ def open_color_file(color_value, preview_object, hex_entry, red_value_open, gree
         red_value_open,
         green_value_open,
         blue_value_open
-        )
+    )
 
+def dont_execute_module():
+    module_execution_text: str = '''
+    This is an external module loaded by the LBP Popit Color Generator\'s Main Program, main.py.
+    It is not meant to be loaded as a standalone script.
+    If you want to use its functions, use the Main Program (for the time being)
+    '''
 
-class Toolbar(tk.Menu):
-    def __init__(self, master, *args, **kwargs):
-        super().__init__(master, *args, **kwargs)
+    print(module_execution_text)
 
-        # File
-        self.file_option = tk.Menu(self, tearoff = 0)
-
-        self.add_cascade(label = 'File', menu = self.file_option)
-
-        # Help
-        self.help_option = tk.Menu(self, tearoff = 0)
-
-        self.add_cascade(label = 'Help', menu = self.help_option)
-
-        self.help_option.add_command(
-            label = 'About',
-            command = None
-            )
-
+def main():
+    dont_execute_module()
 
 if __name__ == '__main__':
-    print(
-        'This is an external module loaded by the LBP Popit Color Generator\'s Main Program, main.py.',
-        '\nIt is not meant to be loaded as a standalone script.',
-        '\nIf you want to use its functions, use the Main Program (for the time being).'
-        ) # just because
+    main()

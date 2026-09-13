@@ -1,6 +1,25 @@
 import customtkinter as ctk
 import tkinter as tk
 
+class Toolbar(tk.Menu):
+    def __init__(self, master, *args, **kwargs):
+        super().__init__(master, *args, **kwargs)
+
+        # File
+        self.file_option = tk.Menu(self, tearoff = 0)
+
+        self.add_cascade(label = 'File', menu = self.file_option)
+
+        # Help
+        self.help_option = tk.Menu(self, tearoff = 0)
+
+        self.add_cascade(label = 'Help', menu = self.help_option)
+
+        self.help_option.add_command(
+            label = 'About',
+            command = None
+        )
+
 class RGBSlider(ctk.CTkSlider):
     def __init__(self, master, slider_y_position, *args, **kwargs):
         super().__init__(master, slider_y_position, *args, **kwargs)
@@ -18,7 +37,7 @@ class RGBSlider(ctk.CTkSlider):
             width = slider_value_range, 
             number_of_steps = slider_value_range,
             variable = self.value_variable
-            )
+        )
 
         self.value_variable.set(0)
         self.place(x = slider_x_position, y = slider_y_position)
