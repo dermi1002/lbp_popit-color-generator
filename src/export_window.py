@@ -3,7 +3,12 @@ import tkinter as tk
 import external_objects
 
 class ExportWindowIII(ctk.CTkToplevel):
-    def __init__(self, primary_color, secondary_color, tertiary_color, emphasis_color, *args, **kwargs):
+    def __init__(
+        self,
+        primary_color, secondary_color, tertiary_color, emphasis_color,
+        *args, **kwargs
+        ):
+
         super().__init__(*args, **kwargs)
 
         self.primary_color = primary_color
@@ -36,10 +41,16 @@ class ExportWindowIII(ctk.CTkToplevel):
 
         def disable_filetype_ncl(value):
             if game_title_option.get() != 'LBP2 (BCUS98245 | 1.33)': 
-                export_filetype_option.configure(values = ['Value List (.TXT)', 'YAML Dictionary (Old)'])
+                export_filetype_option.configure(
+                    values = ['Value List (.TXT)', 'YAML Dictionary (Old)']
+                )
             else:
                 export_filetype_option.configure(
-                    values = ['NetCheat List (.NCL)', 'Value List (.TXT)', 'YAML Dictionary (Old)']
+                    values = [
+                        'NetCheat List (.NCL)',
+                        'Value List (.TXT)',
+                        'YAML Dictionary (Old)'
+                    ]
                 )
 
             if export_filetype_option.get() == 'NetCheat List (.NCL)' and game_title_option.get() != 'LBP2 (BCUS98245 | 1.33)':
@@ -69,7 +80,11 @@ class ExportWindowIII(ctk.CTkToplevel):
         game_title_option = ctk.CTkOptionMenu(test_grid)
         game_title_option.configure(
             width = export_option_width,
-            values = ['LBP1 (BCUS98148 | 1.30)', 'LBP2 (BCUS98245 | 1.33)', 'LBP3 (BCUS98362 | 1.26)'],
+            values = [
+                'LBP1 (BCUS98148 | 1.30)',
+                'LBP2 (BCUS98245 | 1.33)',
+                'LBP3 (BCUS98362 | 1.26)'
+            ],
             variable = game_title_default_option,
             command = disable_filetype_ncl
         )
@@ -100,7 +115,10 @@ class ExportWindowIII(ctk.CTkToplevel):
             command = None
         )
 
-        export_filetype_note = ctk.CTkLabel(self, text = 'YAML Dictionary Support is\ndeprecated and will be\ndiscontinued in 1.0.0.')
+        export_filetype_note = ctk.CTkLabel(
+            self,
+            text = 'YAML Dictionary Support is\ndeprecated and will be\ndiscontinued in 1.0.0.'
+        )
 
         export_bottomrow_note = ctk.CTkLabel(
             self,

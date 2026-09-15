@@ -1,3 +1,5 @@
+from dontexecuteme import *
+
 import customtkinter as ctk
 import tkinter as tk
 
@@ -55,3 +57,24 @@ class RGBLetter(ctk.CTkLabel):
         self.configure(text = rgb_letter_selection)
 
         self.place(x = rgb_letter_x_position, y = rgb_letter_y_position)
+
+class HexColorField(ctk.CTkEntry):
+    def __init__(self, master, positionY: int, *args, **kwargs):
+        super().__init__(master, positionY, *args, **kwargs)
+
+        self.positionX = 297
+        self.positionY = positionY
+
+        self.configure(
+            width = 140,
+            validate = 'key'
+        )
+
+        self.place(x = self.positionX, y = self.positionY)
+
+
+def main():
+    dont_execute_me()
+
+if __name__ == '__main__':
+    main()

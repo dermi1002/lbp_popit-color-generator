@@ -1,3 +1,5 @@
+from dontexecuteme import *
+
 import tkinter as tk
 from tkinter import messagebox
 from pathlib import Path
@@ -323,6 +325,7 @@ def export_any_format(
     else:
         check_existing_file()
 
+
 def change_slider_values(hex_value, red_value, green_value, blue_value):
     # print(hex_value)
     red_change = int(hex_value[:2], 16)
@@ -346,17 +349,8 @@ def open_color_file(color_value, preview_object, hex_entry, red_value_open, gree
         blue_value_open
     )
 
-def dont_execute_module():
-    module_execution_text: str = '''
-    This is an external module loaded by the LBP Popit Color Generator\'s Main Program, main.py.
-    It is not meant to be loaded as a standalone script.
-    If you want to use its functions, use the Main Program (for the time being)
-    '''
-
-    print(module_execution_text)
-
 def main():
-    dont_execute_module()
+    dont_execute_me()
 
 if __name__ == '__main__':
     main()

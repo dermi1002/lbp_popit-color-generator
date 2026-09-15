@@ -73,6 +73,14 @@ Further instructions on how to use the program can be found in the Documents sec
 # To-do List
 ### Current Tasks:
 - [ ] Refactor and organize code again (This is a **BIG** one!)
+    - [x] Move Export Window to its own Python file
+    - [ ] Move Objects from Main Python file to their own module
+    - [ ] Move Objects' command funcitons from Main Python to their own module
+    - [ ] Reformat Label Names
+        - [ ] Functions
+        - [ ] Classes
+        - [ ] Variables
+
 - [ ] Create a Changelog Document
 
 ### Next:
