@@ -3,7 +3,7 @@ import external_objects
 
 import pyperclip
 
-def copy_color_hex_entry(text):
+def copy_hex_color(text):
     pyperclip.copy(text)
 
 def main():

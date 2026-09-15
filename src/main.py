@@ -13,20 +13,8 @@ color_beginning_value: str = '000000'
 
 
 class ColorTab(ctk.CTkFrame):
-    def testlimit(P):
-            try:
-                self.hex_entry_text.trace_add('write', uppercaseletters)
-            except AttributeError:
-                # if you somehow got to open this gui program in python 3.6.0 or lower
-                self.hex_entry_text.trace_add('w', uppercaseletters)
 
-            if len(P) <= 6:
-                return True
-            else:
-                self.bell()
-                return False
-
-    def hex_certain_characters(event):
+    def hex_certain_characters(master, event):
         if event.char in (
             '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
             'A', 'B', 'C', 'D', 'E', 'F',
@@ -45,17 +33,29 @@ class ColorTab(ctk.CTkFrame):
     def __init__(self, master, *args, **kwargs):
         super().__init__(master, *args, **kwargs)
 
-        def change_color_sliders(value):
-            self.Red = int(self.red_slider.value_variable.get())
-            self.Green = int(self.green_slider.value_variable.get())
-            self.Blue = int(self.blue_slider.value_variable.get())
+        def testlimit(P):
+            print(P)
+            try:
+                self.hex_color_field._textvariable.trace_add('write', uppercaseletters)
+            except AttributeError:
+                # if you somehow got to open this gui program in python 3.6.0 or lower
+                self.hex_color_field._textvariable.trace_add('w', uppercaseletters)
 
-            self.color_print_hex = '%02X%02X%02X' % (self.Red, self.Green, self.Blue)
+            if len(P) <= 6:
+                return True
+            else:
+                self.bell()
+                return False
+
+        def change_color_sliders_new(red: int, green: int, blue: int):
+            self.color_print_hex = '%02X%02X%02X' % (red, green, blue)
 
             self.hex_color_field.delete(0, ctk.END)
             self.hex_color_field.insert(0, self.color_print_hex)
 
-            self.color_preview.configure(background = f'#{self.hex_entry_text.get()}')
+            self.color_preview.configure(
+                background = f'#{self.hex_color_field._textvariable.get()}'
+            )
 
         def change_color_hex(value):
             external_objects.change_slider_values(
@@ -66,6 +66,13 @@ class ColorTab(ctk.CTkFrame):
                 )
 
             self.color_preview.configure(background = f'#{self.hex_entry_text.get()}')
+
+        def color_slider_command(value):
+            change_color_sliders_new(
+                self.red_slider.value_variable.get(),
+                self.green_slider.value_variable.get(),
+                self.blue_slider.value_variable.get()
+            )
 
 
         self.color_preview = tk.Frame(
@@ -78,13 +85,13 @@ class ColorTab(ctk.CTkFrame):
 
         
         self.letter_r = gui_objects.RGBLetter(master, 0, 17)
-        self.red_slider = gui_objects.RGBSlider(master, 16, command = change_color_sliders)
+        self.red_slider = gui_objects.RGBSlider(master, 16, command = color_slider_command)
                 
         self.letter_g = gui_objects.RGBLetter(master, 1, 50)
-        self.green_slider = gui_objects.RGBSlider(master, 66, command = change_color_sliders)
+        self.green_slider = gui_objects.RGBSlider(master, 66, command = color_slider_command)
 
         self.letter_b = gui_objects.RGBLetter(master, 2, 82)
-        self.blue_slider = gui_objects.RGBSlider(master, 116, command = change_color_sliders)
+        self.blue_slider = gui_objects.RGBSlider(master, 116, command = color_slider_command)
 
 
         hex_related_x_position: int = 225
@@ -93,12 +100,9 @@ class ColorTab(ctk.CTkFrame):
         self.color_hex_label = ctk.CTkLabel(master, text = 'HEX Color:')
         
         # Doing that right now...
-        def uppercaseletters(*args):
-            self.hex_entry_text.set(self.hex_entry_text.get().upper())
-
         self.hex_entry_text = tk.StringVar(master)
 
-        vcmd = (self.register(self.testlimit), '%P')
+        vcmd = (self.register(testlimit), '%P')
 
         self.hex_color_field = gui_objects.HexColorField(
             master,
@@ -106,11 +110,16 @@ class ColorTab(ctk.CTkFrame):
             # self.hex_entry_text
         )
         
+        # TODO: figure out why 3 arguments are taken from this function
+        def uppercaseletters(arg0, arg1, arg2):
+            print(arg0, ',', arg1, ',', arg2)
+            self.hex_color_field._textvariable.set(self.hex_color_field._textvariable.get().upper())
+
         self.color_hex_copy_button = ctk.CTkButton(
             master, 
             text = 'Copy', 
             width = 50, 
-            command = lambda: gui_commands.copy_color_hex_entry(self.hex_color_field.get())
+            command = lambda: gui_commands.copy_hex_color(self.hex_color_field.get())
         )
         
         self.hex_color_field.configure(
