@@ -59,16 +59,52 @@ class RGBLetter(ctk.CTkLabel):
         self.place(x = rgb_letter_x_position, y = rgb_letter_y_position)
 
 class HexColorField(ctk.CTkEntry):
+    def certain_characters(self, event):
+        if event.char in (
+            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+            'A', 'B', 'C', 'D', 'E', 'F',
+            'a', 'b', 'c', 'd', 'e', 'f'
+        ):
+            return True
+        elif event.keysym not in (
+            'Alt_L', 'F4',
+            'BackSpace', 'Return', 'Left', 'Right',
+            'Control_L', 'V'
+        ):
+            return 'break'
+        else:
+            return False
+
+    def hex_length_limit(self, P):
+        if len(P) <= 6:
+            return True
+        else:
+            self.bell()
+            return False
+    
     def __init__(self, master, positionY: int, *args, **kwargs):
         super().__init__(master, positionY, *args, **kwargs)
+
+        def set_uppercase(*args):
+            uppercaseVersion: str = self.hexFieldText.get().upper()
+            self.hexFieldText.set(uppercaseVersion)
 
         self.positionX = 297
         self.positionY = positionY
 
+        self.hexFieldText = tk.StringVar(master)
+        self.hexFieldText.trace_add('write', set_uppercase)
+
+        self.lengthCommand = (master.register(self.hex_length_limit), '%P')
+
         self.configure(
             width = 140,
-            validate = 'key'
+            validate = 'key',
+            validatecommand = self.lengthCommand,
+            textvariable = self.hexFieldText
         )
+
+        self.bind('<KeyPress>', self.certain_characters)
 
         self.place(x = self.positionX, y = self.positionY)
 

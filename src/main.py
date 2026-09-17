@@ -14,64 +14,28 @@ color_beginning_value: str = '000000'
 
 class ColorTab(ctk.CTkFrame):
 
-    def hex_certain_characters(master, event):
-        if event.char in (
-            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-            'A', 'B', 'C', 'D', 'E', 'F',
-            'a', 'b', 'c', 'd', 'e', 'f'
-        ):
-            return True
-        elif event.keysym not in (
-            'Alt_L', 'F4',
-            'BackSpace', 'Return', 'Left', 'Right',
-            'Control_L' 'V'
-        ):
-            return 'break'
-        else:
-            return False
-
     def __init__(self, master, *args, **kwargs):
         super().__init__(master, *args, **kwargs)
 
-        def testlimit(P):
-            print(P)
-            try:
-                self.hex_color_field._textvariable.trace_add('write', uppercaseletters)
-            except AttributeError:
-                # if you somehow got to open this gui program in python 3.6.0 or lower
-                self.hex_color_field._textvariable.trace_add('w', uppercaseletters)
-
-            if len(P) <= 6:
-                return True
-            else:
-                self.bell()
-                return False
-
-        def change_color_sliders_new(red: int, green: int, blue: int):
-            self.color_print_hex = '%02X%02X%02X' % (red, green, blue)
-
-            self.hex_color_field.delete(0, ctk.END)
-            self.hex_color_field.insert(0, self.color_print_hex)
-
-            self.color_preview.configure(
-                background = f'#{self.hex_color_field._textvariable.get()}'
-            )
-
         def change_color_hex(value):
-            external_objects.change_slider_values(
-                self.hex_entry_text.get(),
+            gui_commands.change_slider_values(
+                self.hex_color_field._textvariable.get(),
                 self.red_slider.value_variable,
                 self.green_slider.value_variable,
                 self.blue_slider.value_variable
                 )
 
-            self.color_preview.configure(background = f'#{self.hex_entry_text.get()}')
+            self.color_preview.configure(
+                background = f'#{self.hex_color_field._textvariable.get()}'
+            )
 
         def color_slider_command(value):
-            change_color_sliders_new(
+            gui_commands.change_color_sliders(
                 self.red_slider.value_variable.get(),
                 self.green_slider.value_variable.get(),
-                self.blue_slider.value_variable.get()
+                self.blue_slider.value_variable.get(),
+                self.hex_color_field,
+                self.color_preview
             )
 
 
@@ -99,22 +63,12 @@ class ColorTab(ctk.CTkFrame):
 
         self.color_hex_label = ctk.CTkLabel(master, text = 'HEX Color:')
         
-        # Doing that right now...
-        self.hex_entry_text = tk.StringVar(master)
-
-        vcmd = (self.register(testlimit), '%P')
-
+        # I think it's done now
         self.hex_color_field = gui_objects.HexColorField(
             master,
             hex_related_y_position
-            # self.hex_entry_text
         )
         
-        # TODO: figure out why 3 arguments are taken from this function
-        def uppercaseletters(arg0, arg1, arg2):
-            print(arg0, ',', arg1, ',', arg2)
-            self.hex_color_field._textvariable.set(self.hex_color_field._textvariable.get().upper())
-
         self.color_hex_copy_button = ctk.CTkButton(
             master, 
             text = 'Copy', 
@@ -122,13 +76,8 @@ class ColorTab(ctk.CTkFrame):
             command = lambda: gui_commands.copy_hex_color(self.hex_color_field.get())
         )
         
-        self.hex_color_field.configure(
-            textvariable = self.hex_entry_text,
-            validatecommand = vcmd
-        )
-
         self.hex_color_field.insert(ctk.END, color_beginning_value)
-        self.hex_color_field.bind('<KeyPress>', self.hex_certain_characters)
+        
         self.hex_color_field.bind('<Return>', change_color_hex)
         
         self.color_hex_label.place(x = hex_related_x_position, y = hex_related_y_position)

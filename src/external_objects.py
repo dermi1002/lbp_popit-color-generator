@@ -326,18 +326,16 @@ def export_any_format(
         check_existing_file()
 
 
-def change_slider_values(hex_value, red_value, green_value, blue_value):
-    # print(hex_value)
-    red_change = int(hex_value[:2], 16)
-    green_change = int(hex_value[2:4], 16)
-    blue_change = int(hex_value[4:], 16)
+def open_color_file(
+    color_value,
+    preview_object,
+    hex_entry,
+    red_value_open,
+    green_value_open,
+    blue_value_open,
+    end_version
+    ):
 
-    red_value.set(red_change)
-    green_value.set(green_change)
-    blue_value.set(blue_change)
-
-
-def open_color_file(color_value, preview_object, hex_entry, red_value_open, green_value_open, blue_value_open, end_version):
     preview_object.configure(background = f'#{color_value}')
     hex_entry.delete(0, end_version)
     hex_entry.insert(0, str(preview_object.cget('background')[1:]))
