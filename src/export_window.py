@@ -1,3 +1,5 @@
+from dontexecuteme import *
+
 import customtkinter as ctk
 import tkinter as tk
 import external_objects
@@ -191,7 +193,7 @@ class ExportWindowIII(ctk.CTkToplevel):
         test_grid.grid(padx = 22)
 
 def main():
-    external_objects.dont_execute_module()
+    dont_execute_me()
 
 if __name__ == '__main__':
     main()
