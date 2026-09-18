@@ -1,5 +1,7 @@
 from dontexecuteme import *
 
+import gui_commands
+
 import tkinter as tk
 from tkinter import messagebox
 from pathlib import Path
@@ -340,7 +342,7 @@ def open_color_file(
     hex_entry.delete(0, end_version)
     hex_entry.insert(0, str(preview_object.cget('background')[1:]))
 
-    change_slider_values(
+    gui_commands.change_slider_values(
         hex_entry.get(),
         red_value_open,
         green_value_open,
