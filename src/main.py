@@ -25,29 +25,40 @@ class ColorTab(ctk.CTkFrame):
                 self.blue_slider.value_variable
                 )
 
-            self.color_preview.configure(
+            self.colorPreview.configure(
                 background = f'#{self.hexColorField._textvariable.get()}'
             )
 
         def color_slider_command(value):
-            newColorHex = gui_commands.change_color_sliders(
+            newHexColor: str = gui_commands.change_color_sliders(
                 self.red_slider.value_variable.get(),
                 self.green_slider.value_variable.get(),
                 self.blue_slider.value_variable.get(),
                 self.hexColorField,
-                self.color_preview
+                self.colorPreview
             )
 
-            return newColorHex
+            self.finalColor.set(newHexColor)
+            # print(self.finalColor.get())
+
+        def test_print(arg0, arg1, arg2):
+            print(self.finalColor.get())
 
 
-        self.color_preview = tk.Frame(
+        self.colorPreview = tk.Frame(
             master, 
             background = f'#{startingColorValue}', 
             width = 200, height = 200
             )
 
-        self.color_preview.place(y = 4)
+        self.colorPreview.place(y = 4)
+
+        self.finalColor = tk.StringVar(master)
+
+        self.finalColor.trace_add(
+            'write',
+            test_print
+        )
 
         
         self.letter_r = gui_objects.RGBLetter(master, 0, 17)
@@ -85,15 +96,6 @@ class ColorTab(ctk.CTkFrame):
         self.hexColorLabel.place(x = hex_related_x_position, y = hex_related_y_position)
         
         self.color_hex_copy_button.place(x = 450, y = hex_related_y_position)
-    
-    # TODO: get rid of this code
-    @property
-    def color_preview(self): return self._color_preview.cget('background')[1:]
-
-    @color_preview.setter
-    def color_preview(self, value):
-        self._color_preview = value
-        if value: print(value)
 
 
 class ColorTabList(ctk.CTkTabview):
@@ -114,16 +116,12 @@ class ColorTabList(ctk.CTkTabview):
         self.emphasis_colortab = ColorTab(self.tab('Emphasis'))
 
         # TODO: fix non-updated values
-        self.popitColorValues: list = [
-            self.primary_colortab.color_preview.cget('background')[1:],
-            self.secondary_colortab.color_preview.cget('background')[1:],
-            self.tertiary_colortab.color_preview.cget('background')[1:],
-            self.emphasis_colortab.color_preview.cget('background')[1:]
-        ]
-
         self.tabExport = export_tab.ExportTab(
             self.tab('Export'),
-            *self.popitColorValues,
+            self.primary_colortab.finalColor.get(),
+            self.secondary_colortab.finalColor.get(),
+            self.tertiary_colortab.finalColor.get(),
+            self.emphasis_colortab.finalColor.get()
         )
 
         self.exportWindow = None
@@ -278,7 +276,7 @@ class ColorTabList(ctk.CTkTabview):
 
             external_objects.open_color_file(
                 primary_color,
-                self.primary_colortab.color_preview,
+                self.primary_colortab.colorPreview,
                 self.primary_colortab.hexColorField,
                 self.primary_colortab.red_slider.value_variable,
                 self.primary_colortab.green_slider.value_variable,
@@ -288,7 +286,7 @@ class ColorTabList(ctk.CTkTabview):
 
             external_objects.open_color_file(
                 secondary_color,
-                self.secondary_colortab.color_preview,
+                self.secondary_colortab.colorPreview,
                 self.secondary_colortab.hexColorField,
                 self.secondary_colortab.red_slider.value_variable,
                 self.secondary_colortab.green_slider.value_variable,
@@ -298,7 +296,7 @@ class ColorTabList(ctk.CTkTabview):
 
             external_objects.open_color_file(
                 tertiary_color,
-                self.tertiary_colortab.color_preview,
+                self.tertiary_colortab.colorPreview,
                 self.tertiary_colortab.hexColorField,
                 self.tertiary_colortab.red_slider.value_variable,
                 self.tertiary_colortab.green_slider.value_variable,
@@ -308,7 +306,7 @@ class ColorTabList(ctk.CTkTabview):
 
             external_objects.open_color_file(
                 emphasis_color,
-                self.emphasis_colortab.color_preview,
+                self.emphasis_colortab.colorPreview,
                 self.emphasis_colortab.hexColorField,
                 self.emphasis_colortab.red_slider.value_variable,
                 self.emphasis_colortab.green_slider.value_variable,
