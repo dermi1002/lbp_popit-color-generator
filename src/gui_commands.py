@@ -17,10 +17,14 @@ def change_color_sliders(
 
     hexField.delete(0, ctk.END)
     hexField.insert(0, color_print_hex)
+
+    newColorHex = hexField._textvariable.get()
     
     colorSquare.configure(
-        background = f'#{hexField._textvariable.get()}'
+        background = f'#{newColorHex}'
     )
+
+    return newColorHex
 
 def change_slider_values(hex_value, red_value, green_value, blue_value):
     red_change = int(hex_value[:2], 16)

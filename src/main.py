@@ -10,7 +10,7 @@ import customtkinter as ctk
 import yaml
 
 
-color_beginning_value: str = '000000'
+startingColorValue: str = '000000'
 
 
 class ColorTab(ctk.CTkFrame):
@@ -30,7 +30,7 @@ class ColorTab(ctk.CTkFrame):
             )
 
         def color_slider_command(value):
-            gui_commands.change_color_sliders(
+            newColorHex = gui_commands.change_color_sliders(
                 self.red_slider.value_variable.get(),
                 self.green_slider.value_variable.get(),
                 self.blue_slider.value_variable.get(),
@@ -38,10 +38,12 @@ class ColorTab(ctk.CTkFrame):
                 self.color_preview
             )
 
+            return newColorHex
+
 
         self.color_preview = tk.Frame(
             master, 
-            background = f'#{color_beginning_value}', 
+            background = f'#{startingColorValue}', 
             width = 200, height = 200
             )
 
@@ -76,13 +78,22 @@ class ColorTab(ctk.CTkFrame):
             command = lambda: gui_commands.copy_hex_color(self.hexColorField.get())
         )
         
-        self.hexColorField.insert(ctk.END, color_beginning_value)
+        self.hexColorField.insert(ctk.END, startingColorValue)
         
         self.hexColorField.bind('<Return>', change_color_hex)
         
         self.hexColorLabel.place(x = hex_related_x_position, y = hex_related_y_position)
         
         self.color_hex_copy_button.place(x = 450, y = hex_related_y_position)
+    
+    # TODO: get rid of this code
+    @property
+    def color_preview(self): return self._color_preview.cget('background')[1:]
+
+    @color_preview.setter
+    def color_preview(self, value):
+        self._color_preview = value
+        if value: print(value)
 
 
 class ColorTabList(ctk.CTkTabview):
@@ -115,16 +126,16 @@ class ColorTabList(ctk.CTkTabview):
             *self.popitColorValues,
         )
 
-        self.test_export_window = None
+        self.exportWindow = None
 
         def show_export_window():
-            if self.test_export_window is None or not self.test_export_window.winfo_exists():
-                self.test_export_window = export_window.ExportWindowIII(
+            if self.exportWindow is None or not self.exportWindow.winfo_exists():
+                self.exportWindow = export_window.ExportWindowIII(
                     *self.popitColorValues
                 )
-                self.test_export_window.focus()
+                self.exportWindow.focus()
             else:
-                self.test_export_window.focus()
+                self.exportWindow.focus()
 
 
         # Toolbar
@@ -159,10 +170,10 @@ class ColorTabList(ctk.CTkTabview):
                     f"You are about to start a new file.\nDiscard changes to current session?"
             ):
                 batch_change_color_elements(
-                    color_beginning_value,
-                    color_beginning_value,
-                    color_beginning_value,
-                    color_beginning_value
+                    startingColorValue,
+                    startingColorValue,
+                    startingColorValue,
+                    startingColorValue
                 )
 
         def discard_changes_valuelist():
@@ -214,7 +225,7 @@ class ColorTabList(ctk.CTkTabview):
                         f'{primary_color_line[9:15]}',
                         f'{secondary_color_line[11:17]}', 
                         f'{tertiary_color_line[10:16]}',
-                        color_beginning_value # Godot made me let go of that lol 
+                        startingColorValue # Godot made me let go of that lol 
                         )
 
                 # turns out storing them in variables did the trick
