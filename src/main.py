@@ -18,32 +18,27 @@ class ColorTab(ctk.CTkFrame):
         super().__init__(master, *args, **kwargs)
 
         def change_color_hex(value):
+            updateColorHex = self.hexColorField._textvariable.get()
+
             gui_commands.change_slider_values(
-                self.hexColorField._textvariable.get(),
+                updateColorHex,
                 self.red_slider.value_variable,
                 self.green_slider.value_variable,
                 self.blue_slider.value_variable
                 )
 
             self.colorPreview.configure(
-                background = f'#{self.hexColorField._textvariable.get()}'
+                background = f'#{updateColorHex}'
             )
 
         def color_slider_command(value):
-            newHexColor: str = gui_commands.change_color_sliders(
+            gui_commands.change_color_sliders(
                 self.red_slider.value_variable.get(),
                 self.green_slider.value_variable.get(),
                 self.blue_slider.value_variable.get(),
                 self.hexColorField,
                 self.colorPreview
             )
-
-            self.finalColor.set(newHexColor)
-            # print(self.finalColor.get())
-
-        def test_print(arg0, arg1, arg2):
-            print(self.finalColor.get())
-
 
         self.colorPreview = tk.Frame(
             master, 
@@ -52,13 +47,6 @@ class ColorTab(ctk.CTkFrame):
             )
 
         self.colorPreview.place(y = 4)
-
-        self.finalColor = tk.StringVar(master)
-
-        self.finalColor.trace_add(
-            'write',
-            test_print
-        )
 
         
         self.letter_r = gui_objects.RGBLetter(master, 0, 17)
@@ -109,19 +97,43 @@ class ColorTabList(ctk.CTkTabview):
         self.add('Export')
 
         self.set('Primary')
- 
+
         self.primary_colortab = ColorTab(self.tab('Primary'))
         self.secondary_colortab = ColorTab(self.tab('Secondary'))
         self.tertiary_colortab = ColorTab(self.tab('Tertiary'))
         self.emphasis_colortab = ColorTab(self.tab('Emphasis'))
 
-        # TODO: fix non-updated values
-        self.tabExport = export_tab.ExportTab(
-            self.tab('Export'),
-            self.primary_colortab.finalColor.get(),
-            self.secondary_colortab.finalColor.get(),
-            self.tertiary_colortab.finalColor.get(),
-            self.emphasis_colortab.finalColor.get()
+        # Export Tab Commands
+        self.tabExport = export_tab.ExportTab(self.tab('Export'))
+
+        self.tabExport.new_export_ncl_button.configure(
+            command = lambda: external_objects.new_export_ncl(
+                self.tabExport.code_caption_entry.get(),
+                self.primary_colortab.colorPreview.cget('background')[1:],
+                self.secondary_colortab.colorPreview.cget('background')[1:],
+                self.tertiary_colortab.colorPreview.cget('background')[1:],
+                self.emphasis_colortab.colorPreview.cget('background')[1:]
+            )
+        )
+
+        self.tabExport.new_save_text_button.configure(
+            command = lambda: external_objects.export_value_list(
+                self.tabExport.game_title_option.get(),
+                self.primary_colortab.colorPreview.cget('background')[1:],
+                self.secondary_colortab.colorPreview.cget('background')[1:],
+                self.tertiary_colortab.colorPreview.cget('background')[1:],
+                self.emphasis_colortab.colorPreview.cget('background')[1:]
+            )
+        )
+
+        self.tabExport.new_export_yaml_button.configure(
+            command = lambda: external_objects.new_export_yaml(
+                self.tabExport.code_caption_entry.get(),
+                self.primary_colortab.colorPreview.cget('background')[1:],
+                self.secondary_colortab.colorPreview.cget('background')[1:],
+                self.tertiary_colortab.colorPreview.cget('background')[1:],
+                self.emphasis_colortab.colorPreview.cget('background')[1:]
+            )
         )
 
         self.exportWindow = None
@@ -137,25 +149,25 @@ class ColorTabList(ctk.CTkTabview):
 
 
         # Toolbar
-        self.test_toolbar = gui_objects.Toolbar(master)
+        self.menuBar = gui_objects.Toolbar(master)
 
-        master.configure(menu = self.test_toolbar)
+        master.configure(menu = self.menuBar)
 
 
-        self.test_toolbar.file_option.add_command(
+        self.menuBar.file_option.add_command(
             label = "New",
             command = lambda: discard_changes_new_file()
         )
 
-        self.test_toolbar.file_option.add_separator()
+        self.menuBar.file_option.add_separator()
 
-        self.test_toolbar.file_option.add_command(
+        self.menuBar.file_option.add_command(
             state = tk.DISABLED,
             label = 'Open Value List',
             command = lambda: discard_changes_valuelist()
         )
 
-        self.test_toolbar.file_option.add_command(
+        self.menuBar.file_option.add_command(
             # state = tk.DISABLED,
             label = 'Open YAML Dict.',
             command = lambda: discard_changes_yaml_dictionary()
@@ -188,9 +200,9 @@ class ColorTabList(ctk.CTkTabview):
             ):
                 open_yaml_dictionary()
 
-        self.test_toolbar.file_option.add_separator()
+        self.menuBar.file_option.add_separator()
 
-        self.test_toolbar.file_option.add_command(
+        self.menuBar.file_option.add_command(
             label = "Save Code",
             command = show_export_window
         )
