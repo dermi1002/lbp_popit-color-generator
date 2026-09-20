@@ -5,6 +5,7 @@ import gui_commands
 import tkinter as tk
 from tkinter import messagebox
 from pathlib import Path
+import yaml
 
 
 def get_yaml_content(
@@ -348,6 +349,44 @@ def open_color_file(
         green_value_open,
         blue_value_open
     )
+
+
+def open_yaml_dictionary(
+    tabColorPrimary, tabColorSecondary, tabColorTertiary, tabColorEmphasis,
+    tabExport, whichEnd
+    ):
+
+    yaml_dictionary_load = tk.filedialog.askopenfilename(
+        title = 'Test - Load YAML Dictionary',
+        initialdir = '../save',
+        filetypes = [('YAML Dictionary', '*.yaml'), ('All Files', '*.*')],
+        defaultextension = '.yaml'
+    )
+
+    # finally got to fix this error
+    if yaml_dictionary_load is None or yaml_dictionary_load == ():
+        return
+    else:
+        yaml_dictionary_path = rf"{yaml_dictionary_load}"
+        with open(yaml_dictionary_path, 'r+') as yaml_dictionary_content:
+            opened_yaml_dictionary = yaml.safe_load(yaml_dictionary_content)
+
+            opened_yaml_values = opened_yaml_dictionary['color-code']
+
+            yaml_primary_color = opened_yaml_values['primcolor']
+            yaml_secondary_color = opened_yaml_values['seccolor']
+            yaml_tertiary_color = opened_yaml_values['tertcolor']
+            yaml_emphasis_color = opened_yaml_values['emphcolor']
+            yamlCaption = opened_yaml_values['caption']
+
+            gui_commands.batch_change_color_elements(
+                f'{yaml_primary_color}', f'{yaml_secondary_color}',
+                f'{yaml_tertiary_color}', f'{yaml_emphasis_color}',
+                tabColorPrimary, tabColorSecondary,
+                tabColorTertiary, tabColorEmphasis,
+                tabExport, f'{yamlCaption}', whichEnd
+            )
+
 
 def main():
     dont_execute_me()

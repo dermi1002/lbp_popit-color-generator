@@ -1,5 +1,4 @@
 import export_tab
-import export_window
 import external_objects
 import gui_objects
 import gui_commands
@@ -7,7 +6,6 @@ import gui_commands
 import tkinter as tk
 from tkinter import messagebox
 import customtkinter as ctk
-import yaml
 
 
 startingColorValue: str = '000000'
@@ -70,8 +68,7 @@ class ColorTab(ctk.CTkFrame):
         hex_related_y_position: int = 170
 
         self.hexColorLabel = ctk.CTkLabel(master, text = 'HEX Color:')
-        
-        # I think it's done now
+
         self.hexColorField = gui_objects.HexColorField(
             master,
             hex_related_y_position
@@ -143,20 +140,8 @@ class ColorTabList(ctk.CTkTabview):
             )
         )
 
+
         self.exportWindow = None
-
-        def show_export_window():
-            if self.exportWindow is None or not self.exportWindow.winfo_exists():
-                self.exportWindow = export_window.ExportWindowIII(
-                    self.primary_colortab.colorValue,
-                    self.secondary_colortab.colorValue,
-                    self.tertiary_colortab.colorValue,
-                    self.emphasis_colortab.colorValue
-                )
-                self.exportWindow.focus()
-            else:
-                self.exportWindow.focus()
-
 
         # Toolbar
         self.menuBar = gui_objects.Toolbar(master)
@@ -166,7 +151,13 @@ class ColorTabList(ctk.CTkTabview):
 
         self.menuBar.file_option.add_command(
             label = "New",
-            command = lambda: discard_changes_new_file()
+            command = lambda: gui_commands.discard_changes_new_file(
+                startingColorValue, startingColorValue,
+                startingColorValue, startingColorValue,
+                self.primary_colortab, self.secondary_colortab,
+                self.tertiary_colortab, self.emphasis_colortab,
+                self.tabExport, blankString, ctk.END
+            )
         )
 
         self.menuBar.file_option.add_separator()
@@ -180,42 +171,32 @@ class ColorTabList(ctk.CTkTabview):
         self.menuBar.file_option.add_command(
             # state = tk.DISABLED,
             label = 'Open YAML Dict.',
-            command = lambda: discard_changes_yaml_dictionary()
+            command = lambda: gui_commands.discard_changes_yaml_dictionary(
+                self.primary_colortab, self.secondary_colortab,
+                self.tertiary_colortab, self.emphasis_colortab,
+                self.tabExport, ctk.END
+            )
         )
 
 
-        def discard_changes_new_file():
-            if messagebox.askyesno(
-                    "Discard Changes?",
-                    f"You are about to start a new file.\nDiscard changes to current session?"
-            ):
-                gui_commands.batch_change_color_elements(
-                    startingColorValue, startingColorValue,
-                    startingColorValue, startingColorValue,
-                    self.primary_colortab, self.secondary_colortab,
-                    self.tertiary_colortab, self.emphasis_colortab,
-                    self.tabExport, blankString, ctk.END
-                )
-
         def discard_changes_valuelist():
             if messagebox.askyesno(
-                    "Discard Changes?",
-                    f"You are about to open a Value List.\nDiscard changes to current session?"
+                "Discard Changes?",
+                f"You are about to open a Value List.\nDiscard changes to current session?"
             ):
                 open_text_list()
-
-        def discard_changes_yaml_dictionary():
-            if messagebox.askyesno(
-                    "Discard Changes?",
-                    f"You are about to open a YAML Dictionary.\nDiscard changes to current session?"
-            ):
-                open_yaml_dictionary()
 
         self.menuBar.file_option.add_separator()
 
         self.menuBar.file_option.add_command(
             label = "Save Code",
-            command = show_export_window
+            command = lambda: gui_commands.show_export_window(
+                self.exportWindow,
+                self.primary_colortab.colorValue,
+                self.secondary_colortab.colorValue,
+                self.tertiary_colortab.colorValue,
+                self.emphasis_colortab.colorValue
+            )
         )
 
         def open_text_list():
@@ -264,39 +245,6 @@ class ColorTabList(ctk.CTkTabview):
                     )
 
 
-        def open_yaml_dictionary():
-            yaml_dictionary_load = tk.filedialog.askopenfilename(
-                title = 'Test - Load YAML Dictionary',
-                initialdir = '../save',
-                filetypes = [('YAML Dictionary', '*.yaml'), ('All Files', '*.*')],
-                defaultextension = '.yaml'
-            )
-
-            # finally got to fix this error
-            if yaml_dictionary_load is None or yaml_dictionary_load == ():
-                return
-            else:
-                yaml_dictionary_path = rf"{yaml_dictionary_load}"
-                with open(yaml_dictionary_path, 'r+') as yaml_dictionary_content:
-                    opened_yaml_dictionary = yaml.safe_load(yaml_dictionary_content)
-
-                    opened_yaml_values = opened_yaml_dictionary['color-code']
-
-                    yaml_primary_color = opened_yaml_values['primcolor']
-                    yaml_secondary_color = opened_yaml_values['seccolor']
-                    yaml_tertiary_color = opened_yaml_values['tertcolor']
-                    yaml_emphasis_color = opened_yaml_values['emphcolor']
-                    yamlCaption = opened_yaml_values['caption']
-
-                    gui_commands.batch_change_color_elements(
-                        f'{yaml_primary_color}', f'{yaml_secondary_color}',
-                        f'{yaml_tertiary_color}', f'{yaml_emphasis_color}',
-                        self.primary_colortab, self.secondary_colortab,
-                        self.tertiary_colortab, self.emphasis_colortab,
-                        self.tabExport, f'{yamlCaption}', ctk.END
-                    )
-
-
         self.place_configure(width = 530, height = 254)
         self.place(x = 5)
 
@@ -306,8 +254,8 @@ class MainProgram(ctk.CTk):
         super().__init__()
 
         # Window Setup
-        self.title("LBP Popit Color Generator") # i mean it was able to export files for more than lbp2 
-        self.geometry('540x260')          # for a while so i might as well...
+        self.title("LBP Popit Color Generator")
+        self.geometry('540x260')
         self.resizable(False, False)
 
         # Program

@@ -84,8 +84,8 @@ Further instructions on how to use the program can be found in the Documents sec
 - [ ] Create a Changelog Document
 
 ### Next:
-- [ ] Add Support for LBP Vita's VitaCheat Format
-- [ ] Replace YAML Support with JSON and eliminate functionality for importing Value Lists
+- [ ] Add Support for LBP1 Cheat Codes and LBP Vita's VitaCheat Format
+- [ ] ~~Replace YAML Support with JSON~~ and eliminate functionality for importing Value Lists
 - [ ] Add Terminal logs and keyboard shortcuts
 - [ ] Replace the Setup Scripts with a Python one
 - [ ] Retheme the GUI to Tkinter's Ttk widget to remove CustomTkinter dependency and support Linux out-of-the-box
