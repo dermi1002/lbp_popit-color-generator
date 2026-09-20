@@ -1,4 +1,4 @@
-from dontexecuteme import *
+from dontexecuteme import dont_execute_me
 
 import gui_commands
 

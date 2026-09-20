@@ -11,6 +11,7 @@ import yaml
 
 
 startingColorValue: str = '000000'
+blankString: str = ''
 
 
 class ColorTab(ctk.CTkFrame):
@@ -31,6 +32,8 @@ class ColorTab(ctk.CTkFrame):
                 background = f'#{updateColorHex}'
             )
 
+            self.colorValue = self.colorPreview.cget('background')[1:]
+
         def color_slider_command(value):
             gui_commands.change_color_sliders(
                 self.red_slider.value_variable.get(),
@@ -40,6 +43,8 @@ class ColorTab(ctk.CTkFrame):
                 self.colorPreview
             )
 
+            self.colorValue = self.colorPreview.cget('background')[1:]
+
         self.colorPreview = tk.Frame(
             master, 
             background = f'#{startingColorValue}', 
@@ -47,6 +52,8 @@ class ColorTab(ctk.CTkFrame):
             )
 
         self.colorPreview.place(y = 4)
+
+        self.colorValue: str = self.colorPreview.cget('background')[1:]
 
         
         self.letter_r = gui_objects.RGBLetter(master, 0, 17)
@@ -109,30 +116,30 @@ class ColorTabList(ctk.CTkTabview):
         self.tabExport.new_export_ncl_button.configure(
             command = lambda: external_objects.new_export_ncl(
                 self.tabExport.code_caption_entry.get(),
-                self.primary_colortab.colorPreview.cget('background')[1:],
-                self.secondary_colortab.colorPreview.cget('background')[1:],
-                self.tertiary_colortab.colorPreview.cget('background')[1:],
-                self.emphasis_colortab.colorPreview.cget('background')[1:]
+                self.primary_colortab.colorValue,
+                self.secondary_colortab.colorValue,
+                self.tertiary_colortab.colorValue,
+                self.emphasis_colortab.colorValue
             )
         )
 
         self.tabExport.new_save_text_button.configure(
             command = lambda: external_objects.export_value_list(
                 self.tabExport.game_title_option.get(),
-                self.primary_colortab.colorPreview.cget('background')[1:],
-                self.secondary_colortab.colorPreview.cget('background')[1:],
-                self.tertiary_colortab.colorPreview.cget('background')[1:],
-                self.emphasis_colortab.colorPreview.cget('background')[1:]
+                self.primary_colortab.colorValue,
+                self.secondary_colortab.colorValue,
+                self.tertiary_colortab.colorValue,
+                self.emphasis_colortab.colorValue
             )
         )
 
         self.tabExport.new_export_yaml_button.configure(
             command = lambda: external_objects.new_export_yaml(
                 self.tabExport.code_caption_entry.get(),
-                self.primary_colortab.colorPreview.cget('background')[1:],
-                self.secondary_colortab.colorPreview.cget('background')[1:],
-                self.tertiary_colortab.colorPreview.cget('background')[1:],
-                self.emphasis_colortab.colorPreview.cget('background')[1:]
+                self.primary_colortab.colorValue,
+                self.secondary_colortab.colorValue,
+                self.tertiary_colortab.colorValue,
+                self.emphasis_colortab.colorValue
             )
         )
 
@@ -141,7 +148,10 @@ class ColorTabList(ctk.CTkTabview):
         def show_export_window():
             if self.exportWindow is None or not self.exportWindow.winfo_exists():
                 self.exportWindow = export_window.ExportWindowIII(
-                    *self.popitColorValues
+                    self.primary_colortab.colorValue,
+                    self.secondary_colortab.colorValue,
+                    self.tertiary_colortab.colorValue,
+                    self.emphasis_colortab.colorValue
                 )
                 self.exportWindow.focus()
             else:
@@ -179,11 +189,12 @@ class ColorTabList(ctk.CTkTabview):
                     "Discard Changes?",
                     f"You are about to start a new file.\nDiscard changes to current session?"
             ):
-                batch_change_color_elements(
-                    startingColorValue,
-                    startingColorValue,
-                    startingColorValue,
-                    startingColorValue
+                gui_commands.batch_change_color_elements(
+                    startingColorValue, startingColorValue,
+                    startingColorValue, startingColorValue,
+                    self.primary_colortab, self.secondary_colortab,
+                    self.tertiary_colortab, self.emphasis_colortab,
+                    self.tabExport, blankString, ctk.END
                 )
 
         def discard_changes_valuelist():
@@ -231,24 +242,26 @@ class ColorTabList(ctk.CTkTabview):
                 # print(f'{game_line}\n{primary_color_line}\n{secondary_color_line}\n{tertiary_color_line}')
 
                 if 'LBP1' in game_line:
-                    batch_change_color_elements(
-                        f'{primary_color_line[9:15]}',
-                        f'{secondary_color_line[11:17]}', 
-                        f'{tertiary_color_line[10:16]}',
-                        startingColorValue # Godot made me let go of that lol 
-                        )
+                    gui_commands.batch_change_color_elements(
+                        f'{primary_color_line[9:15]}', f'{secondary_color_line[11:17]}', 
+                        f'{tertiary_color_line[10:16]}', startingColorValue,
+                        self.primary_colortab, self.secondary_colortab,
+                        self.tertiary_colortab, self.emphasis_colortab,
+                        self.tabExport, blankString, ctk.END
+                    )
 
                 # turns out storing them in variables did the trick
                 if 'LBP2' in game_line or 'LBP3' in game_line:
                     emphasis_color_line: str = old_valuelist_content.readline()
                     # print(emphasis_color_line)
 
-                    batch_change_color_elements(
-                        f'{primary_color_line[11:17]}',
-                        f'{secondary_color_line[13:19]}', 
-                        f'{tertiary_color_line[12:18]}',
-                        f'{emphasis_color_line[12:18]}'
-                        )
+                    gui_commands.batch_change_color_elements(
+                        f'{primary_color_line[11:17]}', f'{secondary_color_line[13:19]}', 
+                        f'{tertiary_color_line[12:18]}', f'{emphasis_color_line[12:18]}',
+                        self.primary_colortab, self.secondary_colortab,
+                        self.tertiary_colortab, self.emphasis_colortab,
+                        self.tabExport, blankString, ctk.END
+                    )
 
 
         def open_yaml_dictionary():
@@ -269,62 +282,19 @@ class ColorTabList(ctk.CTkTabview):
 
                     opened_yaml_values = opened_yaml_dictionary['color-code']
 
-                    yaml_primary_color = opened_yaml_values['primcolor'] # yikes! shortened "variables"! could've been worse...
+                    yaml_primary_color = opened_yaml_values['primcolor']
                     yaml_secondary_color = opened_yaml_values['seccolor']
                     yaml_tertiary_color = opened_yaml_values['tertcolor']
                     yaml_emphasis_color = opened_yaml_values['emphcolor']
+                    yamlCaption = opened_yaml_values['caption']
 
-                    batch_change_color_elements(
-                        f'{yaml_primary_color}',
-                        f'{yaml_secondary_color}',
-                        f'{yaml_tertiary_color}',
-                        f'{yaml_emphasis_color}'
+                    gui_commands.batch_change_color_elements(
+                        f'{yaml_primary_color}', f'{yaml_secondary_color}',
+                        f'{yaml_tertiary_color}', f'{yaml_emphasis_color}',
+                        self.primary_colortab, self.secondary_colortab,
+                        self.tertiary_colortab, self.emphasis_colortab,
+                        self.tabExport, f'{yamlCaption}', ctk.END
                     )
-
-
-        def batch_change_color_elements(
-            primary_color, secondary_color, tertiary_color, emphasis_color
-            ):
-
-            external_objects.open_color_file(
-                primary_color,
-                self.primary_colortab.colorPreview,
-                self.primary_colortab.hexColorField,
-                self.primary_colortab.red_slider.value_variable,
-                self.primary_colortab.green_slider.value_variable,
-                self.primary_colortab.blue_slider.value_variable,
-                ctk.END
-            )
-
-            external_objects.open_color_file(
-                secondary_color,
-                self.secondary_colortab.colorPreview,
-                self.secondary_colortab.hexColorField,
-                self.secondary_colortab.red_slider.value_variable,
-                self.secondary_colortab.green_slider.value_variable,
-                self.secondary_colortab.blue_slider.value_variable,
-                ctk.END
-            )
-
-            external_objects.open_color_file(
-                tertiary_color,
-                self.tertiary_colortab.colorPreview,
-                self.tertiary_colortab.hexColorField,
-                self.tertiary_colortab.red_slider.value_variable,
-                self.tertiary_colortab.green_slider.value_variable,
-                self.tertiary_colortab.blue_slider.value_variable,
-                ctk.END
-            )
-
-            external_objects.open_color_file(
-                emphasis_color,
-                self.emphasis_colortab.colorPreview,
-                self.emphasis_colortab.hexColorField,
-                self.emphasis_colortab.red_slider.value_variable,
-                self.emphasis_colortab.green_slider.value_variable,
-                self.emphasis_colortab.blue_slider.value_variable,
-                ctk.END
-            )
 
 
         self.place_configure(width = 530, height = 254)
@@ -346,9 +316,9 @@ class MainProgram(ctk.CTk):
         # Program Closing Function
         def program_close():
             if messagebox.askyesno(
-                    "Discard Changes?",
-                    f"You are about to quit the program.\nDiscard changes to current session?"
-                    ):
+                "Discard Changes?",
+                f"You are about to quit the program.\nDiscard changes to current session?"
+            ):
                 self.destroy()
 
         self.protocol('WM_DELETE_WINDOW', lambda: program_close())
