@@ -9,7 +9,6 @@ import customtkinter as ctk
 
 
 startingColorValue: str = '000000'
-blankString: str = ''
 
 
 class ColorTab(ctk.CTkFrame):
@@ -93,6 +92,8 @@ class ColorTab(ctk.CTkFrame):
 class ColorTabList(ctk.CTkTabview):
     def __init__(self, master, *args, **kwargs):
         super().__init__(master, *args, **kwargs)
+
+        blankString: str = ''
 
         self.add('Primary')
         self.add('Secondary')
