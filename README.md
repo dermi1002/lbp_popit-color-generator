@@ -77,11 +77,12 @@ Further instructions on how to use the program can be found in the Documents sec
     - [ ] Move Objects from Main Python file to their own module
     - [x] Move Objects' command funcitons from Main Python to their own module
     - [ ] Reformat Label Names
-        - [ ] Functions
-        - [ ] Classes
-        - [ ] Variables
+        - [x] Functions (All lowercase, words separated by underscore characters)
+        - [x] Classes (All words capitalized, no separators)
+        - [ ] Variables (All words capitalized except the first word, no separators)
 
 - [ ] Create a Changelog Document
+- [ ] Create a Coding Style/Contribution Document
 
 ### Next:
 - [ ] Add Support for LBP1 Cheat Codes and LBP Vita's VitaCheat Format

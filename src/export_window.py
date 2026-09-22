@@ -2,27 +2,27 @@ from dontexecuteme import dont_execute_me
 
 import customtkinter as ctk
 import tkinter as tk
-import external_objects
+import file_management
 
 class ExportWindowIII(ctk.CTkToplevel):
     def __init__(
         self,
-        primary_color, secondary_color, tertiary_color, emphasis_color,
+        colorPrimary, colorSecondary, colorTertiary, colorEmphasis,
         *args, **kwargs
         ):
 
         super().__init__(*args, **kwargs)
 
-        self.primary_color = primary_color
-        self.secondary_color = secondary_color
-        self.tertiary_color = tertiary_color
-        self.emphasis_color = emphasis_color
+        self.colorPrimary = colorPrimary
+        self.colorSecondary = colorSecondary
+        self.colorTertiary = colorTertiary
+        self.colorEmphasis = colorEmphasis
 
-        export_toplevel_width: int = 385
-        export_toplevel_height: int = 355
+        exportWindowWidth: int = 385
+        exportWindowHeight: int = 355
         
         self.title('Export Code')
-        self.geometry(f'{export_toplevel_width}x{export_toplevel_height}')
+        self.geometry(f'{exportWindowWidth}x{exportWindowHeight}')
         self.resizable(False, False)
         self.grab_set()
 
@@ -133,23 +133,23 @@ class ExportWindowIII(ctk.CTkToplevel):
             self, 
             text = 'Save File',
             width = 125,
-            command = lambda: external_objects.export_any_format(
+            command = lambda: file_management.export_any_format(
                 export_filetype_option.get(), 
                 code_filepath_entry.get(),
                 game_title_option.get(),
                 code_caption_entry.get(),
                 export_filename_prefix.get(),
-                self.primary_color,
-                self.secondary_color,
-                self.tertiary_color,
-                self.emphasis_color,
+                self.colorPrimary,
+                self.colorSecondary,
+                self.colorTertiary,
+                self.colorEmphasis,
             )
         )
         
 
         # Edit these values to change the Widgets' Position
-        export_toplevel_x_center = int(export_toplevel_width / 2)
-        export_object_center = int((export_toplevel_width / 2) - 18)
+        export_toplevel_x_center = int(exportWindowWidth / 2)
+        export_object_center = int((exportWindowWidth / 2) - 18)
         
         export_y_offset: int = 17
         export_next_row: int = 70
@@ -157,9 +157,9 @@ class ExportWindowIII(ctk.CTkToplevel):
         export_object_x_offset: int = 20
         export_note_y_position: int = 30
 
-        export_object_right = int(export_toplevel_width - export_object_x_offset)
+        export_object_right = int(exportWindowWidth - export_object_x_offset)
 
-        export_code_buttons_bottom = int(export_toplevel_height - export_y_offset)
+        export_code_buttons_bottom = int(exportWindowHeight - export_y_offset)
         
 
         # Do NOT look at this mess full of Variables

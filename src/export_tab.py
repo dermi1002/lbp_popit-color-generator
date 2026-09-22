@@ -1,6 +1,6 @@
 from dontexecuteme import dont_execute_me
 
-import external_objects
+import file_management
 
 import customtkinter as ctk
 

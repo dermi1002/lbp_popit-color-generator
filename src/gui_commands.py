@@ -1,6 +1,6 @@
 from dontexecuteme import dont_execute_me
 
-import external_objects
+import file_management
 import export_window
 
 import customtkinter as ctk
@@ -15,32 +15,32 @@ def change_color_sliders(
     hexField, colorSquare
     ):
 
-    color_print_hex = '%02X%02X%02X' % (red, green, blue)
+    sliderHexConvert = '%02X%02X%02X' % (red, green, blue)
 
     hexField.delete(0, ctk.END)
-    hexField.insert(0, color_print_hex)
+    hexField.insert(0, sliderHexConvert)
 
     colorSquare.configure(
         background = f'#{hexField._textvariable.get()}'
     )
 
-def change_slider_values(hex_value, red_value, green_value, blue_value):
-    red_change = int(hex_value[:2], 16)
-    green_change = int(hex_value[2:4], 16)
-    blue_change = int(hex_value[4:], 16)
+def change_slider_values(valueHex, valueRed, valueGreen, valueBlue):
+    changeRed = int(valueHex[:2], 16)
+    changeGreen = int(valueHex[2:4], 16)
+    changeBlue = int(valueHex[4:], 16)
 
-    red_value.set(red_change)
-    green_value.set(green_change)
-    blue_value.set(blue_change)
+    valueRed.set(changeRed)
+    valueGreen.set(changeGreen)
+    valueBlue.set(changeBlue)
 
-
+# TODO: change variables in export tab python file
 def batch_change_color_elements(
     colorPrimary: str, colorSecondary: str, colorTertiary: str, colorEmphasis: str,
     tabColorPrimary, tabColorSecondary, tabColorTertiary, tabColorEmphasis,
     tabExport, codeCaption: str, whichEnd
     ):
 
-    external_objects.open_color_file(
+    file_management.open_color_file(
         colorPrimary,
         tabColorPrimary.colorPreview,
         tabColorPrimary.hexColorField,
@@ -50,7 +50,7 @@ def batch_change_color_elements(
         whichEnd
     )
 
-    external_objects.open_color_file(
+    file_management.open_color_file(
         colorSecondary,
         tabColorSecondary.colorPreview,
         tabColorSecondary.hexColorField,
@@ -60,7 +60,7 @@ def batch_change_color_elements(
         whichEnd
     )
 
-    external_objects.open_color_file(
+    file_management.open_color_file(
         colorTertiary,
         tabColorTertiary.colorPreview,
         tabColorTertiary.hexColorField,
@@ -70,7 +70,7 @@ def batch_change_color_elements(
         whichEnd
     )
 
-    external_objects.open_color_file(
+    file_management.open_color_file(
         colorEmphasis,
         tabColorEmphasis.colorPreview,
         tabColorEmphasis.hexColorField,
@@ -108,7 +108,7 @@ def discard_changes_yaml_dictionary(
         "Discard Changes?",
         f"You are about to open a YAML Dictionary.\nDiscard changes to current session?"
     ):
-        external_objects.open_yaml_dictionary(
+        file_management.open_yaml_dictionary(
             tabColorPrimary, tabColorSecondary,
             tabColorTertiary, tabColorEmphasis,
             tabExport, whichEnd

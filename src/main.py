@@ -1,5 +1,5 @@
 import export_tab
-import external_objects
+import file_management
 import gui_objects
 import gui_commands
 
@@ -20,9 +20,9 @@ class ColorTab(ctk.CTkFrame):
 
             gui_commands.change_slider_values(
                 updateColorHex,
-                self.red_slider.value_variable,
-                self.green_slider.value_variable,
-                self.blue_slider.value_variable
+                self.sliderRed.value_variable,
+                self.sliderGreen.value_variable,
+                self.sliderBlue.value_variable
                 )
 
             self.colorPreview.configure(
@@ -33,9 +33,9 @@ class ColorTab(ctk.CTkFrame):
 
         def color_slider_command(value):
             gui_commands.change_color_sliders(
-                self.red_slider.value_variable.get(),
-                self.green_slider.value_variable.get(),
-                self.blue_slider.value_variable.get(),
+                self.sliderRed.value_variable.get(),
+                self.sliderGreen.value_variable.get(),
+                self.sliderBlue.value_variable.get(),
                 self.hexColorField,
                 self.colorPreview
             )
@@ -53,24 +53,24 @@ class ColorTab(ctk.CTkFrame):
         self.colorValue: str = self.colorPreview.cget('background')[1:]
 
         
-        self.letter_r = gui_objects.RGBLetter(master, 0, 17)
-        self.red_slider = gui_objects.RGBSlider(master, 16, command = color_slider_command)
+        self.letterR = gui_objects.RGBLetter(master, 0, 17)
+        self.sliderRed = gui_objects.RGBSlider(master, 16, command = color_slider_command)
                 
-        self.letter_g = gui_objects.RGBLetter(master, 1, 50)
-        self.green_slider = gui_objects.RGBSlider(master, 66, command = color_slider_command)
+        self.letterG = gui_objects.RGBLetter(master, 1, 50)
+        self.sliderGreen = gui_objects.RGBSlider(master, 66, command = color_slider_command)
 
-        self.letter_b = gui_objects.RGBLetter(master, 2, 82)
-        self.blue_slider = gui_objects.RGBSlider(master, 116, command = color_slider_command)
+        self.letterB = gui_objects.RGBLetter(master, 2, 82)
+        self.sliderBlue = gui_objects.RGBSlider(master, 116, command = color_slider_command)
 
 
-        hex_related_x_position: int = 225
-        hex_related_y_position: int = 170
+        hexRelatedPositionX: int = 225
+        hexRelatedPositionY: int = 170
 
         self.hexColorLabel = ctk.CTkLabel(master, text = 'HEX Color:')
 
         self.hexColorField = gui_objects.HexColorField(
             master,
-            hex_related_y_position
+            hexRelatedPositionY
         )
         
         self.color_hex_copy_button = ctk.CTkButton(
@@ -84,9 +84,9 @@ class ColorTab(ctk.CTkFrame):
         
         self.hexColorField.bind('<Return>', change_color_hex)
         
-        self.hexColorLabel.place(x = hex_related_x_position, y = hex_related_y_position)
+        self.hexColorLabel.place(x = hexRelatedPositionX, y = hexRelatedPositionY)
         
-        self.color_hex_copy_button.place(x = 450, y = hex_related_y_position)
+        self.color_hex_copy_button.place(x = 450, y = hexRelatedPositionY)
 
 
 class ColorTabList(ctk.CTkTabview):
@@ -103,41 +103,42 @@ class ColorTabList(ctk.CTkTabview):
 
         self.set('Primary')
 
-        self.primary_colortab = ColorTab(self.tab('Primary'))
-        self.secondary_colortab = ColorTab(self.tab('Secondary'))
-        self.tertiary_colortab = ColorTab(self.tab('Tertiary'))
-        self.emphasis_colortab = ColorTab(self.tab('Emphasis'))
+        self.tabColorPrimary = ColorTab(self.tab('Primary'))
+        self.tabColorSecondary = ColorTab(self.tab('Secondary'))
+        self.tabColorTertiary = ColorTab(self.tab('Tertiary'))
+        self.tabColorEmphasis = ColorTab(self.tab('Emphasis'))
 
         # Export Tab Commands
+        # TODO: change variables in export tab python file
         self.tabExport = export_tab.ExportTab(self.tab('Export'))
 
         self.tabExport.new_export_ncl_button.configure(
-            command = lambda: external_objects.new_export_ncl(
+            command = lambda: file_management.new_export_ncl(
                 self.tabExport.code_caption_entry.get(),
-                self.primary_colortab.colorValue,
-                self.secondary_colortab.colorValue,
-                self.tertiary_colortab.colorValue,
-                self.emphasis_colortab.colorValue
+                self.tabColorPrimary.colorValue,
+                self.tabColorSecondary.colorValue,
+                self.tabColorTertiary.colorValue,
+                self.tabColorEmphasis.colorValue
             )
         )
 
         self.tabExport.new_save_text_button.configure(
-            command = lambda: external_objects.export_value_list(
+            command = lambda: file_management.export_value_list(
                 self.tabExport.game_title_option.get(),
-                self.primary_colortab.colorValue,
-                self.secondary_colortab.colorValue,
-                self.tertiary_colortab.colorValue,
-                self.emphasis_colortab.colorValue
+                self.tabColorPrimary.colorValue,
+                self.tabColorSecondary.colorValue,
+                self.tabColorTertiary.colorValue,
+                self.tabColorEmphasis.colorValue
             )
         )
 
         self.tabExport.new_export_yaml_button.configure(
-            command = lambda: external_objects.new_export_yaml(
+            command = lambda: file_management.new_export_yaml(
                 self.tabExport.code_caption_entry.get(),
-                self.primary_colortab.colorValue,
-                self.secondary_colortab.colorValue,
-                self.tertiary_colortab.colorValue,
-                self.emphasis_colortab.colorValue
+                self.tabColorPrimary.colorValue,
+                self.tabColorSecondary.colorValue,
+                self.tabColorTertiary.colorValue,
+                self.tabColorEmphasis.colorValue
             )
         )
 
@@ -155,8 +156,8 @@ class ColorTabList(ctk.CTkTabview):
             command = lambda: gui_commands.discard_changes_new_file(
                 startingColorValue, startingColorValue,
                 startingColorValue, startingColorValue,
-                self.primary_colortab, self.secondary_colortab,
-                self.tertiary_colortab, self.emphasis_colortab,
+                self.tabColorPrimary, self.tabColorSecondary,
+                self.tabColorTertiary, self.tabColorEmphasis,
                 self.tabExport, blankString, ctk.END
             )
         )
@@ -173,8 +174,8 @@ class ColorTabList(ctk.CTkTabview):
             # state = tk.DISABLED,
             label = 'Open YAML Dict.',
             command = lambda: gui_commands.discard_changes_yaml_dictionary(
-                self.primary_colortab, self.secondary_colortab,
-                self.tertiary_colortab, self.emphasis_colortab,
+                self.tabColorPrimary, self.tabColorSecondary,
+                self.tabColorTertiary, self.tabColorEmphasis,
                 self.tabExport, ctk.END
             )
         )
@@ -193,10 +194,10 @@ class ColorTabList(ctk.CTkTabview):
             label = "Save Code",
             command = lambda: gui_commands.show_export_window(
                 self.exportWindow,
-                self.primary_colortab.colorValue,
-                self.secondary_colortab.colorValue,
-                self.tertiary_colortab.colorValue,
-                self.emphasis_colortab.colorValue
+                self.tabColorPrimary.colorValue,
+                self.tabColorSecondary.colorValue,
+                self.tabColorTertiary.colorValue,
+                self.tabColorEmphasis.colorValue
             )
         )
 
@@ -227,8 +228,8 @@ class ColorTabList(ctk.CTkTabview):
                     gui_commands.batch_change_color_elements(
                         f'{primary_color_line[9:15]}', f'{secondary_color_line[11:17]}', 
                         f'{tertiary_color_line[10:16]}', startingColorValue,
-                        self.primary_colortab, self.secondary_colortab,
-                        self.tertiary_colortab, self.emphasis_colortab,
+                        self.tabColorPrimary, self.tabColorSecondary,
+                        self.tabColorTertiary, self.tabColorEmphasis,
                         self.tabExport, blankString, ctk.END
                     )
 
@@ -240,8 +241,8 @@ class ColorTabList(ctk.CTkTabview):
                     gui_commands.batch_change_color_elements(
                         f'{primary_color_line[11:17]}', f'{secondary_color_line[13:19]}', 
                         f'{tertiary_color_line[12:18]}', f'{emphasis_color_line[12:18]}',
-                        self.primary_colortab, self.secondary_colortab,
-                        self.tertiary_colortab, self.emphasis_colortab,
+                        self.tabColorPrimary, self.tabColorSecondary,
+                        self.tabColorTertiary, self.tabColorEmphasis,
                         self.tabExport, blankString, ctk.END
                     )
 
@@ -251,6 +252,13 @@ class ColorTabList(ctk.CTkTabview):
 
 
 class MainProgram(ctk.CTk):
+    def program_close(self):
+        if messagebox.askyesno(
+            "Discard Changes?",
+            f"You are about to quit the program.\nDiscard changes to current session?"
+        ):
+            self.destroy()
+
     def __init__(self):
         super().__init__()
 
@@ -262,15 +270,7 @@ class MainProgram(ctk.CTk):
         # Program
         ColorTabList(self)
 
-        # Program Closing Function
-        def program_close():
-            if messagebox.askyesno(
-                "Discard Changes?",
-                f"You are about to quit the program.\nDiscard changes to current session?"
-            ):
-                self.destroy()
-
-        self.protocol('WM_DELETE_WINDOW', lambda: program_close())
+        self.protocol('WM_DELETE_WINDOW', lambda: self.program_close())
         self.mainloop()
 
 
