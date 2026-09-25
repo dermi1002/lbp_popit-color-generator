@@ -9,160 +9,158 @@ import yaml
 
 
 def get_yaml_content(
-        caption, 
-        primary_color, 
-        secondary_color, 
-        tertiary_color, 
-        emphasis_color
+        codeCaption, 
+        colorPrimary, 
+        colorSecondary, 
+        colorTertiary, 
+        colorEmphasis
     ):
     
-    yaml_content = str(
+    fileContentYaml = str(
         'color-code:\n' +
-        f'  caption: \"{caption}\"\n' +
+        f'  caption: \"{codeCaption}\"\n' +
 
-        f'  primcolor: \"{primary_color}\"\n' +
+        f'  primcolor: \"{colorPrimary}\"\n' +
         '  primopacity: \"FF\"\n' +
 
-        f'  seccolor: \"{secondary_color}\"\n' +
+        f'  seccolor: \"{colorSecondary}\"\n' +
         '  secopacity: \"FF\"\n' +
 
-        f'  tertcolor: \"{tertiary_color}\"\n' +
+        f'  tertcolor: \"{colorTertiary}\"\n' +
         '  tertopacity: \"FF\"\n' +
 
-        f'  emphcolor: \"{emphasis_color}\"\n' +
+        f'  emphcolor: \"{colorEmphasis}\"\n' +
         '  emphopacity: \"FF\"\n' +
 
         '  save: \"save\\\\\"'
     )
     
-    return yaml_content
+    return fileContentYaml
 
 def new_export_yaml(
-    caption, 
-    primary_color, 
-    secondary_color, 
-    tertiary_color, 
-    emphasis_color
+    codeCaption, 
+    colorPrimary, 
+    colorSecondary, 
+    colorTertiary, 
+    colorEmphasis
     ):
 
-    yaml_save_location = tk.filedialog.asksaveasfile(
+    saveLocationYaml = tk.filedialog.asksaveasfile(
         title = "Export YAML Dictionary", 
-        initialdir = "./save", 
+        initialdir = "../save", 
         filetypes = (("YAML Dictionary File", "*.yaml"), ("All Files", "*.*")), 
         defaultextension = '.yaml'
     )
 
-    if yaml_save_location is None:
+    if saveLocationYaml is None or saveLocationYaml == ():
         return
+    else:
+        outputYaml = get_yaml_content(
+            codeCaption, 
+            colorPrimary, 
+            colorSecondary, 
+            colorTertiary, 
+            colorEmphasis
+        )
 
-    test_output = get_yaml_content(
-        caption, 
-        primary_color, 
-        secondary_color, 
-        tertiary_color, 
-        emphasis_color
-    )
-
-    yaml_save_location.write(test_output)
-    yaml_save_location.close()
+        saveLocationYaml.write(outputYaml)
+        saveLocationYaml.close()
 
 
 def get_ncl_content(
-    caption, 
-    primary_color, 
-    secondary_color, 
-    tertiary_color, 
-    emphasis_color
+    codeCaption, 
+    colorPrimary, 
+    colorSecondary, 
+    colorTertiary, 
+    colorEmphasis
     ):
 
-    player_color_pointer: str = "00DC5E8C"
+    playerColorPointer: str = "00DC5E8C"
+    playerColorPointerOffsets = ["00000000", "00000004", "00000008", "0000000C"]
+    netCheatCommand: str = "0 00000000"
 
-    player_color_pointer_value = ["00000000", "00000004", "00000008", "0000000C"]
+    fileContentNetCheat = str(
+        f'{codeCaption}\n0\n' + 
 
-    netcheat_zeroes: str = "0 00000000"
+        f'6 {playerColorPointer} {playerColorPointerOffsets[0]}\n' + 
+        f'{netCheatCommand} FF{colorPrimary}\n' + 
 
-    ncl_content = str(
-        f'{caption}\n0\n' + 
+        f'6 {playerColorPointer} {playerColorPointerOffsets[1]}\n' + 
+        f'{netCheatCommand} FF{colorSecondary}\n' + 
 
-        f'6 {player_color_pointer} {player_color_pointer_value[0]}\n' + 
-        f'{netcheat_zeroes} FF{primary_color}\n' + 
-
-        f'6 {player_color_pointer} {player_color_pointer_value[1]}\n' + 
-        f'{netcheat_zeroes} FF{secondary_color}\n' + 
-
-        f'6 {player_color_pointer} {player_color_pointer_value[2]}\n' + 
-        f'{netcheat_zeroes} FF{tertiary_color}\n' + 
+        f'6 {playerColorPointer} {playerColorPointerOffsets[2]}\n' + 
+        f'{netCheatCommand} FF{colorTertiary}\n' + 
                 
-        f'6 {player_color_pointer} {player_color_pointer_value[3]}\n' + 
-        f'{netcheat_zeroes} FF{emphasis_color}\n#\n'
+        f'6 {playerColorPointer} {playerColorPointerOffsets[3]}\n' + 
+        f'{netCheatCommand} FF{colorEmphasis}\n#\n'
     )
     
-    return ncl_content
+    return fileContentNetCheat
 
 def new_export_ncl(
-    caption, 
-    primary_color, 
-    secondary_color, 
-    tertiary_color, 
-    emphasis_color
+    codeCaption, 
+    colorPrimary, 
+    colorSecondary, 
+    colorTertiary, 
+    colorEmphasis
     ):
 
-    ncl_save_location = tk.filedialog.asksaveasfile(
+    saveLocationNetCheat = tk.filedialog.asksaveasfile(
         title = "Export NetCheat List", 
-        initialdir = "./save", 
+        initialdir = "../save", 
         filetypes = [("NetCheat List File", "*.ncl"), ("All Files", "*.*")], 
         defaultextension = ".ncl"
     )
                 
-    if ncl_save_location is None:
+    if saveLocationNetCheat is None or saveLocationNetCheat == ():
         return
+    else:
+        outputNetCheat = get_ncl_content(
+            codeCaption, 
+            colorPrimary, 
+            colorSecondary, 
+            colorTertiary, 
+            colorEmphasis
+        )
 
-    test_output = get_ncl_content(
-        caption, 
-        primary_color, 
-        secondary_color, 
-        tertiary_color, 
-        emphasis_color
-    )
-
-    ncl_save_location.write(test_output)
-    ncl_save_location.close()
+        saveLocationNetCheat.write(outputNetCheat)
+        saveLocationNetCheat.close()
 
 
 def make_value_list(
     game, 
-    primary_color, 
-    secondary_color, 
-    tertiary_color, 
-    emphasis_color
+    colorPrimary, 
+    colorSecondary, 
+    colorTertiary, 
+    colorEmphasis
     ):
 
-    shortened_game = game[:4]
+    shortenedGame = game[:4]
 
     if game == 'LBP1 (BCUS98148 | 1.30)':
-        test_output = str(
-            f'Game: {shortened_game}\n' +
-            f'Primary: {primary_color}FF\n' +
-            f'Secondary: {secondary_color}FF\n' +
-            f'Tertiary: {tertiary_color}FF\n'
+        outputValueList = str(
+            f'Game: {shortenedGame}\n' +
+            f'Primary: {colorPrimary}FF\n' +
+            f'Secondary: {colorSecondary}FF\n' +
+            f'Tertiary: {colorTertiary}FF\n'
         )
     else:
-        test_output = str(
-            f'Game: {shortened_game}\n' +
-            f'Primary: FF{primary_color}\n' +
-            f'Secondary: FF{secondary_color}\n' +
-            f'Tertiary: FF{tertiary_color}\n' +
-            f'Emphasis: FF{emphasis_color}\n'
+        outputValueList = str(
+            f'Game: {shortenedGame}\n' +
+            f'Primary: FF{colorPrimary}\n' +
+            f'Secondary: FF{colorSecondary}\n' +
+            f'Tertiary: FF{colorTertiary}\n' +
+            f'Emphasis: FF{colorEmphasis}\n'
         )
 
-    return test_output
+    return outputValueList
 
 def export_value_list(
     game, 
-    primary_color, 
-    secondary_color, 
-    tertiary_color, 
-    emphasis_color
+    colorPrimary, 
+    colorSecondary, 
+    colorTertiary, 
+    colorEmphasis
     ):
 
     value_list_save_location = tk.filedialog.asksaveasfile(
@@ -174,10 +172,10 @@ def export_value_list(
 
     value_list_content: str = make_value_list(
         game, 
-        primary_color, 
-        secondary_color, 
-        tertiary_color, 
-        emphasis_color
+        colorPrimary, 
+        colorSecondary, 
+        colorTertiary, 
+        colorEmphasis
     )
 
     value_list_save_location.write(value_list_content)
@@ -186,124 +184,114 @@ def export_value_list(
 
 def prefix_game_info(game):
     if game == 'LBP1 (BCUS98148 | 1.30)':
-        output: str = "- LBP1 BCUS98148 1.30" # files starting with '.' count as hidden in most linux file explorers
-        
+        output: str = "- LBP1 BCUS98148 01.30" # game versions will finally show up on artemis lol
         return output
 
     if game == "LBP2 (BCUS98245 | 1.33)":
-        output: str = "- LBP2 BCUS98245 1.33"
-
+        output: str = "- LBP2 BCUS98245 01.33"
         return output
 
     if game == "LBP3 (BCUS98362 | 1.26)":
-        output: str = "- LBP3 BCUS98362 1.26"
-
+        output: str = "- LBP3 BCUS98362 01.26"
         return output
 
 
 def export_any_format(
-    file_type,
-    folder_location,
+    fileType,
+    folderLocation,
     game,
-    caption,  
-    prefix_info_checked,
-    primary_color, 
-    secondary_color, 
-    tertiary_color, 
-    emphasis_color
+    codeCaption,  
+    prefixInfoChecked,
+    colorPrimary, 
+    colorSecondary, 
+    colorTertiary, 
+    colorEmphasis
     ):
     
     # file types
     def any_format_content(
-        file_type,
-        folder_location,
         game,
-        caption,  
-        primary_color, 
-        secondary_color, 
-        tertiary_color, 
-        emphasis_color
+        codeCaption,  
+        colorPrimary, 
+        colorSecondary, 
+        colorTertiary, 
+        colorEmphasis
         ):
 
-        if file_type == "NetCheat List (.NCL)":
+        if fileType == "NetCheat List (.NCL)":
             output = get_ncl_content( 
-                caption,  
-                primary_color, 
-                secondary_color, 
-                tertiary_color, 
-                emphasis_color
+                codeCaption,  
+                colorPrimary, 
+                colorSecondary, 
+                colorTertiary, 
+                colorEmphasis
             )
 
             return output
 
-        if file_type == "Value List (.TXT)":
+        if fileType == "Value List (.TXT)":
             output = make_value_list(
                 game,
-                primary_color, 
-                secondary_color, 
-                tertiary_color, 
-                emphasis_color
+                colorPrimary, 
+                colorSecondary, 
+                colorTertiary, 
+                colorEmphasis
             )
 
             return output
     
-        if file_type == "YAML Dictionary (Old)":
+        if fileType == "YAML Dictionary (Old)":
             output = get_yaml_content(
-                caption,  
-                primary_color, 
-                secondary_color, 
-                tertiary_color, 
-                emphasis_color
+                codeCaption,  
+                colorPrimary, 
+                colorSecondary, 
+                colorTertiary, 
+                colorEmphasis
             )
 
             return output
 
-    def find_file_extension(file_type):
-        if file_type == "NetCheat List (.NCL)":
-            file_extension = ".ncl"
-
-            return file_extension
+    def find_file_extension(fileType):
+        if fileType == "NetCheat List (.NCL)":
+            fileExtension = ".ncl"
+            return fileExtension
         
-        if file_type == "Value List (.TXT)":
-            file_extension = ".txt"
-
-            return file_extension
+        if fileType == "Value List (.TXT)":
+            fileExtension = ".txt"
+            return fileExtension
         
-        if file_type == "YAML Dictionary (Old)":
-            file_extension = ".yaml"
-            
-            return file_extension
+        if fileType == "YAML Dictionary (Old)":
+            fileExtension = ".yaml"
+            return fileExtension
 
-    def determine_codename(game, caption, prefix_info_checked):
-        if prefix_info_checked == 1:
-            code_filename = f"{prefix_game_info(game)} Custom Popit Color - {caption}"
-
+    def set_codename(game, codeCaption, prefixInfoChecked):
+        if prefixInfoChecked == 1:
+            code_filename = f"{prefix_game_info(game)} Custom Popit Color - {codeCaption}"
             return code_filename
         else:
-            code_filename = caption
-            
+            code_filename = codeCaption
             return code_filename
 
-    determined_export_filename = determine_codename(game, caption, prefix_info_checked)
+    finalCodeName = set_codename(game, codeCaption, prefixInfoChecked)
 
-    file_extension_output: str = find_file_extension(file_type)
+    outputFileExtension: str = find_file_extension(fileType)
 
-    full_file_path = f"{folder_location}/{determined_export_filename}{file_extension_output}"
+    fullFilePath = f"{folderLocation}/{finalCodeName}{outputFileExtension}"
         
-    any_format_output = any_format_content(
-        file_type,
-        folder_location,
+    anyFormatOutput = any_format_content(
+        fileType,
+        folderLocation,
         game,
-        caption,  
-        primary_color, 
-        secondary_color, 
-        tertiary_color, 
-        emphasis_color
+        codeCaption,  
+        colorPrimary, 
+        colorSecondary, 
+        colorTertiary, 
+        colorEmphasis
         )
 
     def check_existing_file():
-        current_export = Path(full_file_path)
-        if current_export.is_file():
+        selectedFilePath = Path(fullFilePath)
+        if selectedFilePath.is_file():
             if tk.messagebox.askyesno(
                 title = "Replace Exising Code?", 
                 message = 
@@ -314,40 +302,44 @@ def export_any_format(
             final_code_export()
 
     def final_code_export():
-        with open(full_file_path, "w") as final_exported_code:
-            final_exported_code.write(any_format_output)
+        with open(fullFilePath, "w") as exportFinalCode:
+            exportFinalCode.write(anyFormatOutput)
 
-        tk.messagebox.showinfo(title = "Export Success!", message = "Popit Color Code successfully exported!")
+        tk.messagebox.showinfo(
+            title = "Export Success!",
+            message = "Popit Color Code successfully exported!"
+        )
 
 
-    if folder_location == "" or caption == "":
+    if folderLocation == "" or codeCaption == "":
         incomplete_info_error = tk.messagebox.showerror(
             title = "Inconplete Code Information",
-            message = "The text fields for Code Name or File Path are empty.\nFill in both to export the file."
+            message =
+                "The text fields for Code Name or File Path are empty.\nFill in both to export the file."
         )
     else:
         check_existing_file()
 
 
 def open_color_file(
-    color_value,
-    preview_object,
-    hex_entry,
-    red_value_open,
-    green_value_open,
-    blue_value_open,
-    end_version
+    colorValue,
+    previewObject,
+    hexField,
+    openValueRed,
+    openValueGreen,
+    openValueBlue,
+    whichEnd
     ):
 
-    preview_object.configure(background = f'#{color_value}')
-    hex_entry.delete(0, end_version)
-    hex_entry.insert(0, str(preview_object.cget('background')[1:]))
+    previewObject.configure(background = f'#{colorValue}')
+    hexField.delete(0, whichEnd)
+    hexField.insert(0, str(previewObject.cget('background')[1:]))
 
     gui_commands.change_slider_values(
-        hex_entry.get(),
-        red_value_open,
-        green_value_open,
-        blue_value_open
+        hexField.get(),
+        openValueRed,
+        openValueGreen,
+        openValueBlue
     )
 
 
@@ -356,7 +348,7 @@ def open_yaml_dictionary(
     tabExport, whichEnd
     ):
 
-    yaml_dictionary_load = tk.filedialog.askopenfilename(
+    loadFileYaml = tk.filedialog.askopenfilename(
         title = 'Test - Load YAML Dictionary',
         initialdir = '../save',
         filetypes = [('YAML Dictionary', '*.yaml'), ('All Files', '*.*')],
@@ -364,24 +356,24 @@ def open_yaml_dictionary(
     )
 
     # finally got to fix this error
-    if yaml_dictionary_load is None or yaml_dictionary_load == ():
+    if loadFileYaml is None or loadFileYaml == ():
         return
     else:
-        yaml_dictionary_path = rf"{yaml_dictionary_load}"
-        with open(yaml_dictionary_path, 'r+') as yaml_dictionary_content:
-            opened_yaml_dictionary = yaml.safe_load(yaml_dictionary_content)
+        getPathYaml = rf"{loadFileYaml}"
+        with open(getPathYaml, 'r+') as fileContentYaml:
+            openedFileYaml = yaml.safe_load(fileContentYaml)
 
-            opened_yaml_values = opened_yaml_dictionary['color-code']
+            fileValuesYaml = openedFileYaml['color-code']
 
-            yaml_primary_color = opened_yaml_values['primcolor']
-            yaml_secondary_color = opened_yaml_values['seccolor']
-            yaml_tertiary_color = opened_yaml_values['tertcolor']
-            yaml_emphasis_color = opened_yaml_values['emphcolor']
-            yamlCaption = opened_yaml_values['caption']
+            yamlColorPrimary = fileValuesYaml['primcolor']
+            yamlColorSecondary = fileValuesYaml['seccolor']
+            yamlColorTertiary = fileValuesYaml['tertcolor']
+            yamlColorEmphasis = fileValuesYaml['emphcolor']
+            yamlCaption = fileValuesYaml['caption']
 
             gui_commands.batch_change_color_elements(
-                f'{yaml_primary_color}', f'{yaml_secondary_color}',
-                f'{yaml_tertiary_color}', f'{yaml_emphasis_color}',
+                f'{yamlColorPrimary}', f'{yamlColorSecondary}',
+                f'{yamlColorTertiary}', f'{yamlColorEmphasis}',
                 tabColorPrimary, tabColorSecondary,
                 tabColorTertiary, tabColorEmphasis,
                 tabExport, f'{yamlCaption}', whichEnd

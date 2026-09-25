@@ -44,9 +44,9 @@ def batch_change_color_elements(
         colorPrimary,
         tabColorPrimary.colorPreview,
         tabColorPrimary.hexColorField,
-        tabColorPrimary.red_slider.value_variable,
-        tabColorPrimary.green_slider.value_variable,
-        tabColorPrimary.blue_slider.value_variable,
+        tabColorPrimary.sliderRed.value_variable,
+        tabColorPrimary.sliderGreen.value_variable,
+        tabColorPrimary.sliderBlue.value_variable,
         whichEnd
     )
 
@@ -54,9 +54,9 @@ def batch_change_color_elements(
         colorSecondary,
         tabColorSecondary.colorPreview,
         tabColorSecondary.hexColorField,
-        tabColorSecondary.red_slider.value_variable,
-        tabColorSecondary.green_slider.value_variable,
-        tabColorSecondary.blue_slider.value_variable,
+        tabColorSecondary.sliderRed.value_variable,
+        tabColorSecondary.sliderGreen.value_variable,
+        tabColorSecondary.sliderBlue.value_variable,
         whichEnd
     )
 
@@ -64,9 +64,9 @@ def batch_change_color_elements(
         colorTertiary,
         tabColorTertiary.colorPreview,
         tabColorTertiary.hexColorField,
-        tabColorTertiary.red_slider.value_variable,
-        tabColorTertiary.green_slider.value_variable,
-        tabColorTertiary.blue_slider.value_variable,
+        tabColorTertiary.sliderRed.value_variable,
+        tabColorTertiary.sliderGreen.value_variable,
+        tabColorTertiary.sliderBlue.value_variable,
         whichEnd
     )
 
@@ -74,14 +74,14 @@ def batch_change_color_elements(
         colorEmphasis,
         tabColorEmphasis.colorPreview,
         tabColorEmphasis.hexColorField,
-        tabColorEmphasis.red_slider.value_variable,
-        tabColorEmphasis.green_slider.value_variable,
-        tabColorEmphasis.blue_slider.value_variable,
+        tabColorEmphasis.sliderRed.value_variable,
+        tabColorEmphasis.sliderGreen.value_variable,
+        tabColorEmphasis.sliderBlue.value_variable,
         whichEnd
     )
 
-    tabExport.code_caption_entry.delete(0, whichEnd)
-    tabExport.code_caption_entry.insert(0, codeCaption)
+    tabExport.codeCaptionField.delete(0, whichEnd)
+    tabExport.codeCaptionField.insert(0, codeCaption)
 
 def discard_changes_new_file(
     colorPrimary: str, colorSecondary: str, colorTertiary: str, colorEmphasis: str,

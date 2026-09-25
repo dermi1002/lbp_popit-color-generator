@@ -114,7 +114,7 @@ class ColorTabList(ctk.CTkTabview):
 
         self.tabExport.new_export_ncl_button.configure(
             command = lambda: file_management.new_export_ncl(
-                self.tabExport.code_caption_entry.get(),
+                self.tabExport.codeCaptionField.get(),
                 self.tabColorPrimary.colorValue,
                 self.tabColorSecondary.colorValue,
                 self.tabColorTertiary.colorValue,
@@ -134,7 +134,7 @@ class ColorTabList(ctk.CTkTabview):
 
         self.tabExport.new_export_yaml_button.configure(
             command = lambda: file_management.new_export_yaml(
-                self.tabExport.code_caption_entry.get(),
+                self.tabExport.codeCaptionField.get(),
                 self.tabColorPrimary.colorValue,
                 self.tabColorSecondary.colorValue,
                 self.tabColorTertiary.colorValue,

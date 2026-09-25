@@ -22,9 +22,9 @@ class ExportTab(ctk.CTkFrame):
         
         exportOptionWidth: int = 190
 
-        self.code_caption_label = ctk.CTkLabel(self, text = 'NetCheat Code Name:')
-        self.code_caption_entry = ctk.CTkEntry(self, width = exportOptionWidth)
-        self.code_caption_note = ctk.CTkLabel(self, text = 'It\'s optional, but it helps.')
+        self.codeCaptionLabel = ctk.CTkLabel(self, text = 'NetCheat Code Name:')
+        self.codeCaptionField = ctk.CTkEntry(self, width = exportOptionWidth)
+        self.codeCaptionNote = ctk.CTkLabel(self, text = 'It\'s optional, but it helps.')
 
         self.game_title = ctk.CTkLabel(self, text = 'Game Title:')
 
@@ -62,9 +62,9 @@ class ExportTab(ctk.CTkFrame):
         )
 
         def place_elements():
-            self.code_caption_label.grid(sticky = 'nw', row = 0, column = 0, padx = (0, 5))
-            self.code_caption_entry.grid(sticky = 'ne', row = 0, column = 1)
-            self.code_caption_note.grid(sticky = 'ne', row = 1, column = 1, pady = (0, 15))
+            self.codeCaptionLabel.grid(sticky = 'nw', row = 0, column = 0, padx = (0, 5))
+            self.codeCaptionField.grid(sticky = 'ne', row = 0, column = 1)
+            self.codeCaptionNote.grid(sticky = 'ne', row = 1, column = 1, pady = (0, 15))
 
             self.game_title.grid(sticky = 'nw', row = 2, column = 0)
             self.game_title_option.grid(sticky = 'ne', row = 2, column = 1)
