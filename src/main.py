@@ -109,7 +109,6 @@ class ColorTabList(ctk.CTkTabview):
         self.tabColorEmphasis = ColorTab(self.tab('Emphasis'))
 
         # Export Tab Commands
-        # TODO: change variables in export tab python file
         self.tabExport = export_tab.ExportTab(self.tab('Export'))
 
         self.tabExport.new_export_ncl_button.configure(
@@ -124,7 +123,7 @@ class ColorTabList(ctk.CTkTabview):
 
         self.tabExport.new_save_text_button.configure(
             command = lambda: file_management.export_value_list(
-                self.tabExport.game_title_option.get(),
+                self.tabExport.gameTitleOption.get(),
                 self.tabColorPrimary.colorValue,
                 self.tabColorSecondary.colorValue,
                 self.tabColorTertiary.colorValue,
@@ -145,7 +144,7 @@ class ColorTabList(ctk.CTkTabview):
 
         self.exportWindow = None
 
-        # Toolbar
+        # Toolbar Commands
         self.menuBar = gui_objects.Toolbar(master)
 
         master.configure(menu = self.menuBar)

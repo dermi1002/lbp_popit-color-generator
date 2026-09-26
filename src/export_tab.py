@@ -15,7 +15,7 @@ class ExportTab(ctk.CTkFrame):
         ]
 
         def disable_export_ncl_button(value):
-            if self.game_title_option.get() != str(self.gameTitles[1]): 
+            if self.gameTitleOption.get() != str(self.gameTitles[1]): 
                 self.new_export_ncl_button.configure(state = 'disabled')
             else:
                 self.new_export_ncl_button.configure(state = 'normal')
@@ -29,8 +29,8 @@ class ExportTab(ctk.CTkFrame):
         self.game_title = ctk.CTkLabel(self, text = 'Game Title:')
 
         self.game_title_default_option = ctk.StringVar(value = str(self.gameTitles[1]))
-        self.game_title_option = ctk.CTkOptionMenu(self)
-        self.game_title_option.configure(
+        self.gameTitleOption = ctk.CTkOptionMenu(self)
+        self.gameTitleOption.configure(
             width = exportOptionWidth,
             values = self.gameTitles,
             variable = self.game_title_default_option,
@@ -67,7 +67,7 @@ class ExportTab(ctk.CTkFrame):
             self.codeCaptionNote.grid(sticky = 'ne', row = 1, column = 1, pady = (0, 15))
 
             self.game_title.grid(sticky = 'nw', row = 2, column = 0)
-            self.game_title_option.grid(sticky = 'ne', row = 2, column = 1)
+            self.gameTitleOption.grid(sticky = 'ne', row = 2, column = 1)
             self.game_title_note.grid(sticky = 'ne', row = 3, column = 1)
         
             self.export_button_frame.grid(sticky = 's', row = 4, columnspan = 2, pady = (10, 0))

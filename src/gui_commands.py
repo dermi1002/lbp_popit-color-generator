@@ -33,7 +33,6 @@ def change_slider_values(valueHex, valueRed, valueGreen, valueBlue):
     valueGreen.set(changeGreen)
     valueBlue.set(changeBlue)
 
-# TODO: change variables in export tab python file
 def batch_change_color_elements(
     colorPrimary: str, colorSecondary: str, colorTertiary: str, colorEmphasis: str,
     tabColorPrimary, tabColorSecondary, tabColorTertiary, tabColorEmphasis,

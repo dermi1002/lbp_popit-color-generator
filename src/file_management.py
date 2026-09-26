@@ -279,8 +279,6 @@ def export_any_format(
     fullFilePath = f"{folderLocation}/{finalCodeName}{outputFileExtension}"
         
     anyFormatOutput = any_format_content(
-        fileType,
-        folderLocation,
         game,
         codeCaption,  
         colorPrimary, 
