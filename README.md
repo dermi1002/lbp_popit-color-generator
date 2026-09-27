@@ -74,7 +74,7 @@ Further instructions on how to use the program can be found in the Documents sec
 ### Current Tasks:
 - [ ] Refactor and organize code again (This is a **BIG** one!)
     - [x] Move Export Window to its own Python file
-    - [ ] Move Objects from Main Python file to their own module
+    - [x] Move Objects from Main Python file to their own module
     - [x] Move Objects' command funcitons from Main Python to their own module
     - [ ] Reformat Label Names
         - [x] Functions (All lowercase, words separated by underscore characters)

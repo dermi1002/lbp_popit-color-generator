@@ -4,7 +4,7 @@ import customtkinter as ctk
 import tkinter as tk
 import file_management
 
-class ExportWindowIII(ctk.CTkToplevel):
+class ExportWindow(ctk.CTkToplevel):
     def __init__(
         self,
         colorPrimary, colorSecondary, colorTertiary, colorEmphasis,

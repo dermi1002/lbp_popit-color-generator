@@ -120,7 +120,7 @@ def show_export_window(
     ):
 
     if exportWindowInstance is None or not exportWindowInstance.winfo_exists():
-        exportWindowInstance = export_window.ExportWindowIII(
+        exportWindowInstance = export_window.ExportWindow(
             colorPrimary, colorSecondary,
             colorTertiary, colorEmphasis
         )
