@@ -8,55 +8,55 @@ class Toolbar(tk.Menu):
         super().__init__(master, *args, **kwargs)
 
         # File
-        self.file_option = tk.Menu(self, tearoff = 0)
+        self.optionFile = tk.Menu(self, tearoff = 0)
 
-        self.add_cascade(label = 'File', menu = self.file_option)
+        self.add_cascade(label = 'File', menu = self.optionFile)
 
         # Help
-        self.help_option = tk.Menu(self, tearoff = 0)
+        self.optionHelp = tk.Menu(self, tearoff = 0)
 
-        self.add_cascade(label = 'Help', menu = self.help_option)
+        self.add_cascade(label = 'Help', menu = self.optionHelp)
 
-        self.help_option.add_command(
+        self.optionHelp.add_command(
             label = 'About',
             command = None
         )
 
 class RGBSlider(ctk.CTkSlider):
-    def __init__(self, master, slider_y_position, *args, **kwargs):
-        super().__init__(master, slider_y_position, *args, **kwargs)
+    def __init__(self, master, sliderPositionY, *args, **kwargs):
+        super().__init__(master, sliderPositionY, *args, **kwargs)
 
-        slider_max_value: int = 255
-        slider_value_range: int = 256
+        sliderMaxValue: int = 255
+        sliderValueRange: int = 256
                 
-        slider_x_position: int = 260
-        slider_y_position: int = slider_y_position
+        sliderPositionX: int = 260
+        sliderPositionY: int = sliderPositionY
 
-        self.value_variable = tk.IntVar(master)
+        self.numberValue = tk.IntVar(master)
 
         self.configure(
-            from_ = 0, to = slider_max_value, 
-            width = slider_value_range, 
-            number_of_steps = slider_value_range,
-            variable = self.value_variable
+            from_ = 0, to = sliderMaxValue, 
+            width = sliderValueRange, 
+            number_of_steps = sliderValueRange,
+            variable = self.numberValue
         )
 
-        self.value_variable.set(0)
-        self.place(x = slider_x_position, y = slider_y_position)
+        self.numberValue.set(0)
+        self.place(x = sliderPositionX, y = sliderPositionY)
 
 class RGBLetter(ctk.CTkLabel):
-    def __init__(self, master, rgb_letter_selection, rgb_letter_y_position, *args):
-        super().__init__(master, rgb_letter_selection, rgb_letter_y_position, *args)
+    def __init__(self, master, rgbLetterSelection, rgbLetterPositionY, *args):
+        super().__init__(master, rgbLetterSelection, rgbLetterPositionY, *args)
 
-        rgb_letter_x_position: int = 225
-        rgb_letter_y_position: int = rgb_letter_y_position
+        rgbLetterPositionX: int = 225
+        rgbLetterPositionY: int = rgbLetterPositionY
 
-        rgb_letter_text = ['R', 'G', 'B', 'H', 'S', 'V', 'A']
-        rgb_letter_selection: int = rgb_letter_text[rgb_letter_selection]
+        rgbLetterText = ['R', 'G', 'B', 'H', 'S', 'V', 'A']
+        rgbLetterSelection: int = rgbLetterText[rgbLetterSelection]
 
-        self.configure(text = rgb_letter_selection)
+        self.configure(text = rgbLetterSelection)
 
-        self.place(x = rgb_letter_x_position, y = rgb_letter_y_position)
+        self.place(x = rgbLetterPositionX, y = rgbLetterPositionY)
 
 class HexColorField(ctk.CTkEntry):
     def certain_characters(self, event):

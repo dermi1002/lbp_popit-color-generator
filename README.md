@@ -72,14 +72,14 @@ Further instructions on how to use the program can be found in the Documents sec
 
 # To-do List
 ### Current Tasks:
-- [ ] Refactor and organize code again (This is a **BIG** one!)
+- [x] Refactor and organize code again (This is a **BIG** one!)
     - [x] Move Export Window to its own Python file
     - [x] Move Objects from Main Python file to their own module
     - [x] Move Objects' command funcitons from Main Python to their own module
-    - [ ] Reformat Label Names
+    - [x] Reformat Label Names
         - [x] Functions (All lowercase, words separated by underscore characters)
         - [x] Classes (All words capitalized, no separators)
-        - [ ] Variables (All words capitalized except the first word, no separators)
+        - [x] Variables (All words capitalized except the first word, no separators)
 
 - [ ] Create a Changelog Document
 - [ ] Create a Coding Style/Contribution Document

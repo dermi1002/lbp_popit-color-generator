@@ -43,9 +43,9 @@ def batch_change_color_elements(
         colorPrimary,
         tabColorPrimary.colorPreview,
         tabColorPrimary.hexColorField,
-        tabColorPrimary.sliderRed.value_variable,
-        tabColorPrimary.sliderGreen.value_variable,
-        tabColorPrimary.sliderBlue.value_variable,
+        tabColorPrimary.sliderRed.numberValue,
+        tabColorPrimary.sliderGreen.numberValue,
+        tabColorPrimary.sliderBlue.numberValue,
         whichEnd
     )
 
@@ -53,9 +53,9 @@ def batch_change_color_elements(
         colorSecondary,
         tabColorSecondary.colorPreview,
         tabColorSecondary.hexColorField,
-        tabColorSecondary.sliderRed.value_variable,
-        tabColorSecondary.sliderGreen.value_variable,
-        tabColorSecondary.sliderBlue.value_variable,
+        tabColorSecondary.sliderRed.numberValue,
+        tabColorSecondary.sliderGreen.numberValue,
+        tabColorSecondary.sliderBlue.numberValue,
         whichEnd
     )
 
@@ -63,9 +63,9 @@ def batch_change_color_elements(
         colorTertiary,
         tabColorTertiary.colorPreview,
         tabColorTertiary.hexColorField,
-        tabColorTertiary.sliderRed.value_variable,
-        tabColorTertiary.sliderGreen.value_variable,
-        tabColorTertiary.sliderBlue.value_variable,
+        tabColorTertiary.sliderRed.numberValue,
+        tabColorTertiary.sliderGreen.numberValue,
+        tabColorTertiary.sliderBlue.numberValue,
         whichEnd
     )
 
@@ -73,9 +73,9 @@ def batch_change_color_elements(
         colorEmphasis,
         tabColorEmphasis.colorPreview,
         tabColorEmphasis.hexColorField,
-        tabColorEmphasis.sliderRed.value_variable,
-        tabColorEmphasis.sliderGreen.value_variable,
-        tabColorEmphasis.sliderBlue.value_variable,
+        tabColorEmphasis.sliderRed.numberValue,
+        tabColorEmphasis.sliderGreen.numberValue,
+        tabColorEmphasis.sliderBlue.numberValue,
         whichEnd
     )
 

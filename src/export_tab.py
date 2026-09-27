@@ -16,9 +16,9 @@ class ExportTab(ctk.CTkFrame):
 
         def disable_export_ncl_button(value):
             if self.gameTitleOption.get() != str(self.gameTitles[1]): 
-                self.new_export_ncl_button.configure(state = 'disabled')
+                self.exportButtonNetCheat.configure(state = 'disabled')
             else:
-                self.new_export_ncl_button.configure(state = 'normal')
+                self.exportButtonNetCheat.configure(state = 'normal')
         
         exportOptionWidth: int = 190
 
@@ -26,37 +26,37 @@ class ExportTab(ctk.CTkFrame):
         self.codeCaptionField = ctk.CTkEntry(self, width = exportOptionWidth)
         self.codeCaptionNote = ctk.CTkLabel(self, text = 'It\'s optional, but it helps.')
 
-        self.game_title = ctk.CTkLabel(self, text = 'Game Title:')
+        self.gameTitleLabel = ctk.CTkLabel(self, text = 'Game Title:')
 
-        self.game_title_default_option = ctk.StringVar(value = str(self.gameTitles[1]))
+        self.gameTitleDefault = ctk.StringVar(value = str(self.gameTitles[1]))
         self.gameTitleOption = ctk.CTkOptionMenu(self)
         self.gameTitleOption.configure(
             width = exportOptionWidth,
             values = self.gameTitles,
-            variable = self.game_title_default_option,
+            variable = self.gameTitleDefault,
             command = disable_export_ncl_button
         )
 
-        self.game_title_note = ctk.CTkLabel(
+        self.gameTitleNote = ctk.CTkLabel(
             self, text = 'LBP1 doesn\'t use the Emphasis Color.'
         )
 
-        self.export_button_frame = ctk.CTkFrame(self, fg_color = 'transparent')
+        self.exportButtonLayout = ctk.CTkFrame(self, fg_color = 'transparent')
 
-        self.new_export_ncl_button = ctk.CTkButton(
-            self.export_button_frame, 
+        self.exportButtonNetCheat = ctk.CTkButton(
+            self.exportButtonLayout, 
             text = 'Save NCL',
             width = 85
         )
 
-        self.new_save_text_button = ctk.CTkButton(
-            self.export_button_frame, 
+        self.exportButtonValueList = ctk.CTkButton(
+            self.exportButtonLayout, 
             text = 'Save Value List',
             width = 105
         )
 
-        self.new_export_yaml_button = ctk.CTkButton(
-            self.export_button_frame, 
+        self.exportButtonYaml = ctk.CTkButton(
+            self.exportButtonLayout, 
             text = 'Save YAML (Old)',
             width = 125
         )
@@ -66,15 +66,15 @@ class ExportTab(ctk.CTkFrame):
             self.codeCaptionField.grid(sticky = 'ne', row = 0, column = 1)
             self.codeCaptionNote.grid(sticky = 'ne', row = 1, column = 1, pady = (0, 15))
 
-            self.game_title.grid(sticky = 'nw', row = 2, column = 0)
+            self.gameTitleLabel.grid(sticky = 'nw', row = 2, column = 0)
             self.gameTitleOption.grid(sticky = 'ne', row = 2, column = 1)
-            self.game_title_note.grid(sticky = 'ne', row = 3, column = 1)
+            self.gameTitleNote.grid(sticky = 'ne', row = 3, column = 1)
         
-            self.export_button_frame.grid(sticky = 's', row = 4, columnspan = 2, pady = (10, 0))
+            self.exportButtonLayout.grid(sticky = 's', row = 4, columnspan = 2, pady = (10, 0))
 
-            self.new_export_ncl_button.grid(sticky = 'sw', row = 4, column = 0)
-            self.new_save_text_button.grid(sticky = 's', row = 4, column = 1, padx = 10, ipadx = 10)
-            self.new_export_yaml_button.grid(sticky = 'se', row = 4, column = 2)
+            self.exportButtonNetCheat.grid(sticky = 'sw', row = 4, column = 0)
+            self.exportButtonValueList.grid(sticky = 's', row = 4, column = 1, padx = 10, ipadx = 10)
+            self.exportButtonYaml.grid(sticky = 'se', row = 4, column = 2)
         
         place_elements()
 

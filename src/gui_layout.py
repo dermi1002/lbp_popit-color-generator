@@ -22,9 +22,9 @@ class ColorTab(ctk.CTkFrame):
 
             gui_commands.change_slider_values(
                 updateColorHex,
-                self.sliderRed.value_variable,
-                self.sliderGreen.value_variable,
-                self.sliderBlue.value_variable
+                self.sliderRed.numberValue,
+                self.sliderGreen.numberValue,
+                self.sliderBlue.numberValue
                 )
 
             self.colorPreview.configure(
@@ -35,9 +35,9 @@ class ColorTab(ctk.CTkFrame):
 
         def color_slider_command(value):
             gui_commands.change_color_sliders(
-                self.sliderRed.value_variable.get(),
-                self.sliderGreen.value_variable.get(),
-                self.sliderBlue.value_variable.get(),
+                self.sliderRed.numberValue.get(),
+                self.sliderGreen.numberValue.get(),
+                self.sliderBlue.numberValue.get(),
                 self.hexColorField,
                 self.colorPreview
             )
@@ -75,7 +75,7 @@ class ColorTab(ctk.CTkFrame):
             hexRelatedPositionY
         )
         
-        self.color_hex_copy_button = ctk.CTkButton(
+        self.hexColorCopy = ctk.CTkButton(
             master, 
             text = 'Copy', 
             width = 50, 
@@ -88,7 +88,7 @@ class ColorTab(ctk.CTkFrame):
         
         self.hexColorLabel.place(x = hexRelatedPositionX, y = hexRelatedPositionY)
         
-        self.color_hex_copy_button.place(x = 450, y = hexRelatedPositionY)
+        self.hexColorCopy.place(x = 450, y = hexRelatedPositionY)
 
 
 class ColorTabList(ctk.CTkTabview):
@@ -113,7 +113,7 @@ class ColorTabList(ctk.CTkTabview):
         # Export Tab Commands
         self.tabExport = export_tab.ExportTab(self.tab('Export'))
 
-        self.tabExport.new_export_ncl_button.configure(
+        self.tabExport.exportButtonNetCheat.configure(
             command = lambda: file_management.new_export_ncl(
                 self.tabExport.codeCaptionField.get(),
                 self.tabColorPrimary.colorValue,
@@ -123,7 +123,7 @@ class ColorTabList(ctk.CTkTabview):
             )
         )
 
-        self.tabExport.new_save_text_button.configure(
+        self.tabExport.exportButtonValueList.configure(
             command = lambda: file_management.export_value_list(
                 self.tabExport.gameTitleOption.get(),
                 self.tabColorPrimary.colorValue,
@@ -133,7 +133,7 @@ class ColorTabList(ctk.CTkTabview):
             )
         )
 
-        self.tabExport.new_export_yaml_button.configure(
+        self.tabExport.exportButtonYaml.configure(
             command = lambda: file_management.new_export_yaml(
                 self.tabExport.codeCaptionField.get(),
                 self.tabColorPrimary.colorValue,
@@ -152,7 +152,7 @@ class ColorTabList(ctk.CTkTabview):
         master.configure(menu = self.menuBar)
 
 
-        self.menuBar.file_option.add_command(
+        self.menuBar.optionFile.add_command(
             label = "New",
             command = lambda: gui_commands.discard_changes_new_file(
                 startingColorValue, startingColorValue,
@@ -163,15 +163,15 @@ class ColorTabList(ctk.CTkTabview):
             )
         )
 
-        self.menuBar.file_option.add_separator()
+        self.menuBar.optionFile.add_separator()
 
-        self.menuBar.file_option.add_command(
+        self.menuBar.optionFile.add_command(
             state = tk.DISABLED,
             label = 'Open Value List',
             command = lambda: discard_changes_valuelist()
         )
 
-        self.menuBar.file_option.add_command(
+        self.menuBar.optionFile.add_command(
             # state = tk.DISABLED,
             label = 'Open YAML Dict.',
             command = lambda: gui_commands.discard_changes_yaml_dictionary(
@@ -189,9 +189,9 @@ class ColorTabList(ctk.CTkTabview):
             ):
                 open_text_list()
 
-        self.menuBar.file_option.add_separator()
+        self.menuBar.optionFile.add_separator()
 
-        self.menuBar.file_option.add_command(
+        self.menuBar.optionFile.add_command(
             label = "Save Code",
             command = lambda: gui_commands.show_export_window(
                 self.exportWindow,
@@ -202,6 +202,8 @@ class ColorTabList(ctk.CTkTabview):
             )
         )
 
+        # i'm planning to delete this, along with any other function related
+        # to opening value lists 
         def open_text_list():
             valuelist_load = tk.filedialog.askopenfilename(
                 title = 'Test - Load Value List',

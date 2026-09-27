@@ -160,35 +160,37 @@ class ExportWindow(ctk.CTkToplevel):
         exportCodeButtonsBottom = int(exportWindowHeight - exportOffsetY)
         
 
-        # Do NOT look at this mess full of Variables
-        codeCaptionLabel.grid(sticky = 'sw', column = 0, row = 0, pady = exportOffsetY)
-        codeCaptionField.grid(sticky = 'sw', column = 1, row = 0, padx = 10, pady = exportOffsetY)
+        def place_elements():
+            codeCaptionLabel.grid(sticky = 'sw', column = 0, row = 0, pady = exportOffsetY)
+            codeCaptionField.grid(sticky = 'sw', column = 1, row = 0, padx = 10, pady = exportOffsetY)
 
-        codeCapitonNote.place(anchor = 'n', x = exportObjectCenter, y = 45)
-
-
-        codeFilePathLabel.grid(sticky = 'nw', column = 0, row = 2, pady = exportOffsetY)
-        codeFilePathField.grid(sticky = 'nw', column = 1, row = 2, padx = 10, pady = exportOffsetY)
-        codeFilePathBrowse.grid(sticky = 'nw', column = 2, row = 2, pady = exportOffsetY)
+            codeCapitonNote.place(anchor = 'n', x = exportObjectCenter, y = 45)
 
 
-        gameTitleLabel.grid(sticky = 'nw', column = 0, row = 3)
-        gameTitleOption.grid(sticky = 'nw', column = 1, row = 3, padx = 10)
-        gameTitleNote.place(anchor = 'n', x = exportObjectCenter, y = 153)
+            codeFilePathLabel.grid(sticky = 'nw', column = 0, row = 2, pady = exportOffsetY)
+            codeFilePathField.grid(sticky = 'nw', column = 1, row = 2, padx = 10, pady = exportOffsetY)
+            codeFilePathBrowse.grid(sticky = 'nw', column = 2, row = 2, pady = exportOffsetY)
 
 
-        artemisPrefixOption.place(anchor = 'n', x = exportObjectCenter, y = 184)
+            gameTitleLabel.grid(sticky = 'nw', column = 0, row = 3)
+            gameTitleOption.grid(sticky = 'nw', column = 1, row = 3, padx = 10)
+            gameTitleNote.place(anchor = 'n', x = exportObjectCenter, y = 153)
+
+
+            artemisPrefixOption.place(anchor = 'n', x = exportObjectCenter, y = 184)
+            
+            
+            codeFileTypeLabel.grid(sticky = 'nw', column = 0, row = 6, pady = 65)
+            codeFileTypeOption.grid(sticky = 'nw', column = 1, row = 6, padx = 10, pady = 65)
+            codeFileTypeNote.place(anchor = 'n', x = exportWindowCenter, y = 248)
+
+            
+            gameTitleSupportNote.place(anchor = 'sw', x = 22, y = exportCodeButtonsBottom)
+            codeExportButton.place(anchor = 'se', x = exportObjectRight, y = exportCodeButtonsBottom)
+
+            gridLayout.grid(padx = 22)
         
-        
-        codeFileTypeLabel.grid(sticky = 'nw', column = 0, row = 6, pady = 65)
-        codeFileTypeOption.grid(sticky = 'nw', column = 1, row = 6, padx = 10, pady = 65)
-        codeFileTypeNote.place(anchor = 'n', x = exportWindowCenter, y = 248)
-
-        
-        gameTitleSupportNote.place(anchor = 'sw', x = 22, y = exportCodeButtonsBottom)
-        codeExportButton.place(anchor = 'se', x = exportObjectRight, y = exportCodeButtonsBottom)
-
-        gridLayout.grid(padx = 22)
+        place_elements()
 
 def main():
     dont_execute_me()
