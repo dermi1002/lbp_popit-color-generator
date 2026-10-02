@@ -95,18 +95,6 @@ Further instructions on how to use the program can be found in the Documents sec
 - [ ] Create mock-up gameplay previews
 - [ ] ~~Rewrite the project in C and Lua~~
 
-### Completed:
-- [x] Rework the code into classes and functions for easier functionality with other games and versions ~~(see the class-test branch)~~
-- [x] Edit code functions, values, etc., for extra readability among project contributors
-- [x] Separate functions to their own script
-- [x] Add a toolbar to the program
-- [x] Add top-level windows for File Export and window closing prompt
-- [x] Add a new plain text Value list to deprecate .YAML support
-- [x] Figure out what to do with the Export Tab
-- [x] Add functionality to change colors via hex color entry and .TXT/.YAML importing
-- [x] Create Batch and Shell Scripts for automated setup
-- [x] Optimize Shell Script and check for errors
-- [x] Change the README.md document accordingly
-- [x] Add checks for Virtual Environments in both scripts
-- [x] Wrap Instruction Sequences into Functions in Ubuntu Script
-- [x] Add checks for the Main Python file in both scripts
+# Change Log
+
+Changes to the repository can be read [here](.github/CHANGELOG.md).

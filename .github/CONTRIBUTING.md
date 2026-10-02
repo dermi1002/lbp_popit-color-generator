@@ -12,4 +12,8 @@
 
 - All discussions in this repo are to be focused on the project. Discussions of any other topic are to be brought outside of the repo.
 
-- Everyone is to be treated with dignity, respect, and fairness, regardless of age, ethnicity, or lifestyle.
+- Everyone is to be treated with dignity, respect, and fairness, regardless of age, ethnicity, lifestyle, etc.
+
+## AI Usage:
+
+- Usage of AI LLMs to write/modify code is prohibited in all aspects.
