@@ -1,0 +1,5 @@
+*.txt
+*.yaml
+*.ncl
+
+!demo popit color.yaml
