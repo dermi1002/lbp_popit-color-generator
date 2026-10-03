@@ -16,4 +16,6 @@
 
 ## AI Usage:
 
-- Usage of AI LLMs to write/modify code is prohibited in all aspects.
+- Usage of AI for contributions is prohibited in all aspects.
+
+- All code is to be written by humans to build trust of users, testers, and developers alike.

@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 ### Changed
+- [x] Refactor and organize code again (This is a **BIG** one!)
+    - [x] Move Export Window to its own Python file
+    - [x] Move Objects from Main Python file to their own module
+    - [x] Move Objects' command funcitons from Main Python to their own module
+    - [x] Reformat Label Names
+        - [x] Functions (snake_case)
+        - [x] Classes (PascalCase)
+        - [x] Variables (camelCase)
 
 ### Removed
 

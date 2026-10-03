@@ -72,17 +72,18 @@ Further instructions on how to use the program can be found in the Documents sec
 
 # To-do List
 ### Current Tasks:
-- [x] Refactor and organize code again (This is a **BIG** one!)
-    - [x] Move Export Window to its own Python file
-    - [x] Move Objects from Main Python file to their own module
-    - [x] Move Objects' command funcitons from Main Python to their own module
-    - [x] Reformat Label Names
-        - [x] Functions (All lowercase, words separated by underscore characters)
-        - [x] Classes (All words capitalized, no separators)
-        - [x] Variables (All words capitalized except the first word, no separators)
 
-- [ ] Create a Changelog Document
-- [ ] Create a Coding Style/Contribution Document
+- [x] Create a Changelog Document
+    - [ ] Document changes for each version
+        - [ ] 0.1.0
+        - [ ] 0.1.1
+        - [ ] 0.2.0
+        - [ ] 0.3.0
+        - [ ] 0.4.0
+        - [ ] 0.5.0 (based on this branch)
+
+- [x] Create a Coding Style/Contribution Document
+    - [ ] Format the document for more in-depth details
 
 ### Next:
 - [ ] Add Support for LBP1 Cheat Codes and LBP Vita's VitaCheat Format
@@ -97,4 +98,4 @@ Further instructions on how to use the program can be found in the Documents sec
 
 # Change Log
 
-Changes to the repository can be read [here](.github/CHANGELOG.md).
+Changes to the repository are documented in the [Change Log](.github/CHANGELOG.md).
