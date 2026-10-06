@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-## [0.4.0-alpha] 2026-10-01
+## [0.4.0-alpha] 2026-09-12
 
 ### Added
 
@@ -34,7 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-## [0.3.0-alpha] 2026-10-01
+## [0.3.0-alpha] 2025-10-20
 
 ### Added
 
@@ -48,7 +48,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-## [0.2.0-alpha] 2026-10-01
+## [0.2.0-alpha] 2025-09-03
 
 ### Added
 
@@ -58,7 +58,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-## [0.1.1-alpha] 2026-10-01
+## [0.1.1-alpha] 2025-06-13
 
 ### Added
 
@@ -68,7 +68,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-## [0.1.0-alpha] 2026-10-01
+## [0.1.0-alpha] 2025-06-02
 
 ### Added
 
