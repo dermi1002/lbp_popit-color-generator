@@ -12,22 +12,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Module for GUI Commands
 - Module for Export Tab
 - Module for Export Window
-- Module to imply that certain modules used by the Main Python file aren't meant to be executed
-- Functionality that interacts with the 'Code Caption' text field in the Main Python file's Export Tab class instance
+- Module to indicate that certain modules used by the `main.py` script aren't meant to be executed
+- Functionality that interacts with the 'Code Caption' text field in the `main.py` script's Export Tab class instance
 - Change Log document (this file)
 - Contributing document
 
 ### Changed
 
-- Move the Export Window class from the Main Python file to its own module
-
-- [x] Move Objects from Main Python file to their own module
-- [x] Move Objects' command funcitons from Main Python to their own module
-
+- Move the Export Window class from the `main.py` script to Module `export_window.py`
+- Move Objects from `main.py` script to Module `gui_objects.py`
+- Move Objects' command funcitons from `main.py` to Module `gui_commands.py`
 - Reformat Function names to Snake Case
 - Reformat Class names to Pascal Case
 - Reformat Variable names to Camel Case
-- Renamed 'External Objects' Module to 'File Management'
+- Renamed Module `external_objects.py` to `file_management.py`
 
 ### Deprecated
 
@@ -43,15 +41,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Automated Setup Scripts, written in Batch for Windows and in Bash for (Ubuntu) Linux
+- Automated Setup Scripts, written in Batch for Windows and in Bash for Ubuntu (Linux)
+- `/src` Directory for Python Scripts and Requirements File
 
 ### Changed
 
-- [x] Optimize Shell Script and check for errors
-- [x] Change the README.md document accordingly
-- [x] Add checks for Virtual Environments in both scripts
-- [x] Wrap Instruction Sequences into Functions in Ubuntu Script
-- [x] Add checks for the Main Python file in both scripts
+- Move Python Scripts, Requirements File, and `.gitignore` File to `/src` Directory
+- Cater the root `.gitignore` File for Files/Directories created by Automated Setup Scripts
 
 ### Deprecated
 
