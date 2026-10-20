@@ -38,7 +38,7 @@ sudo apt install python3-tk python3-venv
 ## Automated Setup Scripts
 You can use an automated setup script for your platform to set up everything needed to start the program. However, an Internet connection is required for Pip package installation. This may be changed, but is low priority and might not happen.
 
-If all else fails (or you're using MacOS), you can refer to the below section.
+If all else fails (or if you're using MacOS), you can refer to the below section.
 
 ## Setting Up From Source
 The LittleBigPlanet Popit Color Generator was tested on Python 3.12 (Windows 10/11) and Python 3.13 (Lubuntu 24.04) with CustomTkinter, PyYAML, and Pyperclip.
@@ -90,12 +90,12 @@ Further instructions on how to use the program can be found in the Documents sec
 - [ ] ~~Replace YAML Support with JSON~~ and eliminate functionality for importing Value Lists
 - [ ] Add Terminal logs and keyboard shortcuts
 - [ ] Replace the Setup Scripts with a Python one
-- [ ] Retheme the GUI to Tkinter's Ttk widget to remove CustomTkinter dependency and support Linux out-of-the-box
+- [ ] Add plain Tkinter GUI version in case CustomTkinter breaks on Linux
 
 ### Future Considerations:
 - [ ] Create mock-up gameplay previews
 - [ ] ~~Rewrite the project in C and Lua~~
 
-# Change Log
+# Changelog
 
-Changes to the repository are documented in the [Change Log](.github/CHANGELOG.md).
+Changes to the repository are documented in the [Changelog](.github/CHANGELOG.md).
