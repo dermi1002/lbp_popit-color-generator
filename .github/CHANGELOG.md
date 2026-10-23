@@ -3,7 +3,7 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] 2026-10-20
+## [Unreleased] 2026-10-23
 
 ### Added
 
@@ -107,16 +107,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-## [0.1.0-alpha] 2025-06-02
+## [0.1.0-alpha] 2025-06-02 [YANKED]
 
 ### Added
 
+- Example Popit Color file for demonstration purposes (`save/demo popit color.yaml`).
+- Empty `.gitignore` file.
+- Section covering how to use the program in `README.md`.
+- Section covering how NetCheat List files (`.ncl`) work in `README.md`.
+- To-do List covering tasks to work on and completed tasks in `README.md`.
+- Image showing the UI of the Primary Color Tab of the program.
+- Image showing the use of the Primary Color Tab of the program.
+- Image showing the UI of the Export Tab of the program.
+- Image showing the use of the Code Name text field in the Export Tab of the program.
+
 ### Changed
 
-- Rework the code into classes and functions for easier functionality with other games and versions
+- Rework the code into classes and functions for easier functionality with other games and versions in `main.py`.
+- Reword the Warning in `README.md`.
+- Specify CustomTkinter Version (`5.2.2`) in `requirements.txt`.
+- Specify Version Pyperclip Version (`1.9.0`) in `requirements.txt`.
+- Specify VersionPyYAML Version (`6.0.2`) in `requirements.txt`.
 
 ### Deprecated
 
 ### Fixed
 
 ### Removed
+
+- Duplicates of objects for each Color Tab and their respective functions in `main.py`.
+- Instruction to import the OS module in `main.py`.
