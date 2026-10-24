@@ -116,10 +116,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Section covering how to use the program in `README.md`.
 - Section covering how NetCheat List files (`.ncl`) work in `README.md`.
 - To-do List covering tasks to work on and completed tasks in `README.md`.
-- Image showing the UI of the Primary Color Tab of the program.
-- Image showing the use of the Primary Color Tab of the program.
-- Image showing the UI of the Export Tab of the program.
-- Image showing the use of the Code Name text field in the Export Tab of the program.
+- Image showing the UI of the Primary Color Tab of the program (`.readme_pictures/main_firstlook.png`).
+- Image showing the use of the Primary Color Tab of the program (`.readme_pictures/main_changecolor.png`).
+- Image showing the UI of the Export Tab of the program (`.readme_pictures/main_export.png`).
+- Image showing the use of the Code Name text field in the Export Tab of the program (`.readme_pictures/main_exportcodename.png`).
+- `CTkFrame` Object `ColorTab` which contains code for the Color Tab UI in `main.py`.
+- `CTkSlider` Object `RGBSlider` which contains specific configurations for the RGB Sliders in `main.py`.
+- `CTkLabel` Object `RGBLetter` which contains code for which letter to display next to its associated RGB Slider in `main.py`.
+- `CTkTabView` Object `ColorTabList` which contains the GUI layout for the program in `main.py`.
+- Class `MainProgram` which sets up the program window and loads Layout `ColorTabList` in `main.py`.
 
 ### Changed
 
@@ -128,10 +133,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Specify CustomTkinter Version (`5.2.2`) in `requirements.txt`.
 - Specify Version Pyperclip Version (`1.9.0`) in `requirements.txt`.
 - Specify VersionPyYAML Version (`6.0.2`) in `requirements.txt`.
-
-### Deprecated
-
-### Fixed
 
 ### Removed
 
