@@ -1,32 +1,36 @@
 # Changelog
 
+<sub>Written by dermi1002</sub>
+
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+**Author Note**: This is a **work in progress**. Many changes haven't been documented; and it will take a while to complete it. Contributions are welcome, however!
 
 ## [Unreleased] 2026-10-23
 
 ### Added
 
-- Module for GUI Objects (`gui_objects.py`).
-- Module for GUI Layout (`gui_layout.py`).
-- Module for GUI Commands (`gui_commands.py`).
-- Module for Export Tab (`export_tab.py`).
-- Module for Export Window (`export_window.py`).
-- Module to indicate that a module script isn't meant to be executed (`dontexecuteme.py`).
-- Functionality that interacts with the 'Code Caption' text field in the `main.py` script's Export Tab class instance.
-- Change Log document (this file).
+- Module for GUI Objects (`src/gui_objects.py`).
+- Module for GUI Layout (`src/gui_layout.py`).
+- Module for GUI Commands (`src/gui_commands.py`).
+- Module for Export Tab (`src/export_tab.py`).
+- Module for Export Window (`src/export_window.py`).
+- Module to indicate that a module script isn't meant to be executed (`src/dontexecuteme.py`).
+- Functionality that interacts with the 'Code Caption' text field in the `src/main.py` script's Export Tab class instance.
+- Changelog document (this file).
 - Contributing document.
 
 ### Changed
 
-- Move the Export Window class from the `main.py` script to Module `export_window.py`.
-- Move the Export Tab's code from `main.py` to Module `export_tab.py`.
-- Move Objects from `main.py` script to Module `gui_objects.py`.
-- Move Objects' command funcitons from `main.py` to Module `gui_commands.py`.
+- Move the Export Window class from the `src/main.py` script to Module `src/export_window.py`.
+- Move the Export Tab's code from `src/main.py` to Module `src/export_tab.py`.
+- Move Objects from `src/main.py` script to Module `src/gui_objects.py`.
+- Move Objects' command funcitons from `src/main.py` to Module `src/gui_commands.py`.
 - Reformat Function names to Snake Case.
 - Reformat Class names to Pascal Case.
 - Reformat Variable names to Camel Case.
-- Rename Module `external_objects.py` to `file_management.py`.
+- Rename Module `src/external_objects.py` to `src/file_management.py`.
 
 ### Deprecated
 
@@ -45,11 +49,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Automated Setup Script for Windows, written in Batch.
 - Automated Setup Script for Ubuntu (Linux), written in Bash.
-- `/src` Directory for Python Scripts and Requirements File.
+- `src/` Directory for Python Scripts and Requirements File.
 
 ### Changed
 
-- Move Python Scripts, Requirements File, and `.gitignore` File to `/src` Directory.
+- Move Python Scripts, Requirements File, and `.gitignore` File to `src/` Directory.
 - Add filters in the `.gitignore` File in root directory for Files/Directories created by Automated Setup Scripts.
 
 ### Deprecated
@@ -138,3 +142,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Duplicates of objects for each Color Tab and their respective functions in `main.py`.
 - Instruction to import the OS module in `main.py`.
+
+<!-- Version Links -->
+
+[unreleased]: https://github.com/dermi1002/lbp_popit-color-generator/compare/v0.4.0-alpha...code-refactor
+[0.4.0-alpha]: https://github.com/dermi1002/lbp_popit-color-generator/compare/v0.3.0-alpha...v0.4.0-alpha
+[0.3.0-alpha]: https://github.com/dermi1002/lbp_popit-color-generator/compare/v0.2.0-alpha...v0.3.0-alpha
+[0.2.0-alpha]: https://github.com/dermi1002/lbp_popit-color-generator/compare/v0.1.1-alpha...v0.2.0-alpha
+[0.1.1-alpha]: https://github.com/dermi1002/lbp_popit-color-generator/compare/v0.1.0-alpha...v0.1.1-alpha
+[0.1.0-alpha]: https://github.com/dermi1002/lbp_popit-color-generator/compare/1edc69e4bb9b0e1c33b3fbd6c14e7d9901fd9de6...v0.1.0-alpha
