@@ -1,7 +1,7 @@
 # LittleBigPlanet Popit Color Generator
 A Python GUI program that generates NetCheat List files to modify LittleBigPlanet Popit Color Themes
 
-README Document written by dermi1002
+<sub>README Document written by dermi1002</sub>
 
 ## WARNING
 THIS PROGRAM IS AN UNFINISHED WORK (IN PROGRESS) AND ONLY WORKS ON LBP2 US LATEST VERSION! DO NOT ATTEMPT ON OTHER GAMES OR VERSIONS!
@@ -41,7 +41,7 @@ You can use an automated setup script for your platform to set up everything nee
 If all else fails (or if you're using MacOS), you can refer to the below section.
 
 ## Setting Up From Source
-The LittleBigPlanet Popit Color Generator was tested on Python 3.12 (Windows 10/11) and Python 3.13 (Lubuntu 24.04) with CustomTkinter, PyYAML, and Pyperclip.
+The LittleBigPlanet Popit Color Generator was tested on Python 3.12 (Windows 10/11) and Python 3.13 (Ubuntu 24.04) with CustomTkinter, PyYAML, and Pyperclip.
 
 Although CustomTkinter is only meant to work in Windows or MacOS, a Ttk version will be made to support Linux out-of-the-box.
 
@@ -61,14 +61,14 @@ python src\main.py
 ```
 If done correctly, you'll end up with this:
 
-![First look of the LBP Popit Color Generator GUI](./docs/resources/main_firstlook.png)
+![First look of the LBP Popit Color Generator GUI](docs/resources/main_firstlook.png)
 
 Further instructions on how to use the program can be found in the Documents section below.
 
 # Documents
-- [How To Use](./docs/how_to_use.md)
+- [How To Use](docs/how_to_use.md)
 
-- [How NetCheat Codes Work](./docs/netcheat_pointer_codes.md)
+- [How NetCheat Codes Work](docs/netcheat_pointer_codes.md)
 
 # To-do List
 ### Current Tasks:
@@ -98,4 +98,4 @@ Further instructions on how to use the program can be found in the Documents sec
 
 # Changelog
 
-Changes to the repository are documented in the [Changelog](.github/CHANGELOG.md).
+Changes to the repository are documented in the [Changelog](.github/CHANGELOG.md) \(WIP\).
