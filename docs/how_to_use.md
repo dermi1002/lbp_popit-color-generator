@@ -1,9 +1,11 @@
-# How To Use 
+# How To Use
+
 When you open the program, there will be five tabs, four of which are for changing color values. 
 
 The Popit uses the first three of the values; Primary, Secondary, and Tertiary; and the fourth one, Emphasis, is used as "highlighted" text in level descriptions.
 
 These four tabs appear in a layout like this:
+
 - On the right are three sliders; those of which "represent" values for red, green, and blue;
 - Below them is a text field displaying the hex code for the color with a button to copy and paste outside the program; and
 - On the left is a square that previews the color changed by the three sliders.
@@ -23,11 +25,13 @@ In this tab is an entry for the NetCheat Code Name. You can click on it and type
 ![Entering a Code Name in the Export Tab of the LittleBigPlanet Color Generator GUI](./resources/main_exportcodename.png)
 
 After that, below is a Game Title option, where you can set the mainline title of your target. Choices for this are:
+
 - LittleBigPlanet 2, which is fully supported by the program,
 - LittleBigPlanet 1, which stores color values differently and the program adapts accordingly, and isn't fully supported yet, and
 - LittleBigPlanet 3, which stores color values the same as LBP2 but isn't fully supported yet.
 
 Then, you have three choices. You can:
+
 - click on the "Save NCL" button to store your Popit color values in a .ncl NetCheat List file, which is important for getting the custom Popit color in your LittleBigPlanet game;
 - click on the "Save Value List" button to store your Popit color values in a text file, which would be your last resort if saving cheat code isn't supported for your game of choice; and/or
 - click on the "Save YAML (Old)" button to store your Popit color values in a YAML dictionary file for the program to open in future sessions. Support for this format is deprecated and will be replaced with JSON in later releases.
@@ -41,6 +45,7 @@ Once you saved your .ncl file, you can import it to the PS3 memory editor of you
 ## Toolbar
 
 The thing between the window title with the close button and the program itself is a toolbar with two tabs:
+
 - File, which gives you the ability to open another window of exporting options, but can't open files yet, and
 - Help, which does nothing, ironically.
 
